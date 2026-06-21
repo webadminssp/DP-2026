@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="icon" href="favicon/favicon.ico" sizes="any" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="favicon/site.webmanifest" />
+        <title>Shriram Samruddhi Pujo • Durga Pujo 2026</title>
+        <style>
+            @font-face {
+                font-family: "Switzer";
+                src: url("fonts/Switzer-Variable.ttf")
+                    format("truetype-variations");
+                font-weight: 100 900;
+                font-style: normal;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: "Switzer";
+                src: url("fonts/Switzer-VariableItalic.ttf")
+                    format("truetype-variations");
+                font-weight: 100 900;
+                font-style: italic;
+                font-display: swap;
+            }
+            body {
+                font-family: "Switzer", ui-sans-serif, system-ui, sans-serif;
+            }
+        </style>
+    </head>
+    <body
+        class="relative min-h-screen flex items-center justify-center bg-white"
+    >
+        <div class="flex flex-col items-center gap-6 sm:gap-8 px-6">
+            <img
+                src="images/ssdpa-logo.svg"
+                alt="Shriram Samruddhi Durga Pujo Association logo"
+                class="w-56 sm:w-80 h-auto"
+            />
+            <hr class="w-56 sm:w-80 border-0 h-px bg-[#b13321]/40" />
+            <h1 class="w-56 sm:w-80" aria-label="Coming Soon">
+                <svg
+                    id="coming-soon"
+                    viewBox="0 0 1000 120"
+                    class="w-full h-auto"
+                    role="img"
+                    aria-hidden="true"
+                >
+                    <text
+                        id="coming-soon-text"
+                        x="0"
+                        y="100"
+                        font-family="Switzer, sans-serif"
+                        font-weight="600"
+                        font-size="100"
+                        fill="#b13321"
+                    >
+                        COMING SOON
+                    </text>
+                </svg>
+            </h1>
+        </div>
+
+        <div
+            id="kans-strip"
+            aria-label="Kans grass (kaash phool) border"
+            role="img"
+            class="pointer-events-none select-none fixed -bottom-2 left-0 w-full flex items-end overflow-hidden"
+        ></div>
+
+        <script>
+            // Fit the "COMING SOON" SVG viewBox tightly around the text so it
+            // scales to the logo width without distorting the glyphs.
+            (function () {
+                const svg = document.getElementById("coming-soon");
+                const text = document.getElementById("coming-soon-text");
+                function fit() {
+                    const b = text.getBBox();
+                    svg.setAttribute(
+                        "viewBox",
+                        b.x + " " + b.y + " " + b.width + " " + b.height
+                    );
+                }
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(fit);
+                } else {
+                    fit();
+                }
+            })();
+
+            (function () {
+                const SRC = [
+                    "images/kans-1.svg",
+                    "images/kans-2.svg",
+                    "images/kans-3.svg",
+                ];
+                // intrinsic aspect ratios (width / height)
+                const RATIOS = [340 / 255, 148 / 228, 308 / 278];
+                const strip = document.getElementById("kans-strip");
+
+                function render() {
+                    const h = window.innerWidth < 640 ? 220 : 230;
+                    const setWidth = RATIOS.reduce((a, r) => a + r * h, 0);
+                    const overlap = Math.round(h * 0.28); // px each tile shifts left
+                    const sets = Math.ceil(window.innerWidth / (setWidth - overlap * 3)) + 1;
+                    let html = "";
+                    let first = true;
+                    for (let s = 0; s < sets; s++) {
+                        for (let i = 0; i < SRC.length; i++) {
+                            html +=
+                                '<img src="' +
+                                SRC[i] +
+                                '" alt="" style="height:' +
+                                h +
+                                "px;width:auto;flex:none;margin-left:" +
+                                (first ? 0 : -overlap) +
+                                'px" />';
+                            first = false;
+                        }
+                    }
+                    strip.innerHTML = html;
+                }
+
+                render();
+                let t;
+                window.addEventListener("resize", function () {
+                    clearTimeout(t);
+                    t = setTimeout(render, 150);
+                });
+            })();
+        </script>
+    </body>
+</html>
