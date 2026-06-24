@@ -31,6 +31,9 @@ python3 -m http.server
 
 ## Tech stack
 
-- Plain HTML5
-- [Tailwind CSS v4](https://tailwindcss.com/) via browser CDN script
-- [Switzer](https://www.fontshare.com/fonts/switzer) variable font (self-hosted)
+* **Current (Coming Soon Phase):**
+  - Plain HTML5
+  - [Tailwind CSS v4](https://tailwindcss.com/) via browser CDN script
+  - [Switzer](https://www.fontshare.com/fonts/switzer) variable font (self-hosted)
+* **Future (Production website):**
+  - See [TECH_STACK.md](file:///Users/dp2026/Documents/CODE/DP-2026/TECH_STACK.md) for details on the upcoming Astro, native animations, Headless CMS, and payment integration plans.
