@@ -1,0 +1,94 @@
+---
+import Menu from '@lucide/astro/icons/menu';
+import X from '@lucide/astro/icons/x';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+const navLinks = [
+  { label: "Home",    href: "/" },
+  { label: "About",   href: "/about" },
+  { label: "Events",  href: "/events" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Contact", href: "/contact" },
+];
+---
+
+<header class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-sm border-b border-stone-200">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+
+    <!-- Wordmark -->
+    <a href="/" class="flex flex-col leading-tight no-underline">
+      <span class="font-heading text-xs font-medium tracking-widest text-stone-500 uppercase">SSDPA · Durga Pujo 2026</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
+      {navLinks.map(({ label, href }) => (
+        <a
+          href={href}
+          class="text-sm font-medium text-stone-600 hover:text-[#b13321] transition-colors duration-150"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="menu-toggle"
+      type="button"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label="Toggle navigation menu"
+      class={cn(
+        buttonVariants({ variant: 'ghost', size: 'icon' }),
+        'md:hidden text-stone-600 hover:text-[#b13321] hover:bg-stone-100 [&_svg]:size-5'
+      )}
+    >
+      <Menu id="icon-menu" size={22} />
+      <X id="icon-close" size={22} class="hidden" />
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    hidden
+    class="md:hidden border-t border-stone-200 bg-white px-4 pb-4"
+  >
+    <nav class="flex flex-col gap-1 pt-2" aria-label="Mobile navigation">
+      {navLinks.map(({ label, href }) => (
+        <a
+          href={href}
+          class="rounded-md px-3 py-2.5 text-sm font-medium text-stone-700 hover:bg-stone-100 hover:text-[#b13321] transition-colors duration-150"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle    = document.getElementById("menu-toggle")!;
+  const menu      = document.getElementById("mobile-menu")!;
+  const iconMenu  = document.getElementById("icon-menu")!;
+  const iconClose = document.getElementById("icon-close")!;
+
+  toggle.addEventListener("click", () => {
+    const isOpen = !menu.hidden;
+    menu.hidden = isOpen;
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    iconMenu.classList.toggle("hidden", !isOpen);
+    iconClose.classList.toggle("hidden", isOpen);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768 && !menu.hidden) {
+      menu.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      iconMenu.classList.remove("hidden");
+      iconClose.classList.add("hidden");
+    }
+  });
+</script>
