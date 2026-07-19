@@ -1,0 +1,26 @@
+:root {
+  --font-heading: 'Fraunces Variable', serif;
+  --font-body: 'DM Sans Variable', sans-serif;
+  --font-bengali: 'Tiro Bangla', serif;
+}
+
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  background: #fff;
+  color: #111;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 560;
+  font-variation-settings: "opsz" 144, "SOFT" 28, "WONK" 1;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.bengali-text {
+  font-family: var(--font-bengali);
+}

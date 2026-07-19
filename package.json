@@ -1,0 +1,16 @@
+{
+  "name": "ssdpa-2026",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.2.8",
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource/tiro-bangla": "^5.2.7",
+    "astro": "^7.0.2"
+  }
+}

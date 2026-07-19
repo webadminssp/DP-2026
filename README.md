@@ -2,38 +2,39 @@
 
 Official website for the **Shriram Samruddhi Durga Pujo Association (SSDPA)** — Durga Pujo 2026.
 
-## What this repo will house
-
-The full public-facing website for SSDPA's Durga Pujo 2026 celebrations: event schedule, venue details, cultural programme, sponsor recognition, photo gallery, and any other information the association wants to share with attendees and the wider community.
-
 ## Where we're at
 
-Early days. The site currently shows a **"Coming Soon"** landing page — the SSDPA logo, a "COMING SOON" heading, and a decorative kans grass border at the bottom. That's it.
-
-No framework, no build step — just a single `index.html` wired up to Tailwind CSS (via CDN) and the Switzer variable font served locally.
+The project is structured as a barebones **Astro** application. The codebase has been migrated to Astro to support zero-JS pages, native view transitions, and future headless CMS and payment integrations.
 
 ## Project structure
 
-```
-index.html          # Coming soon landing page (the whole site, for now)
-favicon/            # Favicon assets (ico, png variants, webmanifest)
-fonts/              # Switzer variable font (upright + italic)
-images/             # SSDPA logo + kans grass SVG tiles
+```text
+astro.config.mjs    # Astro configuration file
+package.json        # Dependencies and scripts
+public/
+  favicon/          # Favicon assets (ico, png variants, webmanifest)
+src/
+  pages/
+    index.astro     # Core entry point page
+README.md           # This file
+TECH_STACK.md       # Technical stack documentation and architecture plans
 ```
 
 ## Running locally
 
-No build tooling needed. Open `index.html` directly in a browser, or serve it with anything static:
+Install the project dependencies and run the Astro local development server:
 
 ```bash
-python3 -m http.server
+# Install dependencies
+npm install
+
+# Start the dev server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
 ## Tech stack
 
-* **Current (Coming Soon Phase):**
-  - Plain HTML5
-  - [Tailwind CSS v4](https://tailwindcss.com/) via browser CDN script
-  - [Switzer](https://www.fontshare.com/fonts/switzer) variable font (self-hosted)
-* **Future (Production website):**
-  - See [TECH_STACK.md](file:///Users/dp2026/Documents/CODE/DP-2026/TECH_STACK.md) for details on the upcoming Astro, native animations, Headless CMS, and payment integration plans.
+For the full detailed breakdown of the planned architecture, see **[TECH_STACK.md](file:///Users/dp2026/Documents/CODE/DP-2026/TECH_STACK.md)**.
