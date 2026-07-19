@@ -1,0 +1,164 @@
+---
+const linkGroups = [
+  {
+    heading: "Puja",
+    links: [
+      { label: "About the Puja",  href: "/about" },
+      { label: "History",         href: "/history" },
+      { label: "Our Committee",   href: "/committee" },
+      { label: "Patrons",         href: "/patrons" },
+    ],
+  },
+  {
+    heading: "Events",
+    links: [
+      { label: "Programme",        href: "/events" },
+      { label: "Pushpanjali",      href: "/events/pushpanjali" },
+      { label: "Sandhi Puja",      href: "/events/sandhi-puja" },
+      { label: "Dhunuchi Naach",   href: "/events/dhunuchi-naach" },
+      { label: "Sindoor Khela",    href: "/events/sindoor-khela" },
+      { label: "Cultural Evening", href: "/events/cultural" },
+    ],
+  },
+  {
+    heading: "Gallery",
+    links: [
+      { label: "Photos",     href: "/gallery/photos" },
+      { label: "Videos",     href: "/gallery/videos" },
+      { label: "Past Years", href: "/gallery/archive" },
+    ],
+  },
+  {
+    heading: "Get Involved",
+    links: [
+      { label: "Donate",     href: "/donate" },
+      { label: "Sponsor Us", href: "/sponsor" },
+    ],
+  },
+  {
+    heading: "Info",
+    links: [
+      { label: "Venue & Directions", href: "/venue" },
+      { label: "Announcements",      href: "/announcements" },
+      { label: "FAQs",               href: "/faq" },
+      { label: "Contact Us",         href: "/contact" },
+    ],
+  },
+];
+
+const col1 = linkGroups.slice(0, 2);
+const col2 = linkGroups.slice(2);
+---
+
+<footer style="background: var(--palette-crimson);">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+
+    <!-- Main row -->
+    <div class="flex flex-col gap-12 md:flex-row md:gap-0">
+
+      <!-- Left: logo (w-1/3) -->
+      <div class="md:w-1/3 flex flex-col items-start">
+        <a href="/" aria-label="Home" class="footer-logo-link">
+          <img
+            src="/logo.svg"
+            alt="SSDPA"
+            class="h-20 w-auto object-contain"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          />
+          <!-- Text fallback until a logo file is placed at public/logo.svg -->
+          <span class="hidden font-heading text-2xl leading-tight footer-wordmark">
+            SSDPA<br />
+            <span class="text-sm font-body font-normal tracking-widest uppercase footer-wordmark-sub">
+              Durga Pujo 2026
+            </span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Right: links (w-2/3) -->
+      <div class="md:w-2/3">
+        <div class="grid grid-cols-2 gap-x-10 gap-y-10">
+
+          <!-- Link column 1 -->
+          <div class="flex flex-col gap-8">
+            {col1.map((group) => (
+              <div>
+                <p class="font-heading text-base font-semibold mb-3 footer-heading">
+                  {group.heading}
+                </p>
+                <ul class="flex flex-col gap-2 list-none m-0 p-0">
+                  {group.links.map(({ label, href }) => (
+                    <li>
+                      <a href={href} class="footer-link text-sm">{label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <!-- Link column 2 -->
+          <div class="flex flex-col gap-8">
+            {col2.map((group) => (
+              <div>
+                <p class="font-heading text-base font-semibold mb-3 footer-heading">
+                  {group.heading}
+                </p>
+                <ul class="flex flex-col gap-2 list-none m-0 p-0">
+                  {group.links.map(({ label, href }) => (
+                    <li>
+                      <a href={href} class="footer-link text-sm">{label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-14 pt-6 footer-divider">
+      <p class="text-xs footer-copyright">
+        © 2026 Shriram Samruddhi Puja Association · Bangalore
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .footer-wordmark       { color: var(--palette-cream); }
+  .footer-wordmark-sub   { color: var(--palette-gold-on-dark); }
+
+  .footer-heading        { color: var(--palette-gold-on-dark); }
+
+  .footer-link {
+    color: var(--palette-cream);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .footer-link:hover {
+    color: var(--palette-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .footer-link:focus-visible {
+    color: var(--palette-gold);
+    outline: 2px solid var(--palette-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .footer-logo-link:focus-visible {
+    outline: 2px solid var(--palette-gold);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .footer-divider        { border-top: 1px solid oklch(1 0 0 / 45%); }
+  .footer-copyright      { color: var(--palette-cream); opacity: 0.7; }
+</style>
