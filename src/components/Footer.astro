@@ -1,5 +1,6 @@
 ---
 import alponaBase from "../assets/images/footer-base-alpona.svg";
+import ssdpaLogo from "../assets/images/logo-on-dark-bg.svg";
 
 const linkGroups = [
   {
@@ -62,18 +63,10 @@ const col2 = linkGroups.slice(2);
       <div class="md:w-1/3 flex flex-col items-start">
         <a href="/" aria-label="Home" class="footer-logo-link">
           <img
-            src="/logo.svg"
-            alt="SSDPA"
+            src={ssdpaLogo.src}
+            alt="SSDPA · Durga Pujo 2026"
             class="h-20 w-auto object-contain"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
           />
-          <!-- Text fallback until a logo file is placed at public/logo.svg -->
-          <span class="hidden font-heading text-2xl leading-tight footer-wordmark">
-            SSDPA<br />
-            <span class="text-sm font-body font-normal tracking-widest uppercase footer-wordmark-sub">
-              Durga Pujo 2026
-            </span>
-          </span>
         </a>
       </div>
 
@@ -140,9 +133,6 @@ const col2 = linkGroups.slice(2);
 </footer>
 
 <style>
-  .footer-wordmark       { color: var(--palette-cream); }
-  .footer-wordmark-sub   { color: var(--palette-gold-on-dark); }
-
   .footer-heading        { color: var(--palette-gold-on-dark); }
 
   .footer-link {

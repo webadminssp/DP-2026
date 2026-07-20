@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import headerTopAlpona from '../assets/images/header-top-alpona.svg';
 import headerBaseAlpona from '../assets/images/header-base-alpona.svg';
+import iconLogo from '../assets/images/icon-on-dark-bg.svg';
 
 const navLinks = [
   { label: "Home",    href: "/" },
@@ -25,9 +26,9 @@ const navLinks = [
 
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
 
-    <!-- Wordmark -->
-    <a href="/" class="flex flex-col leading-tight no-underline">
-      <span class="font-heading text-xs font-medium tracking-widest uppercase header-wordmark">SSDPA · Durga Pujo 2026</span>
+    <!-- Logomark -->
+    <a href="/" class="flex items-center leading-tight no-underline" aria-label="SSDPA Home">
+      <img src={iconLogo.src} alt="SSDPA" class="h-10 w-auto sm:h-11" />
     </a>
 
     <!-- Desktop nav -->
@@ -81,8 +82,6 @@ const navLinks = [
 ></div>
 
 <style>
-  .header-wordmark { color: var(--palette-cream); }
-
   .header-link         { color: var(--palette-cream); }
   .header-link:hover   { color: var(--palette-gold); }
   .header-link:focus-visible {
@@ -104,7 +103,7 @@ const navLinks = [
 
   .header-base-alpona {
     width: 100%;
-    height: clamp(1.5rem, 2.5vw, 2rem);
+    height: clamp(2rem, 3.2vw, 2.75rem);
     background-repeat: repeat-x;
     background-position: top left;
     background-size: auto 100%;
