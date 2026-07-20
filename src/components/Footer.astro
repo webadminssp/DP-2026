@@ -1,4 +1,6 @@
 ---
+import alponaBase from "../assets/images/footer-base-alpona.svg";
+
 const linkGroups = [
   {
     heading: "Puja",
@@ -128,6 +130,13 @@ const col2 = linkGroups.slice(2);
     </div>
 
   </div>
+
+  <div
+    class="footer-alpona"
+    style={`background-image: url(${alponaBase.src});`}
+    role="presentation"
+    aria-hidden="true"
+  ></div>
 </footer>
 
 <style>
@@ -161,4 +170,12 @@ const col2 = linkGroups.slice(2);
 
   .footer-divider        { border-top: 1px solid oklch(1 0 0 / 45%); }
   .footer-copyright      { color: var(--palette-cream); opacity: 0.7; }
+
+  .footer-alpona {
+    width: 100%;
+    height: clamp(2.5rem, 3.5vw, 3rem);
+    background-repeat: repeat-x;
+    background-position: bottom left;
+    background-size: auto 100%;
+  }
 </style>
