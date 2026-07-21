@@ -1,0 +1,261 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+  height: number;
+}
+
+interface Column {
+  width: number;
+  slides: Slide[];
+}
+
+const placeholder = (w: number, h: number) => `https://placehold.co/${w}x${h}/cccccc/cccccc`;
+
+const columnDefs: { width: number; heights: number[] }[] = [
+  { width: 300, heights: [420] },
+  { width: 260, heights: [260, 150] },
+  { width: 380, heights: [320] },
+  { width: 220, heights: [190, 190] },
+  { width: 260, heights: [460] },
+  { width: 340, heights: [300, 140] },
+  { width: 340, heights: [260] },
+  { width: 300, heights: [220, 180] },
+];
+
+const columns: Column[] = columnDefs.map(({ width, heights }) => ({
+  width,
+  slides: heights.map((height) => ({
+    src: placeholder(width, height),
+    alt: "Placeholder image",
+    height,
+  })),
+}));
+
+// Duplicated once so the track can loop seamlessly at the halfway point.
+const track = [...columns, ...columns];
+---
+
+<div class="carousel" id="image-carousel" role="region" aria-label="Photo preview carousel">
+  <div class="carousel-track" id="carousel-track">
+    {track.map((column, ci) => (
+      <div
+        class="carousel-column"
+        data-base-width={column.width}
+        style={`width: ${column.width}px;`}
+        aria-hidden={ci >= columns.length ? "true" : "false"}
+      >
+        {column.slides.map(({ src, alt, height }) => (
+          <div class="carousel-card" data-base-height={height} style={`height: ${height}px;`}>
+            <img src={src} alt={ci >= columns.length ? "" : alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+
+  @media (min-width: 640px) {
+    .carousel {
+      height: 520px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carousel {
+      height: 640px;
+    }
+  }
+
+  .carousel-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 12px;
+    will-change: transform;
+  }
+
+  .carousel-column {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .carousel-card {
+    flex: none;
+    width: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    will-change: transform, box-shadow;
+  }
+
+  .carousel-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  const GAP = 12; // must match the CSS `gap` values above
+
+  const carousel = document.getElementById("image-carousel")!;
+  const trackEl = document.getElementById("carousel-track")!;
+  const columnEls = Array.from(trackEl.querySelectorAll<HTMLElement>(".carousel-column"));
+
+  // Design-time reference sizes (from the markup) -- never mutated.
+  const designWidths = columnEls.map((col) => Number(col.dataset.baseWidth));
+  const cardGroups = columnEls.map((col) => Array.from(col.querySelectorAll<HTMLElement>(".carousel-card")));
+  const designHeightGroups = cardGroups.map((cards) => cards.map((card) => Number(card.dataset.baseHeight)));
+  const maxDesignHeight = Math.max(...designHeightGroups.flat());
+
+  const MIN_SCALE = 0.85;
+  const MAX_SCALE = 1.3;
+  const VERTICAL_DAMPING = 0.45; // fraction of the width-scale delta applied to height
+  const FOCUS_RATIO = 0.3;       // fraction of container width treated as the "focus zone"
+  const SHADOW_BUFFER = 40;      // headroom so the peak shadow/lift never gets clipped
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Below this many px of container width, columns are scaled down so several
+  // are always in view at once -- otherwise a single card can dwarf a phone
+  // screen and the "marquee" reads as a single abrupt slide-in/slide-out.
+  function getResponsiveScale(width: number) {
+    return Math.min(1.15, Math.max(0.55, width / 1100));
+  }
+
+  // Design sizes scaled for the current viewport -- recomputed on resize.
+  let baseWidths = [...designWidths];
+  let baseHeightGroups = designHeightGroups.map((g) => [...g]);
+
+  // Widths are simulated entirely in JS (never read back from the DOM), so
+  // growing a column never triggers layout thrash -- and because we only ever
+  // set `width` (flex `gap` handles spacing), neighbors are pushed, not covered.
+  let widths = [...baseWidths];
+  let offset = 0;
+  let containerWidth = 0;
+  let wrapThreshold = 0;
+  let speed = 45; // px per second, scaled with viewport
+  let paused = false;
+  let lastTime: number | null = null;
+
+  function measure() {
+    containerWidth = carousel.clientWidth;
+    const scaleFactor = getResponsiveScale(containerWidth);
+
+    baseWidths = designWidths.map((w) => w * scaleFactor);
+    baseHeightGroups = designHeightGroups.map((g) => g.map((h) => h * scaleFactor));
+    speed = 45 * scaleFactor;
+
+    // The track is two identical copies of the same set back to back, so it
+    // must wrap after exactly ONE set's width -- not the full doubled track --
+    // otherwise the whole thing scrolls out of view before resetting.
+    const half = baseWidths.length / 2;
+    const oneSet = baseWidths.slice(0, half);
+    wrapThreshold = oneSet.reduce((sum, w) => sum + w, 0) + GAP * (half - 1);
+
+    const heightScaleMax = 1 + (MAX_SCALE - 1) * VERTICAL_DAMPING;
+    const neededHeight = maxDesignHeight * scaleFactor * heightScaleMax + SHADOW_BUFFER;
+    carousel.style.height = `${Math.ceil(neededHeight)}px`;
+  }
+
+  // Smooth cosine bump: eases in to full scale at the center and back out,
+  // with zero slope at both ends so a column never "snaps" as it turns around.
+  function falloff(distance: number, maxDistance: number) {
+    if (distance >= maxDistance) return 0;
+    return (Math.cos((distance / maxDistance) * Math.PI) + 1) / 2;
+  }
+
+  function centersFromWidths(ws: number[]) {
+    const centers: number[] = [];
+    let cursor = 0;
+    for (const w of ws) {
+      centers.push(cursor + w / 2);
+      cursor += w + GAP;
+    }
+    return centers;
+  }
+
+  function applyFrame() {
+    const containerCenter = containerWidth / 2;
+    const maxDistance = containerWidth * FOCUS_RATIO;
+    const centers = centersFromWidths(widths);
+
+    const nextWidths = baseWidths.map((base, i) => {
+      const onScreenCenter = centers[i] + offset;
+      const distance = Math.abs(onScreenCenter - containerCenter);
+      const t = falloff(distance, maxDistance);
+      const scale = MIN_SCALE + t * (MAX_SCALE - MIN_SCALE);
+
+      const lift = t * 10;
+      const blur = 8 + t * 8;
+      const spread = t * 1;
+      const alpha = 0.06 + t * 0.06;
+      const shadow = `0 ${(3 + t * 4).toFixed(1)}px ${blur.toFixed(1)}px ${spread.toFixed(1)}px oklch(0.22 0.08 21 / ${alpha.toFixed(2)})`;
+      const cardTransform = `translateY(${(-lift).toFixed(2)}px)`;
+      const heightScale = 1 + (scale - 1) * VERTICAL_DAMPING;
+
+      cardGroups[i].forEach((card, ci) => {
+        card.style.transform = cardTransform;
+        card.style.boxShadow = shadow;
+        card.style.height = `${(baseHeightGroups[i][ci] * heightScale).toFixed(2)}px`;
+      });
+
+      return base * scale;
+    });
+
+    widths = nextWidths;
+    columnEls.forEach((col, i) => {
+      col.style.width = `${widths[i].toFixed(2)}px`;
+    });
+  }
+
+  function tick(time: number) {
+    if (lastTime === null) lastTime = time;
+    const dt = (time - lastTime) / 1000;
+    lastTime = time;
+
+    if (!paused) {
+      offset -= speed * dt;
+      if (Math.abs(offset) >= wrapThreshold) {
+        offset += wrapThreshold;
+      }
+      trackEl.style.transform = `translateX(${offset}px)`;
+    }
+
+    applyFrame();
+    requestAnimationFrame(tick);
+  }
+
+  measure();
+
+  if (!prefersReducedMotion) {
+    requestAnimationFrame(tick);
+  }
+
+  for (const cards of cardGroups) {
+    for (const card of cards) {
+      card.addEventListener("mouseenter", () => {
+        paused = true;
+      });
+      card.addEventListener("mouseleave", () => {
+        paused = false;
+        lastTime = null;
+      });
+    }
+  }
+
+  window.addEventListener("resize", measure);
+</script>
