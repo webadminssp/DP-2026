@@ -16,13 +16,16 @@ const navLinks = [
 ];
 ---
 
-<header class="sticky top-0 z-50 w-full relative" style="background: var(--palette-crimson);">
+<div class="sticky top-0 z-50 w-full">
+<header class="w-full relative" style="background: var(--palette-crimson);">
+  <!--
   <div
     class="header-alpona"
     style={`background-image: url(${headerTopAlpona.src});`}
     role="presentation"
     aria-hidden="true"
   ></div>
+  -->
 
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
 
@@ -80,6 +83,7 @@ const navLinks = [
   role="presentation"
   aria-hidden="true"
 ></div>
+</div>
 
 <style>
   .header-link         { color: var(--palette-cream); }
