@@ -1,0 +1,62 @@
+---
+import QrCode from '@lucide/astro/icons/qr-code';
+import qrCode from '../assets/images/qr.png';
+import trustedPartners from '../assets/images/trusted-partners.svg';
+
+const reasons = [
+  "Pandal decor & alpona artistry",
+  "Rituals, pushpanjali & bhog",
+  "Cultural evenings & performances",
+  "Community welfare initiatives",
+];
+---
+
+<section id="contribute" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+  <div
+    class="mx-auto max-w-4xl rounded-2xl border px-6 py-12 sm:px-12"
+    style="border-color: var(--border); background: var(--card);"
+  >
+  <div class="flex flex-col items-center gap-10 md:flex-row md:items-center md:gap-14">
+    <div class="flex flex-col items-center gap-3 md:flex-1 md:items-start">
+      <p class="text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
+        Every Bit Helps
+      </p>
+      <h2 class="text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
+        Contribute to This Year's Pujo
+      </h2>
+      <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
+        Placeholder copy — whatever you're able to give, big or small, goes directly
+        toward making this year's celebration possible. Your contribution helps fund:
+      </p>
+      <ul class="mt-1 flex flex-col gap-2 text-sm sm:text-base" style="color: var(--foreground);">
+        {reasons.map((reason) => (
+          <li class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--palette-gold);"></span>
+            {reason}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="flex flex-col items-center gap-3">
+      <div class="rounded-xl border p-4" style="border-color: var(--border); background: #ffffff;">
+        <img src={qrCode.src} alt="QR code for contributions" width="200" height="200" />
+      </div>
+      <p class="flex items-center gap-1.5 text-xs font-medium" style="color: var(--muted-foreground);">
+        <QrCode size={14} />
+        Scan to contribute via UPI
+      </p>
+      <span
+        class="rounded-full px-3 py-1 text-xs font-medium"
+        style="background: var(--palette-cream-dk); color: var(--palette-crimson);"
+      >
+        Online payment link coming soon
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-10 flex justify-center border-t pt-6 sm:justify-end" style="border-color: var(--border);">
+    <img src={trustedPartners.src} alt="Trusted partners" class="h-8 w-auto sm:h-10" />
+  </div>
+  </div>
+</section>

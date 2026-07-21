@@ -1,0 +1,111 @@
+---
+import Award from '@lucide/astro/icons/award';
+import Handshake from '@lucide/astro/icons/handshake';
+import Building2 from '@lucide/astro/icons/building-2';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+const tiers = [
+  {
+    icon: Award,
+    name: "Title Sponsor",
+    price: "Placeholder amount",
+    perks: ["Logo on pandal & banners", "Top billing on website", "Stage mentions all 5 days"],
+  },
+  {
+    icon: Building2,
+    name: "Co-Sponsor",
+    price: "Placeholder amount",
+    perks: ["Logo on website & booklet", "Stage mentions on key days", "Social media shoutouts"],
+  },
+  {
+    icon: Handshake,
+    name: "Supporting Sponsor",
+    price: "Placeholder amount",
+    perks: ["Name in printed booklet", "Listing on website", "A heartfelt thank-you"],
+  },
+];
+
+const pastSponsorLogo = "https://placehold.co/160x64/ffffff/cccccc?text=Logo";
+---
+
+<section id="sponsors" class="py-16 sm:py-20" style="background: var(--palette-cream-dk);">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="mb-3 text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
+        Partner With Us
+      </p>
+      <h2 class="mb-5 text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
+        Become a Sponsor
+      </h2>
+      <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
+        Placeholder copy — reach hundreds of families across a five-day celebration
+        while supporting a beloved community tradition.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-6 flex max-w-2xl justify-center gap-8 text-center">
+      {[
+        ["XXX+", "Families Reached"],
+        ["X", "Days of Visibility"],
+        ["X,XXX+", "Total Footfall"],
+      ].map(([value, label]) => (
+        <div>
+          <p class="text-2xl font-semibold sm:text-3xl" style="color: var(--palette-crimson); font-family: var(--font-heading);">
+            {value}
+          </p>
+          <p class="mt-1 text-xs sm:text-sm" style="color: var(--muted-foreground);">
+            {label}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {tiers.map(({ icon: Icon, name, price, perks }) => (
+        <div
+          class="flex flex-col gap-4 rounded-2xl border p-6"
+          style="border-color: var(--border); background: var(--card);"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full"
+            style="background: var(--palette-cream-dk); color: var(--palette-crimson);"
+          >
+            <Icon size={20} />
+          </div>
+          <div>
+            <h3 class="text-xl" style="color: var(--palette-crimson);">{name}</h3>
+            <p class="mt-0.5 text-sm" style="color: var(--muted-foreground);">{price}</p>
+          </div>
+          <ul class="flex flex-1 flex-col gap-2 text-sm" style="color: var(--foreground);">
+            {perks.map((perk) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--palette-gold);"></span>
+                {perk}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <p class="mb-5 text-sm font-medium" style="color: var(--muted-foreground);">
+        Our Past Sponsors
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-6">
+        {Array.from({ length: 4 }).map(() => (
+          <img src={pastSponsorLogo} alt="Placeholder sponsor logo" width="120" height="48" class="rounded-md opacity-70" />
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/sponsor" class={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
+        Become a Sponsor
+        <ArrowRight size={18} />
+      </a>
+    </div>
+  </div>
+</section>

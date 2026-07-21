@@ -1,0 +1,36 @@
+---
+const stats = [
+  { value: "XX", label: "Years of Celebration" },
+  { value: "XXX+", label: "Families Involved" },
+  { value: "X", label: "Days of Festivities" },
+];
+---
+
+<section id="about" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="mb-3 text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
+      Our Story
+    </p>
+    <h2 class="mb-5 text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
+      About Shriram Samruddhi Durga Pujo
+    </h2>
+    <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
+      Placeholder copy — a few lines on how this community Pujo began, what it means to
+      the residents of Shriram Samruddhi, and the spirit that brings everyone together
+      each year to celebrate Ma Durga's homecoming.
+    </p>
+  </div>
+
+  <div class="mx-auto mt-12 grid max-w-2xl grid-cols-3 gap-6 text-center">
+    {stats.map(({ value, label }) => (
+      <div>
+        <p class="text-3xl font-semibold sm:text-4xl" style="color: var(--palette-crimson); font-family: var(--font-heading);">
+          {value}
+        </p>
+        <p class="mt-1 text-xs sm:text-sm" style="color: var(--muted-foreground);">
+          {label}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
