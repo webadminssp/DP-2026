@@ -23,6 +23,17 @@ const { title = "Shriram Samruddhi Pujo 2026" } = Astro.props;
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 		<link rel="manifest" href="/favicon/site.webmanifest" />
 		<title>{title}</title>
+		<script is:inline>
+			(function () {
+				var hash = window.location.hash;
+				if (!hash) return;
+				history.replaceState(null, '', window.location.pathname + window.location.search);
+				window.addEventListener('load', function () {
+					var el = document.querySelector(hash);
+					if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				});
+			})();
+		</script>
 	</head>
 	<body>
 		<Header />

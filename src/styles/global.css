@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   --font-heading: 'Fraunces Variable', serif;
   --font-body: 'DM Sans Variable', sans-serif;
