@@ -3,50 +3,49 @@ import alponaBase from "../assets/images/footer-base-alpona.svg";
 import ssdpaLogo from "../assets/images/logo-on-dark-bg.svg";
 
 const linkGroups = [
-  {
-    heading: "Puja",
-    links: [
-      { label: "About the Puja",  href: "/about" },
-      { label: "History",         href: "/about#history" },
-      { label: "Our Committee",   href: "/committee" },
-      { label: "Patrons",         href: "/patrons" },
-    ],
-  },
-  {
-    heading: "Events",
-    links: [
-      { label: "Programme",        href: "/events" },
-      { label: "Pushpanjali",      href: "/events/pushpanjali" },
-      { label: "Sandhi Puja",      href: "/events/sandhi-puja" },
-      { label: "Dhunuchi Naach",   href: "/events/dhunuchi-naach" },
-      { label: "Sindoor Khela",    href: "/events/sindoor-khela" },
-      { label: "Cultural Evening", href: "/events/cultural" },
-    ],
-  },
-  {
-    heading: "Gallery",
-    links: [
-      { label: "Photos",     href: "/gallery/photos" },
-      { label: "Videos",     href: "/gallery/videos" },
-      { label: "Past Years", href: "/gallery/archive" },
-    ],
-  },
-  {
-    heading: "Get Involved",
-    links: [
-      { label: "Donate",     href: "/donate" },
-      { label: "Sponsor Us", href: "/sponsor" },
-    ],
-  },
-  {
-    heading: "Info",
-    links: [
-      { label: "Venue & Directions", href: "/venue" },
-      { label: "Announcements",      href: "/announcements" },
-      { label: "FAQs",               href: "/faq" },
-      { label: "Contact Us",         href: "/contact" },
-    ],
-  },
+    {
+        heading: "Puja",
+        links: [
+            { label: "About the Puja", href: "/about" },
+            { label: "Our Committee", href: "/committee" },
+            { label: "Patrons", href: "/patrons" },
+        ],
+    },
+    {
+        heading: "Events",
+        links: [
+            { label: "Programme", href: "/events" },
+            { label: "Pushpanjali", href: "/events/pushpanjali" },
+            { label: "Sandhi Puja", href: "/events/sandhi-puja" },
+            { label: "Dhunuchi Naach", href: "/events/dhunuchi-naach" },
+            { label: "Sindoor Khela", href: "/events/sindoor-khela" },
+            { label: "Cultural Evening", href: "/events/cultural" },
+        ],
+    },
+    {
+        heading: "Gallery",
+        links: [
+            { label: "Photos", href: "/gallery/photos" },
+            { label: "Videos", href: "/gallery/videos" },
+            { label: "Past Years", href: "/gallery/archive" },
+        ],
+    },
+    {
+        heading: "Get Involved",
+        links: [
+            { label: "Donate", href: "/donate" },
+            { label: "Sponsor Us", href: "/sponsor" },
+        ],
+    },
+    {
+        heading: "Info",
+        links: [
+            { label: "Venue & Directions", href: "/venue" },
+            { label: "Announcements", href: "/announcements" },
+            { label: "FAQs", href: "/faq" },
+            { label: "Contact Us", href: "/contact" },
+        ],
+    },
 ];
 
 const col1 = linkGroups.slice(0, 2);
@@ -54,118 +53,176 @@ const col2 = linkGroups.slice(2);
 ---
 
 <footer style="background: var(--palette-crimson);">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+        <!-- Main row -->
+        <div class="flex flex-col gap-12 md:flex-row md:gap-0">
+            <!-- Left: logo + map (w-1/3) -->
+            <div class="md:w-1/3 flex flex-col items-start gap-8">
+                <a href="/" aria-label="Home" class="footer-logo-link">
+                    <img
+                        src={ssdpaLogo.src}
+                        alt="SSDPA · Durga Pujo 2026"
+                        class="h-20 w-auto object-contain"
+                    />
+                </a>
 
-    <!-- Main row -->
-    <div class="flex flex-col gap-12 md:flex-row md:gap-0">
+                <div class="footer-map-block w-full max-w-xs">
+                    <p
+                        class="font-heading text-base font-semibold mb-3 footer-heading"
+                    >
+                        Find Us
+                    </p>
+                    <address class="footer-address text-sm not-italic mb-3">
+                        Shriram Samruddhi Apartment,<br />
+                        Munnekolala, Bengaluru
+                    </address>
+                    <div class="footer-map">
+                        <iframe
+                            src="https://www.google.com/maps?q=Shriram%20Samruddhi%20Apartment%2C%20KR%20Puram%2C%20Bangalore&output=embed"
+                            title="Map to Shriram Samruddhi Apartment, Munnekolala, Bengaluru"
+                            width="100%"
+                            height="180"
+                            style="border:0;"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Left: logo (w-1/3) -->
-      <div class="md:w-1/3 flex flex-col items-start">
-        <a href="/" aria-label="Home" class="footer-logo-link">
-          <img
-            src={ssdpaLogo.src}
-            alt="SSDPA · Durga Pujo 2026"
-            class="h-20 w-auto object-contain"
-          />
-        </a>
-      </div>
+            <!-- Right: links (w-2/3) -->
+            <div class="md:w-2/3">
+                <div class="grid grid-cols-2 gap-x-10 gap-y-10">
+                    <!-- Link column 1 -->
+                    <div class="flex flex-col gap-8">
+                        {
+                            col1.map((group) => (
+                                <div>
+                                    <p class="font-heading text-base font-semibold mb-3 footer-heading">
+                                        {group.heading}
+                                    </p>
+                                    <ul class="flex flex-col gap-2 list-none m-0 p-0">
+                                        {group.links.map(({ label, href }) => (
+                                            <li>
+                                                <a
+                                                    href={href}
+                                                    class="footer-link text-sm"
+                                                >
+                                                    {label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))
+                        }
+                    </div>
 
-      <!-- Right: links (w-2/3) -->
-      <div class="md:w-2/3">
-        <div class="grid grid-cols-2 gap-x-10 gap-y-10">
-
-          <!-- Link column 1 -->
-          <div class="flex flex-col gap-8">
-            {col1.map((group) => (
-              <div>
-                <p class="font-heading text-base font-semibold mb-3 footer-heading">
-                  {group.heading}
-                </p>
-                <ul class="flex flex-col gap-2 list-none m-0 p-0">
-                  {group.links.map(({ label, href }) => (
-                    <li>
-                      <a href={href} class="footer-link text-sm">{label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <!-- Link column 2 -->
-          <div class="flex flex-col gap-8">
-            {col2.map((group) => (
-              <div>
-                <p class="font-heading text-base font-semibold mb-3 footer-heading">
-                  {group.heading}
-                </p>
-                <ul class="flex flex-col gap-2 list-none m-0 p-0">
-                  {group.links.map(({ label, href }) => (
-                    <li>
-                      <a href={href} class="footer-link text-sm">{label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
+                    <!-- Link column 2 -->
+                    <div class="flex flex-col gap-8">
+                        {
+                            col2.map((group) => (
+                                <div>
+                                    <p class="font-heading text-base font-semibold mb-3 footer-heading">
+                                        {group.heading}
+                                    </p>
+                                    <ul class="flex flex-col gap-2 list-none m-0 p-0">
+                                        {group.links.map(({ label, href }) => (
+                                            <li>
+                                                <a
+                                                    href={href}
+                                                    class="footer-link text-sm"
+                                                >
+                                                    {label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
 
+        <!-- Bottom bar -->
+        <div class="mt-14 pt-6 footer-divider">
+            <p class="text-xs footer-copyright">
+                © 2026 Shriram Samruddhi Puja Association · Bangalore
+            </p>
+        </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="mt-14 pt-6 footer-divider">
-      <p class="text-xs footer-copyright">
-        © 2026 Shriram Samruddhi Puja Association · Bangalore
-      </p>
+    <div
+        class="footer-alpona"
+        style={`background-image: url(${alponaBase.src});`}
+        role="presentation"
+        aria-hidden="true"
+    >
     </div>
-
-  </div>
-
-  <div
-    class="footer-alpona"
-    style={`background-image: url(${alponaBase.src});`}
-    role="presentation"
-    aria-hidden="true"
-  ></div>
 </footer>
 
 <style>
-  .footer-heading        { color: var(--palette-gold-on-dark); }
+    .footer-heading {
+        color: var(--palette-gold-on-dark);
+    }
 
-  .footer-link {
-    color: var(--palette-cream);
-    text-decoration: none;
-    transition: color 150ms ease;
-  }
-  .footer-link:hover {
-    color: var(--palette-gold);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .footer-link:focus-visible {
-    color: var(--palette-gold);
-    outline: 2px solid var(--palette-gold);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
+    .footer-link {
+        color: var(--palette-cream);
+        text-decoration: none;
+        transition: color 150ms ease;
+    }
+    .footer-link:hover {
+        color: var(--palette-gold);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .footer-link:focus-visible {
+        color: var(--palette-gold);
+        outline: 2px solid var(--palette-gold);
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
 
-  .footer-logo-link:focus-visible {
-    outline: 2px solid var(--palette-gold);
-    outline-offset: 4px;
-    border-radius: 4px;
-  }
+    .footer-logo-link:focus-visible {
+        outline: 2px solid var(--palette-gold);
+        outline-offset: 4px;
+        border-radius: 4px;
+    }
 
-  .footer-divider        { border-top: 1px solid oklch(1 0 0 / 45%); }
-  .footer-copyright      { color: var(--palette-cream); opacity: 0.7; }
+    .footer-address {
+        color: var(--palette-cream);
+        opacity: 0.85;
+        line-height: 1.5;
+    }
 
-  .footer-alpona {
-    width: 100%;
-    height: clamp(2.5rem, 3.5vw, 3rem);
-    background-repeat: repeat-x;
-    background-position: bottom left;
-    background-size: auto 100%;
-  }
+    .footer-map {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--palette-gold);
+        box-shadow: 0 6px 18px oklch(0 0 0 / 25%);
+        line-height: 0;
+    }
+    .footer-map iframe {
+        display: block;
+        width: 100%;
+    }
+
+    .footer-divider {
+        border-top: 1px solid oklch(1 0 0 / 45%);
+    }
+    .footer-copyright {
+        color: var(--palette-cream);
+        opacity: 0.7;
+    }
+
+    .footer-alpona {
+        width: 100%;
+        height: clamp(2.5rem, 3.5vw, 3rem);
+        background-repeat: repeat-x;
+        background-position: bottom left;
+        background-size: auto 100%;
+    }
 </style>
