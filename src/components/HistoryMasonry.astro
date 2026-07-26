@@ -1,0 +1,271 @@
+---
+const placeholder = (w: number, h: number) =>
+    `https://placehold.co/${w}x${h}/cccccc/cccccc`;
+
+type ImageItem = { type: "image"; src: string; alt: string; ratio: string };
+type TextItem = { type: "text"; body: string };
+type MasonryItem = ImageItem | TextItem;
+
+type MasonryBlock = { type: "masonry"; items: MasonryItem[] };
+type FullBlock = { type: "full"; src: string; alt: string; ratio: string };
+type ProseBlock = { type: "prose"; body: string };
+type Block = MasonryBlock | FullBlock | ProseBlock;
+
+// Placeholder mix -- real photos and copy to be swapped in later. Full-width
+// images and standalone prose are their own blocks in the vertical stack,
+// not part of a column masonry -- `column-span: all` inside a multicol is
+// unreliable across browsers and was silently dropping content entirely.
+const blocks: Block[] = [
+    {
+        type: "masonry",
+        items: [
+            {
+                type: "image",
+                src: placeholder(400, 300),
+                alt: "Placeholder image",
+                ratio: "4 / 3",
+            },
+            {
+                type: "image",
+                src: placeholder(300, 400),
+                alt: "Placeholder image",
+                ratio: "3 / 4",
+            },
+            {
+                type: "text",
+                body: "Placeholder copy — in the early years, the Pujo was little more than a small gathering of neighbours pooling together whatever they could to bring Ma Durga home. What it lacked in scale, it made up for in warmth, and that warmth is what people still talk about when they remember those first celebrations.",
+            },
+            {
+                type: "image",
+                src: placeholder(400, 400),
+                alt: "Placeholder image",
+                ratio: "1 / 1",
+            },
+            {
+                type: "image",
+                src: placeholder(300, 380),
+                alt: "Placeholder image",
+                ratio: "3 / 3.8",
+            },
+            {
+                type: "image",
+                src: placeholder(400, 260),
+                alt: "Placeholder image",
+                ratio: "4 / 2.6",
+            },
+        ],
+    },
+    {
+        type: "prose",
+        body: "Placeholder copy — every year, the days leading up to the Pujo carry their own kind of anticipation: the pandal taking shape, the first strains of the dhaak being tested, and the whole community slowly turning its attention toward the same few days it has waited all year for.",
+    },
+    {
+        type: "full",
+        src: placeholder(1600, 700),
+        alt: "Placeholder image",
+        ratio: "16 / 7",
+    },
+    {
+        type: "masonry",
+        items: [
+            {
+                type: "text",
+                body: "Placeholder copy — as the community grew, so did the celebration. New families brought new traditions, the cultural evenings got bigger, and the puja slowly became the one time of year everyone made sure to be home for, no matter how busy life had gotten in between.",
+            },
+            {
+                type: "image",
+                src: placeholder(300, 420),
+                alt: "Placeholder image",
+                ratio: "3 / 4.2",
+            },
+            {
+                type: "image",
+                src: placeholder(400, 320),
+                alt: "Placeholder image",
+                ratio: "4 / 3.2",
+            },
+            {
+                type: "image",
+                src: placeholder(300, 340),
+                alt: "Placeholder image",
+                ratio: "3 / 3.4",
+            },
+            {
+                type: "image",
+                src: placeholder(400, 480),
+                alt: "Placeholder image",
+                ratio: "4 / 4.8",
+            },
+        ],
+    },
+    {
+        type: "prose",
+        body: "Placeholder copy — none of it would happen without the volunteers who give up their evenings and weekends for weeks beforehand — organising, coordinating, and making sure that when the four days finally arrive, everyone else can simply show up and celebrate.",
+    },
+    {
+        type: "full",
+        src: placeholder(1600, 800),
+        alt: "Placeholder image",
+        ratio: "2 / 1",
+    },
+    {
+        type: "masonry",
+        items: [
+            {
+                type: "image",
+                src: placeholder(400, 340),
+                alt: "Placeholder image",
+                ratio: "4 / 3.4",
+            },
+            {
+                type: "text",
+                body: "Placeholder copy — today, the Pujo brings together hundreds of families across generations. It's a reminder of how far the community has come, and of the small group of strangers who decided, twenty years ago, to start something worth continuing.",
+            },
+            {
+                type: "image",
+                src: placeholder(300, 380),
+                alt: "Placeholder image",
+                ratio: "3 / 3.8",
+            },
+        ],
+    },
+];
+---
+
+<div class="history-stack">
+    {
+        blocks.map((block) => {
+            if (block.type === "full") {
+                return (
+                    <div class="history-full">
+                        <img
+                            src={block.src}
+                            alt={block.alt}
+                            loading="lazy"
+                            style={`aspect-ratio: ${block.ratio};`}
+                        />
+                    </div>
+                );
+            }
+
+            if (block.type === "prose") {
+                return (
+                    <div class="history-prose">
+                        <p>{block.body}</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div class="history-masonry">
+                    {block.items.map((item) =>
+                        item.type === "image" ? (
+                            <div class="history-masonry-item history-masonry-image">
+                                <img
+                                    src={item.src}
+                                    alt={item.alt}
+                                    loading="lazy"
+                                    style={`aspect-ratio: ${item.ratio};`}
+                                />
+                            </div>
+                        ) : (
+                            <div class="history-masonry-item history-masonry-text">
+                                <p>{item.body}</p>
+                            </div>
+                        ),
+                    )}
+                </div>
+            );
+        })
+    }
+</div>
+
+<style>
+    .history-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .history-full {
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+
+    .history-full img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .history-prose {
+        max-width: 42rem;
+        margin: 1.5rem auto;
+        text-align: center;
+    }
+
+    .history-prose p {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--muted-foreground);
+    }
+
+    @media (min-width: 640px) {
+        .history-prose p {
+            font-size: 1.125rem;
+        }
+    }
+
+    .history-masonry {
+        columns: 1;
+        column-gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .history-masonry {
+            columns: 2;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .history-masonry {
+            columns: 3;
+        }
+    }
+
+    .history-masonry-item {
+        break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+
+    .history-masonry-image {
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+
+    .history-masonry-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .history-masonry-text {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+    }
+
+    .history-masonry-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--muted-foreground);
+    }
+
+    @media (max-width: 639px) {
+        .history-masonry-text {
+            text-align: center;
+        }
+    }
+</style>
