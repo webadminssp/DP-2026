@@ -1,0 +1,434 @@
+---
+// Countdown to Mahalaya.
+// `target` is an ISO string WITH an explicit offset so the countdown is the
+// same for every visitor regardless of their local timezone. Mahalaya 2026 is
+// observed at dawn — 06:00 IST on 10 Oct 2026.
+interface Props {
+    target?: string;
+    title?: string;
+    eyebrow?: string;
+}
+
+const {
+    target = "2026-10-10T06:00:00+05:30",
+    title = "Countdown to Mahalaya",
+    eyebrow = "Maa is on her way",
+} = Astro.props;
+
+const units = [
+    { key: "days", label: "Days" },
+    { key: "hours", label: "Hours" },
+    { key: "minutes", label: "Minutes" },
+    { key: "seconds", label: "Seconds" },
+] as const;
+
+// A stylised hanging pradip (oil lamp) — line-art, inherits `currentColor`.
+function lampSvg() {
+    return `
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="32" y1="0" x2="32" y2="70" stroke-dasharray="1.5 6" />
+      <path d="M18 78 Q32 66 46 78 Q46 96 32 104 Q18 96 18 78 Z" />
+      <path d="M24 82 Q32 90 40 82" stroke-width="1.1" />
+      <path d="M32 104 L32 112" />
+      <path d="M32 78 Q29 71 32 66 Q35 71 32 78 Z" fill="currentColor" stroke="none" />
+    </g>
+    <g fill="currentColor" stroke="none">
+      <circle cx="32" cy="20" r="1.4" />
+      <circle cx="32" cy="40" r="1.4" />
+      <circle cx="32" cy="60" r="1.4" />
+    </g>
+  `;
+}
+---
+
+<section
+    id="countdown"
+    class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20"
+    aria-label={title}
+>
+    <div
+        class="countdown-panel relative mx-auto max-w-4xl overflow-hidden rounded-2xl px-4 py-6 sm:px-12 sm:py-14"
+        data-countdown
+        data-target={target}
+        role="timer"
+    >
+        <!-- gold hanging-lamp ornaments, echoing the site's rajbari motif -->
+        <svg
+            class="lamp lamp-left"
+            viewBox="0 0 64 150"
+            aria-hidden="true"
+            set:html={lampSvg()}
+        />
+        <svg
+            class="lamp lamp-right"
+            viewBox="0 0 64 150"
+            aria-hidden="true"
+            set:html={lampSvg()}
+        />
+
+        <div
+            class="relative flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-10"
+        >
+            <div class="text-center md:text-left">
+                <p
+                    class="countdown-eyebrow text-xs font-semibold tracking-[0.18em] uppercase sm:text-sm"
+                >
+                    {eyebrow}
+                </p>
+                <h2
+                    class="countdown-title mt-2 text-3xl leading-tight sm:text-4xl"
+                >
+                    {
+                        title.split(" to ").length === 2 ? (
+                            <>
+                                {title.split(" to ")[0]} to
+                                <br />
+                                {title.split(" to ")[1]}
+                            </>
+                        ) : (
+                            title
+                        )
+                    }
+                </h2>
+            </div>
+
+            <div class="flex w-full justify-center gap-2 sm:w-auto sm:gap-3 md:gap-4">
+                {
+                    units.map((u) => (
+                        <div class="countdown-tile flex flex-1 flex-col items-center rounded-xl px-2 py-2.5 sm:flex-none sm:px-4 sm:py-4">
+                            <span
+                                class="countdown-value tabular-nums"
+                                data-unit={u.key}
+                            >
+                                --
+                            </span>
+                            <span class="countdown-label mt-1 text-[0.55rem] uppercase sm:mt-1 sm:text-xs sm:tracking-wide">
+                                {u.label}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+
+        <!-- shown when the countdown reaches zero -->
+        <div class="countdown-done relative mt-6 hidden text-center">
+            <p class="countdown-title text-2xl sm:text-3xl">শুভ মহালয়া</p>
+            <p class="countdown-eyebrow mt-1 text-sm">
+                Shubho Mahalaya — Maa has arrived
+            </p>
+        </div>
+
+        <!-- coarse-grained, screen-reader-friendly summary (seconds are too noisy) -->
+        <p class="sr-only" data-countdown-sr aria-live="polite"></p>
+    </div>
+</section>
+
+<style>
+    .countdown-panel {
+        /* self-contained festive banner — reads the same in light & dark mode */
+        background:
+            radial-gradient(
+                120% 140% at 50% -20%,
+                var(--palette-crimson-lt) 0%,
+                transparent 55%
+            ),
+            linear-gradient(
+                160deg,
+                var(--palette-crimson) 0%,
+                var(--palette-crimson-dk) 100%
+            );
+        border: 1px solid
+            color-mix(in oklch, var(--palette-gold) 45%, transparent);
+        box-shadow:
+            0 20px 45px -20px oklch(0.18 0.06 21 / 0.55),
+            inset 0 1px 0
+                color-mix(in oklch, var(--palette-gold) 20%, transparent);
+    }
+
+    /* faint paper grain, like the reference banner */
+    .countdown-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+            oklch(1 0 0 / 0.03) 1px,
+            transparent 1px
+        );
+        background-size: 4px 4px;
+        opacity: 0.6;
+    }
+
+    .countdown-eyebrow {
+        color: var(--palette-gold-on-dark);
+    }
+    .countdown-title {
+        font-family: var(--font-heading);
+        color: var(--palette-cream);
+        font-variation-settings:
+            "opsz" 72,
+            "SOFT" 20,
+            "WONK" 1;
+    }
+
+    .countdown-tile {
+        min-width: 0;
+        background: color-mix(
+            in oklch,
+            var(--palette-crimson-dk) 78%,
+            black 8%
+        );
+        border: 1px solid
+            color-mix(in oklch, var(--palette-gold) 32%, transparent);
+        box-shadow: inset 0 1px 0
+            color-mix(in oklch, var(--palette-gold) 14%, transparent);
+    }
+    @media (min-width: 640px) {
+        .countdown-tile {
+            min-width: 5.25rem;
+        }
+    }
+
+    .countdown-value {
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-variation-settings:
+            "opsz" 144,
+            "SOFT" 0,
+            "WONK" 0;
+        color: var(--palette-cream);
+        font-size: clamp(1.5rem, 8vw, 3rem);
+        line-height: 1;
+        display: inline-flex;
+        height: 1em;
+    }
+    .countdown-label {
+        color: var(--palette-gold-on-dark);
+        font-weight: 600;
+    }
+
+    /* ── per-digit odometer roll ───────────────────────────────
+     Each digit lives in its own slot. Only the digit that
+     actually changes rolls; the rest stay perfectly still.
+     A single 1em transform transition = smooth, never jittery.
+     NOTE: these must be :global — the digit nodes are created in
+     JS, so they never receive Astro's scoped style attribute. */
+    :global(.digit-slot) {
+        display: inline-block;
+        overflow: hidden;
+        height: 1em;
+        line-height: 1;
+        vertical-align: bottom;
+    }
+    :global(.digit-reel) {
+        display: block;
+        transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+    }
+    :global(.digit) {
+        display: block;
+        height: 1em;
+        line-height: 1;
+        text-align: center;
+    }
+
+    /* the seconds tile gets a soft, slow gold breathing glow */
+    .countdown-tile:has([data-unit="seconds"]) {
+        animation: countdown-breathe 2s ease-in-out infinite;
+    }
+    @keyframes countdown-breathe {
+        0%,
+        100% {
+            box-shadow:
+                inset 0 1px 0
+                    color-mix(in oklch, var(--palette-gold) 14%, transparent),
+                0 0 0 0 color-mix(in oklch, var(--palette-gold) 0%, transparent);
+        }
+        50% {
+            box-shadow:
+                inset 0 1px 0
+                    color-mix(in oklch, var(--palette-gold) 14%, transparent),
+                0 0 18px -2px
+                    color-mix(in oklch, var(--palette-gold) 45%, transparent);
+        }
+    }
+
+    .lamp {
+        position: absolute;
+        top: -0.25rem;
+        width: 2.25rem;
+        height: auto;
+        color: var(--palette-gold-on-dark);
+        opacity: 0.55;
+        animation: lamp-sway 5s ease-in-out infinite;
+        transform-origin: top center;
+    }
+    .lamp-left {
+        left: 1rem;
+    }
+    .lamp-right {
+        right: 1rem;
+        animation-delay: -2.5s;
+    }
+    @media (max-width: 480px) {
+        .lamp {
+            display: none;
+        }
+    }
+    @keyframes lamp-sway {
+        0%,
+        100% {
+            transform: rotate(-3deg);
+        }
+        50% {
+            transform: rotate(3deg);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .countdown-tile:has([data-unit="seconds"]),
+        .lamp {
+            animation: none !important;
+        }
+        :global(.digit-reel) {
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    function initCountdowns() {
+        const roots =
+            document.querySelectorAll<HTMLElement>("[data-countdown]");
+
+        roots.forEach((root) => {
+            const targetAttr = root.dataset.target;
+            if (!targetAttr) return;
+            const target = new Date(targetAttr).getTime();
+            if (Number.isNaN(target)) return;
+
+            const fields: Record<string, HTMLElement | null> = {
+                days: root.querySelector('[data-unit="days"]'),
+                hours: root.querySelector('[data-unit="hours"]'),
+                minutes: root.querySelector('[data-unit="minutes"]'),
+                seconds: root.querySelector('[data-unit="seconds"]'),
+            };
+            const doneEl = root.querySelector<HTMLElement>(".countdown-done");
+            const srEl = root.querySelector<HTMLElement>("[data-countdown-sr]");
+            const grid = fields.days?.closest(".grid") as HTMLElement | null;
+
+            let lastSrMinute = -1;
+            let finished = false;
+            const reduceMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches;
+
+            const pad = (n: number, width = 2) =>
+                String(n).padStart(width, "0");
+
+            function makeSlot(char: string): HTMLElement {
+                const slot = document.createElement("span");
+                slot.className = "digit-slot";
+                const reel = document.createElement("span");
+                reel.className = "digit-reel";
+                const digit = document.createElement("span");
+                digit.className = "digit";
+                digit.textContent = char;
+                reel.appendChild(digit);
+                slot.appendChild(reel);
+                return slot;
+            }
+
+            // Roll a single slot to a new digit. The incoming digit enters from the
+            // top and gently pushes the old one down and out — a single 1em slide.
+            // The reel is normalised to one child at the START of every roll, so
+            // leftover nodes can never accumulate even if a transition is interrupted.
+            function rollSlot(slot: HTMLElement, char: string) {
+                const reel = slot.firstElementChild as HTMLElement;
+
+                // collapse to just the currently-visible digit (the top / first child)
+                while (reel.childElementCount > 1) {
+                    reel.removeChild(reel.lastElementChild as HTMLElement);
+                }
+                const current = reel.firstElementChild as HTMLElement;
+                if (current.textContent === char) return;
+
+                if (reduceMotion) {
+                    current.textContent = char;
+                    return;
+                }
+
+                const incoming = document.createElement("span");
+                incoming.className = "digit";
+                incoming.textContent = char;
+                reel.insertBefore(incoming, current); // incoming sits on top
+
+                // start shifted up so the OLD digit is what's visible…
+                reel.style.transition = "none";
+                reel.style.transform = "translateY(-1em)";
+                void reel.offsetHeight; // reflow — commit the start state
+
+                // …then slide DOWN to reveal the incoming digit
+                reel.style.transition = "";
+                reel.style.transform = "translateY(0)";
+            }
+
+            // Update a unit's value, one slot per digit. Rebuilds (no animation) only
+            // when the number of digits changes (e.g. 100 → 99, once a day).
+            function setValue(el: HTMLElement | null, value: string) {
+                if (!el) return;
+                const slots = el.querySelectorAll<HTMLElement>(".digit-slot");
+                if (slots.length !== value.length) {
+                    el.replaceChildren(...[...value].map(makeSlot));
+                    return;
+                }
+                slots.forEach((slot, i) => rollSlot(slot, value[i]));
+            }
+
+            function render() {
+                const diff = target - Date.now();
+
+                if (diff <= 0) {
+                    if (!finished) {
+                        finished = true;
+                        grid?.classList.add("hidden");
+                        doneEl?.classList.remove("hidden");
+                        if (srEl)
+                            srEl.textContent =
+                                "The countdown to Mahalaya has ended. Shubho Mahalaya.";
+                    }
+                    return;
+                }
+
+                const totalSeconds = Math.floor(diff / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                setValue(fields.days, pad(days, days >= 100 ? 3 : 2));
+                setValue(fields.hours, pad(hours));
+                setValue(fields.minutes, pad(minutes));
+                setValue(fields.seconds, pad(seconds));
+
+                // Update the SR summary at most once a minute so it isn't noisy.
+                if (srEl && minutes !== lastSrMinute) {
+                    lastSrMinute = minutes;
+                    srEl.textContent = `${days} days, ${hours} hours and ${minutes} minutes until Mahalaya.`;
+                }
+            }
+
+            render();
+            // align ticks close to the wall-clock second and keep them steady
+            const interval = window.setInterval(render, 1000);
+            window.addEventListener("beforeunload", () =>
+                window.clearInterval(interval),
+            );
+        });
+    }
+
+    initCountdowns();
+    // Astro view-transition safety: re-init if the DOM is swapped.
+    document.addEventListener("astro:page-load", initCountdowns);
+</script>
