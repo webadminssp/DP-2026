@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import heroArt from "../assets/images/hero-v1.png";
+
+// The 2702×2062 artwork carries its own wall + earthy backdrop baked in. The
+// arch openings are transparent, so the section background shows through them
+// (placeholder until the final textured backdrop lands).
+//
+// Responsive framing via object-fit: cover on a breakpoint-driven aspect-ratio:
+//   • Desktop — full width, all three arches; only the ~22px transparent margin
+//     below the pillar bases (content ends at y≈2040) is trimmed.
+//   • Mobile  — zoom to the central band: the middle arch plus half of each side
+//     arch (x≈586→2096, the mid-points of the outer arches), down to the dhakis'
+//     feet, mirroring the printed portrait card instead of shrinking all three.
+---
+
+<section class="hero" aria-label="Shriram Samruddhi Durga Pujo 2026">
+    <Image
+        src={heroArt}
+        alt="Shriram Samruddhi Durga Pujo 2026 — dhakis playing beneath temple arches"
+        class="hero-art"
+        widths={[640, 960, 1280, 1600, 2000, 2702]}
+        sizes="(max-width: 767px) 177vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+    />
+</section>
+
+<style>
+    .hero {
+        /* Placeholder backdrop showing through the arch openings; the eventual
+           earthy texture replaces this. */
+        background: #6B281F;
+        overflow: hidden;
+        /* Desktop: full width, bottom edge at the pillar bases. */
+        aspect-ratio: 2702 / 2040;
+    }
+
+    .hero-art {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    /* Mobile: zoom to the central arch + half of each side arch (card layout). */
+    @media (max-width: 767px) {
+        .hero {
+            aspect-ratio: 1510 / 2040;
+        }
+    }
+</style>
