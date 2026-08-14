@@ -1,0 +1,285 @@
+---
+import CalendarDays from "@lucide/astro/icons/calendar-days";
+import MapPin from "@lucide/astro/icons/map-pin";
+import UtensilsCrossed from "@lucide/astro/icons/utensils-crossed";
+import Flame from "@lucide/astro/icons/flame";
+import Bell from "@lucide/astro/icons/bell";
+import Drama from "@lucide/astro/icons/drama";
+import Store from "@lucide/astro/icons/store";
+import Music from "@lucide/astro/icons/music";
+import Sparkles from "@lucide/astro/icons/sparkles";
+import Soup from "@lucide/astro/icons/soup";
+import WavesHorizontal from "@lucide/astro/icons/waves-horizontal";
+
+import { schedule, scheduleMeta, type EventIcon } from "../data/schedule";
+
+const icons: Record<EventIcon, any> = {
+    anandamela: UtensilsCrossed,
+    bodhon: Flame,
+    aaroti: Bell,
+    cultural: Drama,
+    market: Store,
+    music: Music,
+    dandiya: Sparkles,
+    bhog: Soup,
+    bisorjon: WavesHorizontal,
+};
+---
+
+<section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
+    <!-- Page header -->
+    <header class="text-center">
+        <p
+            class="mb-3 text-sm font-semibold tracking-wide uppercase"
+            style="color: var(--palette-gold);"
+        >
+            {scheduleMeta.milestone}
+        </p>
+        <h1
+            class="mb-5 text-3xl sm:text-4xl md:text-5xl"
+            style="color: var(--palette-crimson);"
+        >
+            Event Schedule
+        </h1>
+        <div class="schedule-meta">
+            <span><CalendarDays size={16} />{scheduleMeta.dateRange}</span>
+            <span class="schedule-meta-sep" aria-hidden="true"></span>
+            <span><MapPin size={16} />{scheduleMeta.venue}</span>
+        </div>
+    </header>
+
+    <!-- Timeline -->
+    <div class="schedule-days">
+        {
+            schedule.map((day) => (
+                <article class="schedule-day">
+                    <div class="schedule-marker">
+                        <p class="schedule-index">Day {day.index}</p>
+                        <h2 class="schedule-tithi">
+                            {day.tithi}
+                            {day.part && (
+                                <span class="schedule-part">{day.part}</span>
+                            )}
+                        </h2>
+                        <p class="schedule-tithi-bn bengali-text">
+                            {day.tithiBengali}
+                        </p>
+                        <p class="schedule-date">
+                            <span class="schedule-date-num">{day.date}</span>
+                            <span class="schedule-date-rest">
+                                {day.month}
+                                <br />
+                                {day.weekday}
+                            </span>
+                        </p>
+                    </div>
+
+                    <ul class="schedule-events">
+                        {day.events.map((event) => {
+                            const Icon = icons[event.icon];
+                            return (
+                                <li class="schedule-event">
+                                    <span
+                                        class="schedule-event-icon"
+                                        aria-hidden="true"
+                                    >
+                                        <Icon size={18} />
+                                    </span>
+                                    <div>
+                                        <h3 class="schedule-event-title">
+                                            {event.title}
+                                        </h3>
+                                        <p class="schedule-event-desc">
+                                            {event.description}
+                                        </p>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </article>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    /* ── Header meta row ──────────────────────────────────────────────── */
+
+    .schedule-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem 1rem;
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+    }
+
+    .schedule-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+    }
+
+    .schedule-meta :global(svg) {
+        color: var(--palette-gold);
+        flex-shrink: 0;
+    }
+
+    .schedule-meta-sep {
+        width: 1px;
+        height: 0.9rem;
+        background: var(--border);
+    }
+
+    @media (max-width: 639px) {
+        .schedule-meta-sep {
+            display: none;
+        }
+    }
+
+    /* ── Timeline ─────────────────────────────────────────────────────── */
+
+    .schedule-days {
+        margin-top: 3.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .schedule-day {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .schedule-day {
+            grid-template-columns: 11rem 1fr;
+            gap: 2.5rem;
+        }
+    }
+
+    /* Left marker */
+    .schedule-index {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--palette-gold);
+    }
+
+    .schedule-tithi {
+        margin-top: 0.25rem;
+        font-size: 1.375rem;
+        line-height: 1.2;
+        color: var(--palette-crimson);
+    }
+
+    .schedule-part {
+        margin-left: 0.4rem;
+        font-family: var(--font-body);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+    }
+
+    .schedule-tithi-bn {
+        margin-top: 0.1rem;
+        font-size: 1rem;
+        line-height: 1.4;
+        color: var(--palette-gold);
+    }
+
+    .schedule-date {
+        margin-top: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--muted-foreground);
+    }
+
+    .schedule-date-num {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 560;
+        line-height: 1;
+        color: var(--foreground);
+    }
+
+    .schedule-date-rest {
+        font-size: 0.75rem;
+        line-height: 1.35;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* Right events, hung off a vertical rail with a node at the top */
+    .schedule-events {
+        position: relative;
+        list-style: none;
+        margin: 0;
+        padding: 0 0 0 1.5rem;
+        border-left: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .schedule-events::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-left: -0.28rem;
+        border-radius: 50%;
+        background: var(--palette-gold);
+    }
+
+    .schedule-event {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .schedule-event-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: color-mix(in oklab, var(--palette-gold) 16%, transparent);
+        color: var(--palette-crimson);
+    }
+
+    .schedule-event-title {
+        font-size: 1rem;
+        line-height: 1.4;
+        color: var(--palette-crimson);
+    }
+
+    .schedule-event-desc {
+        margin-top: 0.15rem;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: var(--muted-foreground);
+    }
+
+    @media (min-width: 640px) {
+        .schedule-tithi {
+            font-size: 1.5rem;
+        }
+
+        .schedule-event-title {
+            font-size: 1.0625rem;
+        }
+    }
+</style>
