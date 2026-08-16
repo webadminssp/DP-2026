@@ -9,6 +9,11 @@ const reasons = [
   "Cultural evenings & performances",
   "Community welfare initiatives",
 ];
+
+// Keep Razorpay Test Mode available on local/Preview deployments, but do not
+// expose the online checkout on the public Production site until the Razorpay
+// account is activated and Live Mode credentials are configured.
+const onlinePaymentsEnabled = process.env.VERCEL_ENV !== 'production';
 ---
 
 <section id="contribute" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
@@ -39,49 +44,63 @@ const reasons = [
       </div>
 
       <div class="flex w-full max-w-xs flex-col items-center gap-4">
-        <div class="w-full rounded-xl border p-5" style="border-color: var(--border); background: var(--background);">
-          <p class="mb-3 text-center text-sm font-semibold" style="color: var(--foreground);">
-            Contribute online
-          </p>
+        {onlinePaymentsEnabled ? (
+          <div class="w-full rounded-xl border p-5" style="border-color: var(--border); background: var(--background);">
+            <p class="mb-3 text-center text-sm font-semibold" style="color: var(--foreground);">
+              Contribute online
+            </p>
 
-          <div class="grid grid-cols-3 gap-2" data-amount-buttons>
-            {[501, 1001, 2001].map((amount) => (
-              <button
-                type="button"
-                class="rounded-lg border px-2 py-2 text-sm font-semibold transition hover:opacity-80"
-                style="border-color: var(--border); color: var(--palette-crimson);"
-                data-amount={amount}
-              >
-                ₹{amount.toLocaleString('en-IN')}
-              </button>
-            ))}
+            <div class="grid grid-cols-3 gap-2" data-amount-buttons>
+              {[501, 1001, 2001].map((amount) => (
+                <button
+                  type="button"
+                  class="rounded-lg border px-2 py-2 text-sm font-semibold transition hover:opacity-80"
+                  style="border-color: var(--border); color: var(--palette-crimson);"
+                  data-amount={amount}
+                >
+                  ₹{amount.toLocaleString('en-IN')}
+                </button>
+              ))}
+            </div>
+
+            <label class="mt-3 block text-xs font-medium" style="color: var(--muted-foreground);" for="contribution-amount">
+              Or enter an amount (₹)
+            </label>
+            <input
+              id="contribution-amount"
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="e.g. 1500"
+              class="mt-1 w-full rounded-lg border bg-transparent px-3 py-2 text-sm outline-none"
+              style="border-color: var(--border); color: var(--foreground);"
+            />
+
+            <button
+              id="razorpay-contribute"
+              type="button"
+              class="mt-3 w-full rounded-lg px-4 py-3 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+              style="background: var(--palette-crimson);"
+            >
+              Contribute securely
+            </button>
+
+            <p id="payment-status" class="mt-3 min-h-5 text-center text-xs" aria-live="polite" style="color: var(--muted-foreground);"></p>
           </div>
-
-          <label class="mt-3 block text-xs font-medium" style="color: var(--muted-foreground);" for="contribution-amount">
-            Or enter an amount (₹)
-          </label>
-          <input
-            id="contribution-amount"
-            type="number"
-            min="1"
-            step="1"
-            inputmode="numeric"
-            placeholder="e.g. 1500"
-            class="mt-1 w-full rounded-lg border bg-transparent px-3 py-2 text-sm outline-none"
-            style="border-color: var(--border); color: var(--foreground);"
-          />
-
-          <button
-            id="razorpay-contribute"
-            type="button"
-            class="mt-3 w-full rounded-lg px-4 py-3 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-            style="background: var(--palette-crimson);"
+        ) : (
+          <div
+            class="w-full rounded-xl border p-6 text-center"
+            style="border-color: var(--border); background: var(--background);"
           >
-            Contribute securely
-          </button>
-
-          <p id="payment-status" class="mt-3 min-h-5 text-center text-xs" aria-live="polite" style="color: var(--muted-foreground);"></p>
-        </div>
+            <p class="text-sm font-semibold" style="color: var(--palette-crimson);">
+              Online payments opening soon
+            </p>
+            <p class="mt-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+              Our secure online payment gateway is being activated. Please check back shortly.
+            </p>
+          </div>
+        )}
 
         <div class="flex items-center gap-3 text-xs" style="color: var(--muted-foreground);">
           <span class="h-px w-10" style="background: var(--border);"></span>
@@ -105,7 +124,7 @@ const reasons = [
   </div>
 </section>
 
-<script is:inline src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script is:inline src={onlinePaymentsEnabled ? 'https://checkout.razorpay.com/v1/checkout.js' : undefined}></script>
 <script>
   const amountInput = document.getElementById('contribution-amount');
   const payButton = document.getElementById('razorpay-contribute');
