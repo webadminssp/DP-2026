@@ -118,6 +118,42 @@ const reasons = [
     status.style.color = isError ? '#b42318' : 'var(--muted-foreground)';
   };
 
+  const delay = (milliseconds) =>
+    new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+
+  const verifyCapturedPayment = async (checkoutResponse, orderProof) => {
+    const retryDelays = [0, 800, 1200, 2000];
+
+    for (let attempt = 0; attempt < retryDelays.length; attempt += 1) {
+      if (retryDelays[attempt] > 0) {
+        await delay(retryDelays[attempt]);
+      }
+
+      const verifyResponse = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...checkoutResponse,
+          order_proof: orderProof,
+        }),
+      });
+
+      const verification = await verifyResponse.json();
+
+      if (verifyResponse.status === 202 && verification.pending) {
+        continue;
+      }
+
+      if (!verifyResponse.ok || !verification.success) {
+        throw new Error(verification.error || 'Payment verification failed.');
+      }
+
+      return { success: true, pending: false };
+    }
+
+    return { success: false, pending: true };
+  };
+
   amountButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const amount = button.getAttribute('data-amount');
@@ -158,6 +194,10 @@ const reasons = [
         throw new Error(order.error || 'Unable to create payment order.');
       }
 
+      if (!order.order_proof) {
+        throw new Error('Secure order verification could not be initialised.');
+      }
+
       if (typeof window.Razorpay !== 'function') {
         throw new Error('Razorpay checkout could not be loaded. Please refresh and try again.');
       }
@@ -171,24 +211,26 @@ const reasons = [
         order_id: order.order_id,
         theme: { color: '#8f1d2c' },
         handler: async (response) => {
-          setStatus('Verifying payment…');
+          setStatus('Payment received. Confirming capture…');
 
           try {
-            const verifyResponse = await fetch('/api/verify-payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(response),
-            });
+            const verification = await verifyCapturedPayment(response, order.order_proof);
 
-            const verification = await verifyResponse.json();
-            if (!verifyResponse.ok || !verification.success) {
-              throw new Error(verification.error || 'Payment verification failed.');
+            if (verification.pending) {
+              setStatus(
+                'Payment received and is still being confirmed. Please do not retry the payment; the Pujo committee can verify it in Razorpay.',
+              );
+            } else {
+              setStatus('Thank you — your payment was captured and verified successfully.');
             }
-
-            setStatus('Thank you — your payment was verified successfully.');
           } catch (error) {
             console.error(error);
-            setStatus('Payment received but verification failed. Please contact the Pujo committee before retrying.', true);
+            setStatus(
+              'Payment received but could not be fully verified. Please contact the Pujo committee before retrying.',
+              true,
+            );
+          } finally {
+            payButton.disabled = false;
           }
         },
         modal: {
@@ -207,7 +249,6 @@ const reasons = [
       });
 
       checkout.open();
-      payButton.disabled = false;
     } catch (error) {
       console.error(error);
       setStatus(error instanceof Error ? error.message : 'Unable to start payment. Please try again.', true);
