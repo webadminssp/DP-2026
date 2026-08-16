@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import Razorpay from 'razorpay';
+import { createOrderProof } from '../../lib/payment-security';
 
 export const prerender = false;
 
@@ -20,7 +21,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const amount = Number(payload.amount);
   const currency = typeof payload.currency === 'string' ? payload.currency.trim().toUpperCase() : 'INR';
-  const receipt = typeof payload.receipt === 'string' ? payload.receipt.trim() : '';
+  const requestedReceipt = typeof payload.receipt === 'string' ? payload.receipt.trim() : '';
 
   if (!Number.isInteger(amount) || amount < 100) {
     return json({ error: 'Amount must be an integer of at least 100 paise.' }, 400);
@@ -39,19 +40,34 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
+  const receipt = (requestedReceipt || `pujo_${Date.now()}`)
+    .replace(/[^A-Za-z0-9_-]/g, '_')
+    .slice(0, 40);
 
   try {
     const order = await razorpay.orders.create({
       amount,
       currency,
-      receipt: receipt || `pujo_${Date.now()}`,
+      receipt,
     });
+
+    const orderAmount = Number(order.amount);
+    const orderCurrency = String(order.currency).toUpperCase();
+    const orderProof = createOrderProof(
+      {
+        order_id: order.id,
+        amount: orderAmount,
+        currency: orderCurrency,
+      },
+      keySecret,
+    );
 
     return json({
       order_id: order.id,
-      amount: order.amount,
-      currency: order.currency,
+      amount: orderAmount,
+      currency: orderCurrency,
       key_id: keyId,
+      order_proof: orderProof,
     });
   } catch (error: any) {
     const statusCode = Number(error?.statusCode ?? error?.response?.status);
