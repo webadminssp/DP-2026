@@ -1,0 +1,21 @@
+name: Razorpay branch build
+
+on:
+  push:
+    branches:
+      - agent/razorpay-standard-checkout
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
