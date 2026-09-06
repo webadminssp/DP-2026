@@ -8,19 +8,18 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 </Layout>
 
 <style is:global>
-  /*
-   * Approved-reference desktop hero treatment.
-   * Show the complete illustrated top composition, including both dhak players,
-   * and mask the centre so no artwork text can overlap the live page content.
-   */
+  /* Desktop hero tuned against the approved visual reference. */
   @media (min-width: 901px) {
     .home-shell .hero {
-      height: clamp(455px, 44vw, 720px);
-      min-height: 455px;
+      height: 43.67vw;
+      min-height: 560px;
+      max-height: 900px;
       overflow: hidden;
       background: #930014;
+      isolation: isolate;
     }
 
+    /* Keep the COMPLETE hero artwork visible. Do not zoom/crop it. */
     .home-shell .hero-art {
       position: absolute;
       inset: 0;
@@ -29,74 +28,118 @@ import HomePageDesign from "../components/HomePageDesign.astro";
       max-width: none;
       object-fit: fill;
       object-position: center center;
+      z-index: 0;
     }
 
+    /*
+     * Only mask the original artwork directly behind the live centre copy.
+     * The previous mask was far too wide and covered the dhak players.
+     */
     .home-shell .hero-center-wash {
-      left: 31.3%;
-      right: 31.3%;
-      top: 8%;
-      bottom: 1.2%;
-      opacity: 1;
+      z-index: 1;
+      left: 35.3%;
+      right: 35.3%;
+      top: 16.5%;
+      bottom: 1.5%;
+      opacity: .985;
       filter: none;
-      border-radius: 46% 46% 2% 2% / 16% 16% 2% 2%;
-      background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 52%, #fff6e3 100%);
-      box-shadow: 0 0 22px 18px #fff7e8;
+      border-radius: 48% 48% 2% 2% / 13% 13% 2% 2%;
+      background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 55%, #fff6e4 100%);
+      box-shadow: 0 0 12px 8px rgba(255,247,232,.94);
     }
 
     .home-shell .hero-content {
-      width: min(470px, 42vw);
-      padding-top: 42px;
-      margin-inline: auto;
+      position: relative;
+      z-index: 4;
+      width: 31vw;
+      max-width: 635px;
+      min-width: 430px;
+      margin: 0 auto;
+      padding-top: 3.2vw;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .home-shell .hero-logo {
-      width: clamp(142px, 15vw, 185px);
-      height: clamp(142px, 15vw, 185px);
-      margin-bottom: -2px;
+      width: 11.8vw;
+      height: 11.8vw;
+      min-width: 165px;
+      min-height: 165px;
+      max-width: 242px;
+      max-height: 242px;
+      object-fit: contain;
+      margin-bottom: 0;
+      filter: drop-shadow(0 5px 10px rgba(126,27,18,.25));
     }
 
     .home-shell .hero h1 {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: clamp(27px, 2.55vw, 38px);
-      line-height: 1.03;
+      margin: 0;
+      color: #a10d18;
+      font-size: clamp(30px, 2.15vw, 44px);
+      line-height: 1.02;
+      font-weight: 700;
+      text-shadow: 0 1px #fff;
     }
 
     .home-shell .hero-values {
-      margin-top: 6px;
-      margin-bottom: 7px;
-      line-height: 1.15;
+      margin: 7px 0 9px;
+      font-size: clamp(12px, .95vw, 19px);
+      line-height: 1.16;
+      white-space: normal;
     }
 
     .home-shell .hero-rule {
-      margin-bottom: 5px;
+      width: 42%;
+      margin-bottom: 6px;
+    }
+
+    .home-shell .event-date {
+      font-size: clamp(18px, 1.35vw, 28px);
     }
 
     .home-shell .event-place {
-      margin-top: 4px;
-      margin-bottom: 9px;
+      margin: 5px 0 10px;
+      font-size: clamp(11px, .78vw, 16px);
+      line-height: 1.18;
     }
 
     .home-shell .countdown {
-      width: min(350px, 100%);
-      gap: 8px;
+      width: 74%;
+      max-width: 470px;
+      gap: 9px;
+    }
+
+    .home-shell .countdown > div {
+      min-height: clamp(56px, 4vw, 82px);
+    }
+
+    .home-shell .countdown strong {
+      font-size: clamp(22px, 1.75vw, 35px);
+    }
+
+    .home-shell .countdown span {
+      font-size: clamp(9px, .62vw, 13px);
     }
 
     .home-shell .hero-cta {
-      margin-top: 11px;
+      margin-top: 12px;
+      padding: 9px 26px;
+      min-width: 220px;
+      font-size: clamp(11px, .72vw, 15px);
     }
 
+    /* Place the side copy above, not on top of, the drummers. */
     .home-shell .hero-side {
-      top: 54%;
+      top: 47%;
+      width: 145px;
+      line-height: 1.04;
+      text-shadow: 0 1px 0 #fff, 0 0 2px #fff;
     }
 
-    .home-shell .hero-side-left {
-      left: 11.2%;
-    }
-
-    .home-shell .hero-side-right {
-      right: 10.8%;
-    }
+    .home-shell .hero-side-left { left: 10.5%; }
+    .home-shell .hero-side-right { right: 10.2%; }
   }
 
   /* Keep the existing responsive mobile/tablet treatment intact. */
