@@ -5,42 +5,20 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
-
-  <script>
-    const applyApprovedHero = () => {
-      const scene = document.querySelector('.hero-scene');
-      const art = document.querySelector('.hero-art');
-      if (!scene || !art) return;
-
-      // HomePageDesign provides the approved artwork as the hero-art source.
-      // Render that exact image as the hero background so CSS can use
-      // background-size: cover and background-position: center.
-      const heroSrc = art.currentSrc || art.getAttribute('src');
-      if (heroSrc) scene.style.backgroundImage = `url("${heroSrc}")`;
-
-      art.setAttribute('aria-hidden', 'true');
-      art.style.display = 'none';
-
-      // The new artwork already contains the anniversary emblem and has no
-      // side slogans, so remove all legacy overlays/masks from older versions.
-      scene.querySelectorAll('.hero-side, .hero-center-wash').forEach((el) => el.remove());
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', applyApprovedHero, { once: true });
-    } else {
-      applyApprovedHero();
-    }
-  </script>
 </Layout>
 
 <style is:global>
-  /* Final approved hero: supplied image used as a true CSS background. */
+  /*
+   * HERO SITE — render the supplied artwork exactly as an image.
+   * No CSS background conversion, no cover crop, no masks and no live
+   * text/logo/countdown layered over the artwork.
+   */
   .home-shell .hero {
     position: relative !important;
+    width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     background: #8e0014 !important;
   }
 
@@ -49,131 +27,61 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
-    aspect-ratio: 1780 / 883 !important;
-    overflow: hidden !important;
-    background-color: #8e0014 !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    isolation: isolate !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+    background-image: none !important;
   }
 
-  .home-shell .hero-art,
+  .home-shell .hero-art {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* The supplied Hero Site artwork already contains the anniversary logo.
+     Remove every legacy/generated element that used to sit on top of it. */
+  .home-shell .hero-content,
+  .home-shell .hero-logo,
   .home-shell .side-eraser,
   .home-shell .hero-side,
   .home-shell .hero-center-wash {
     display: none !important;
   }
 
-  /* The supplied artwork already contains the official 20-year emblem. */
-  .home-shell .hero-logo {
-    display: none !important;
-  }
-
-  /* Place the live website information inside the clean central area between
-     the two full dhak players, without masking or distorting the artwork. */
-  .home-shell .hero-content {
-    position: absolute !important;
-    z-index: 4 !important;
-    left: 50% !important;
-    top: 52.5% !important;
-    transform: translateX(-50%) !important;
-    width: min(650px, 43vw) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-align: center !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .home-shell .hero h1 {
-    margin: 0 !important;
-    color: #99111a !important;
-    font-size: clamp(25px, 2.15vw, 37px) !important;
-    line-height: 1.04 !important;
-    font-weight: 750 !important;
-    text-shadow: 0 1px #fff8e8 !important;
-  }
-
-  .home-shell .hero-values {
-    margin: 5px 0 7px !important;
-    font-size: clamp(11px, .98vw, 15px) !important;
-    white-space: nowrap !important;
-  }
-
-  .home-shell .hero-rule {
-    margin-bottom: 4px !important;
-  }
-
-  .home-shell .event-place {
-    margin: 3px 0 8px !important;
-  }
-
-  .home-shell .hero-cta {
-    margin-top: 10px !important;
-  }
-
   @media (max-width: 1050px) {
-    .home-shell .hero-content {
-      top: 49% !important;
-      width: min(610px, 54vw) !important;
-    }
-
-    .home-shell .hero h1 {
-      font-size: clamp(23px, 3vw, 32px) !important;
-    }
-
-    .home-shell .hero-values {
-      font-size: 12px !important;
+    .home-shell .hero-scene,
+    .home-shell .hero-art {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
     }
   }
 
   @media (max-width: 760px) {
+    .home-shell .hero,
     .home-shell .hero-scene {
-      aspect-ratio: auto !important;
-      height: 620px !important;
-      min-height: 620px !important;
-      background-size: cover !important;
-      background-position: center !important;
+      overflow-x: hidden !important;
     }
 
-    .home-shell .hero-content {
-      top: 47% !important;
-      width: min(92vw, 520px) !important;
-      padding: 0 18px !important;
-      box-sizing: border-box !important;
-    }
-
-    .home-shell .hero h1 {
-      font-size: clamp(25px, 7vw, 32px) !important;
-    }
-
-    .home-shell .hero-values {
-      white-space: normal !important;
-      line-height: 1.3 !important;
-      max-width: 410px !important;
-    }
-
-    .home-shell .countdown {
-      width: min(390px, 100%) !important;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .home-shell .hero-scene {
-      height: 670px !important;
-      min-height: 670px !important;
-      background-position: center !important;
-    }
-
-    .home-shell .hero-content {
-      top: 45% !important;
-    }
-
-    .home-shell .countdown {
-      grid-template-columns: repeat(2, 1fr) !important;
-      width: min(300px, 94%) !important;
+    .home-shell .hero-art {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
     }
   }
 </style>
