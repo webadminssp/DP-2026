@@ -3,167 +3,78 @@ import ArrowRight from "@lucide/astro/icons/arrow-right";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { schedule, scheduleMeta } from "../data/schedule";
+
+const daySymbols = ["◉", "❁", "☘", "✦", "◈", "◉", "❋"];
 ---
 
-<section
-    id="schedule"
-    class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20"
->
-    <div class="mx-auto max-w-2xl text-center">
-        <p
-            class="mb-3 text-sm font-semibold tracking-wide uppercase"
-            style="color: var(--palette-gold);"
-        >
-            {scheduleMeta.dateRange}
-        </p>
-        <h2
-            class="mb-5 text-3xl sm:text-4xl"
-            style="color: var(--palette-crimson);"
-        >
-            Seven Days of Celebration
-        </h2>
-        <p
-            class="text-base leading-relaxed sm:text-lg"
-            style="color: var(--muted-foreground);"
-        >
-            From the first Anandamela to the farewell at Bisorjon — here is how
-            the week unfolds.
-        </p>
+<section id="schedule" class="schedule-section">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-18">
+    <div class="section-heading mx-auto max-w-3xl text-center">
+      <p class="eyebrow">{scheduleMeta.dateRange}</p>
+      <h2>Seven Days of Celebration</h2>
+      <p class="subhead">A divine journey of devotion, culture and togetherness — from Panchami to a heartfelt Bisorjon.</p>
     </div>
 
     <ol class="preview-grid">
-        {
-            schedule.map((day) => (
-                <li class="preview-card">
-                    <p class="preview-date">
-                        <span class="preview-date-num">{day.date}</span>
-                        <span class="preview-date-month">{day.month.slice(0, 3)}</span>
-                    </p>
-                    <div>
-                        <h3 class="preview-tithi">
-                            {day.tithi}
-                            {day.part && (
-                                <span class="preview-part">{day.part}</span>
-                            )}
-                        </h3>
-                        <p class="preview-tithi-bn bengali-text">
-                            {day.tithiBengali}
-                        </p>
-                    </div>
-                    <p class="preview-highlight">
-                        {day.events.map((event) => event.title).join(" · ")}
-                    </p>
-                </li>
-            ))
-        }
+      {schedule.map((day, i) => (
+        <li class="preview-card">
+          <span class="card-symbol" aria-hidden="true">{daySymbols[i]}</span>
+          <h3 class="preview-tithi">{day.tithi}{day.part && <span class="preview-part">{day.part}</span>}</h3>
+          <p class="preview-tithi-bn bengali-text">{day.tithiBengali}</p>
+          <div class="date-rule" aria-hidden="true"></div>
+          <p class="preview-date"><strong>{day.date} {day.month.slice(0,3)} 2026</strong><span>{day.weekday}</span></p>
+          <p class="preview-highlight">{day.events.map((event) => event.title).join(" · ")}</p>
+        </li>
+      ))}
     </ol>
 
-    <div class="mt-10 flex justify-center">
-        <a
-            href="/schedule"
-            class={cn(
-                buttonVariants({ size: "lg" }),
-                "preview-cta gap-2",
-            )}
-        >
-            View the full schedule
-            <ArrowRight size={18} />
-        </a>
+    <div class="mt-9 flex justify-center">
+      <a href="/schedule" class={cn(buttonVariants({ size: "lg" }), "preview-cta gap-2")}>View Detailed Schedule <ArrowRight size={18} /></a>
     </div>
+  </div>
 </section>
 
 <style>
-    .preview-grid {
-        margin-top: 3rem;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-        gap: 0.75rem;
-        list-style: none;
-        padding: 0;
-    }
-
-    .preview-card {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 1rem;
-        border: 1px solid var(--border);
-        border-radius: 0.75rem;
-        background: var(--card);
-        transition:
-            border-color 150ms ease,
-            transform 150ms ease;
-    }
-
-    .preview-card:hover {
-        border-color: var(--palette-gold);
-        transform: translateY(-2px);
-    }
-
-    .preview-date {
-        display: flex;
-        align-items: baseline;
-        gap: 0.3rem;
-        color: var(--muted-foreground);
-    }
-
-    .preview-date-num {
-        font-family: var(--font-heading);
-        font-size: 1.75rem;
-        font-weight: 560;
-        line-height: 1;
-        color: var(--palette-crimson);
-    }
-
-    .preview-date-month {
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-    }
-
-    .preview-tithi {
-        font-size: 1rem;
-        line-height: 1.3;
-        color: var(--foreground);
-    }
-
-    .preview-part {
-        margin-left: 0.3rem;
-        font-family: var(--font-body);
-        font-size: 0.625rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--muted-foreground);
-        white-space: nowrap;
-    }
-
-    .preview-tithi-bn {
-        font-size: 0.875rem;
-        line-height: 1.4;
-        color: var(--palette-gold);
-    }
-
-    .preview-highlight {
-        margin-top: auto;
-        padding-top: 0.25rem;
-        font-size: 0.8125rem;
-        line-height: 1.5;
-        color: var(--muted-foreground);
-    }
-
-    /* The shared button uses bg-primary, which is the crimson token already. */
-    .preview-cta {
-        text-decoration: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .preview-card {
-            transition: none;
-        }
-        .preview-card:hover {
-            transform: none;
-        }
-    }
+  .schedule-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 0 20%, color-mix(in oklch, var(--palette-gold) 10%, transparent), transparent 26rem),
+      radial-gradient(circle at 100% 80%, color-mix(in oklch, var(--palette-crimson) 7%, transparent), transparent 25rem),
+      var(--palette-cream);
+    border-block: 1px solid color-mix(in oklch, var(--palette-gold) 22%, transparent);
+  }
+  .schedule-section::before,
+  .schedule-section::after {
+    content:"❁"; position:absolute; color:color-mix(in oklch,var(--palette-gold) 18%,transparent);
+    font-size:10rem; line-height:1; pointer-events:none;
+  }
+  .schedule-section::before { left:-2rem; top:2rem; transform:rotate(-20deg); }
+  .schedule-section::after { right:-2rem; bottom:1rem; transform:rotate(18deg); }
+  .eyebrow { margin-bottom:.5rem; color:var(--palette-gold); font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .section-heading h2 { color:var(--palette-crimson); font-size:clamp(2rem,4vw,3rem); }
+  .subhead { margin-top:.6rem; color:var(--muted-foreground); line-height:1.65; }
+  .preview-grid { margin-top:2.6rem; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:.65rem; list-style:none; padding:0; }
+  .preview-card {
+    position:relative; min-height:15.5rem; display:flex; flex-direction:column; align-items:center; text-align:center;
+    padding:1.2rem .75rem 1rem; border:1px solid color-mix(in oklch,var(--palette-gold) 38%,var(--border)); border-radius:.85rem;
+    background:linear-gradient(180deg,rgba(255,253,245,.98),rgba(249,239,218,.72));
+    box-shadow:0 10px 28px -24px rgb(73 15 16 / .4), inset 0 0 0 3px rgb(255 255 255 / .45);
+    transition:transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease;
+  }
+  .preview-card::before { content:""; position:absolute; inset:.35rem; border:1px solid color-mix(in oklch,var(--palette-gold) 18%,transparent); border-radius:.6rem; pointer-events:none; }
+  .preview-card:hover { transform:translateY(-4px); border-color:var(--palette-gold); box-shadow:0 16px 34px -23px rgb(73 15 16 / .45); }
+  .card-symbol { height:2.1rem; color:var(--palette-gold); font-size:1.35rem; }
+  .preview-tithi { color:var(--palette-crimson); font-size:1.02rem; line-height:1.2; }
+  .preview-part { display:block; margin-top:.15rem; font-family:var(--font-body); font-size:.6rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted-foreground); }
+  .preview-tithi-bn { margin-top:.25rem; color:var(--palette-crimson-lt); font-size:.9rem; }
+  .date-rule { width:2.4rem; height:1px; margin:.75rem 0; background:var(--palette-gold); }
+  .preview-date { display:flex; flex-direction:column; gap:.1rem; font-size:.72rem; color:var(--muted-foreground); }
+  .preview-date strong { color:var(--palette-crimson); font-size:.78rem; }
+  .preview-highlight { margin-top:auto; padding-top:.9rem; color:var(--muted-foreground); font-size:.72rem; line-height:1.45; }
+  .preview-cta { text-decoration:none; background:var(--palette-crimson); box-shadow:0 7px 18px -10px var(--palette-crimson-dk); }
+  @media(max-width:1100px){ .preview-grid{grid-template-columns:repeat(4,1fr);} }
+  @media(max-width:700px){ .preview-grid{grid-template-columns:repeat(2,1fr);} .preview-card{min-height:13.25rem;} }
+  @media(max-width:400px){ .preview-grid{grid-template-columns:1fr;} }
+  @media(prefers-reduced-motion:reduce){ .preview-card{transition:none}.preview-card:hover{transform:none} }
 </style>
