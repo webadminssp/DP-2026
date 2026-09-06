@@ -35,14 +35,6 @@ const approvedHeroSrc = heroArt.src;
         left.innerHTML = 'Tradition<br>Unites<br>Us';
         scene.appendChild(left);
       }
-
-      if (!scene.querySelector('.hero-side-right')) {
-        const right = document.createElement('p');
-        right.className = 'hero-side hero-side-right';
-        right.setAttribute('aria-hidden', 'true');
-        right.innerHTML = 'In<br>Community<br>We Celebrate';
-        scene.appendChild(right);
-      }
     };
 
     if (document.readyState === 'loading') {
@@ -117,7 +109,6 @@ const approvedHeroSrc = heroArt.src;
   }
 
   .home-shell .hero-side-left { left: 11.2%; }
-  .home-shell .hero-side-right { right: 10.8%; }
 
   .home-shell .hero-content {
     position: relative !important;
