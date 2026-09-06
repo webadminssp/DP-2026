@@ -1,8 +1,178 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HomePageDesign from "../components/HomePageDesign.astro";
+import heroArt from "../assets/images/hero-v1.png";
+
+const approvedHeroSrc = heroArt.src;
 ---
 
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
+
+  <script define:vars={{ approvedHeroSrc }}>
+    const applyApprovedHero = () => {
+      const scene = document.querySelector('.hero-scene');
+      const art = document.querySelector('.hero-art');
+      if (!scene || !art) return;
+
+      // Use the repository's original approved Pujo artwork instead of the broken inline data URI.
+      art.setAttribute('src', approvedHeroSrc);
+      art.removeAttribute('srcset');
+      art.removeAttribute('sizes');
+
+      // Restore the approved hero composition around the live event content.
+      if (!scene.querySelector('.hero-center-wash')) {
+        const wash = document.createElement('div');
+        wash.className = 'hero-center-wash';
+        wash.setAttribute('aria-hidden', 'true');
+        scene.insertBefore(wash, scene.querySelector('.hero-content'));
+      }
+
+      if (!scene.querySelector('.hero-side-left')) {
+        const left = document.createElement('p');
+        left.className = 'hero-side hero-side-left';
+        left.setAttribute('aria-hidden', 'true');
+        left.innerHTML = 'Tradition<br>Unites<br>Us';
+        scene.appendChild(left);
+      }
+
+      if (!scene.querySelector('.hero-side-right')) {
+        const right = document.createElement('p');
+        right.className = 'hero-side hero-side-right';
+        right.setAttribute('aria-hidden', 'true');
+        right.innerHTML = 'In<br>Community<br>We Celebrate';
+        scene.appendChild(right);
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyApprovedHero, { once: true });
+    } else {
+      applyApprovedHero();
+    }
+  </script>
 </Layout>
+
+<style is:global>
+  /* Approved full-width 20th-year hero restoration */
+  .home-shell .hero {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    background: #8e0014 !important;
+  }
+
+  .home-shell .hero-scene {
+    position: relative !important;
+    width: 100% !important;
+    height: min(44.45vw, 690px) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    background: #8e0014 !important;
+    isolation: isolate !important;
+  }
+
+  .home-shell .hero-art {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    z-index: 0 !important;
+  }
+
+  .home-shell .side-eraser { display: none !important; }
+
+  .home-shell .hero-center-wash {
+    position: absolute;
+    z-index: 1;
+    left: 31%;
+    right: 31%;
+    top: 34%;
+    bottom: 3%;
+    background: radial-gradient(ellipse at 50% 40%, #fffdf4 0%, #fff9ea 55%, #f9edd5 100%);
+    opacity: .98;
+    border-radius: 30% 30% 5% 5%;
+    box-shadow: 0 0 42px 35px #fff7e8;
+    pointer-events: none;
+  }
+
+  .home-shell .hero-side {
+    position: absolute;
+    z-index: 3;
+    top: 48%;
+    transform: translateY(-50%);
+    width: 135px;
+    margin: 0;
+    text-align: center;
+    font: 650 clamp(19px, 1.7vw, 27px)/1.03 var(--font-heading);
+    color: #a11a17;
+    text-shadow: 0 1px #fff;
+    pointer-events: none;
+  }
+
+  .home-shell .hero-side-left { left: 11.2%; }
+  .home-shell .hero-side-right { right: 10.8%; }
+
+  .home-shell .hero-content {
+    position: relative !important;
+    z-index: 4 !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: min(470px, 42vw) !important;
+    margin: 0 auto !important;
+    padding-top: 38px !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .home-shell .hero-logo {
+    width: clamp(130px, 15vw, 190px) !important;
+    height: clamp(130px, 15vw, 190px) !important;
+    object-fit: contain !important;
+    margin: 0 auto -4px !important;
+  }
+
+  .home-shell .hero h1 {
+    margin: 0 !important;
+    color: #a10d18 !important;
+    font-size: clamp(27px, 2.55vw, 38px) !important;
+    line-height: 1.05 !important;
+    font-weight: 700 !important;
+  }
+
+  .home-shell .hero-values {
+    margin: 5px 0 8px !important;
+    font-size: clamp(12px, 1.15vw, 16px) !important;
+    white-space: nowrap !important;
+  }
+
+  .home-shell .hero-rule { margin-bottom: 5px !important; }
+  .home-shell .event-place { margin: 4px 0 9px !important; }
+  .home-shell .hero-cta { margin-top: 11px !important; }
+
+  @media (max-width: 900px) {
+    .home-shell .hero-scene { height: 62vw !important; min-height: 430px !important; }
+    .home-shell .hero-content { width: min(470px, 60vw) !important; padding-top: 30px !important; }
+    .home-shell .hero-side { display: none !important; }
+    .home-shell .hero-center-wash { left: 24%; right: 24%; }
+  }
+
+  @media (max-width: 620px) {
+    .home-shell .hero-scene { height: 118vw !important; min-height: 500px !important; max-height: 650px !important; }
+    .home-shell .hero-art { object-position: center top !important; }
+    .home-shell .hero-center-wash { left: 9%; right: 9%; top: 27%; bottom: 3%; }
+    .home-shell .hero-content { width: min(92vw, 430px) !important; padding-top: 26px !important; }
+    .home-shell .hero-logo { width: 145px !important; height: 145px !important; }
+    .home-shell .hero h1 { font-size: clamp(24px, 7vw, 32px) !important; }
+    .home-shell .hero-values { white-space: normal !important; font-size: 12px !important; }
+  }
+</style>
