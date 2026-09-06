@@ -6,3 +6,104 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
     <HomePageDesign />
 </Layout>
+
+<style is:global>
+  /*
+   * Approved-reference desktop hero treatment.
+   * Show the complete illustrated top composition, including both dhak players,
+   * and mask the centre so no artwork text can overlap the live page content.
+   */
+  @media (min-width: 901px) {
+    .home-shell .hero {
+      height: clamp(455px, 44vw, 720px);
+      min-height: 455px;
+      overflow: hidden;
+      background: #930014;
+    }
+
+    .home-shell .hero-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: fill;
+      object-position: center center;
+    }
+
+    .home-shell .hero-center-wash {
+      left: 31.3%;
+      right: 31.3%;
+      top: 8%;
+      bottom: 1.2%;
+      opacity: 1;
+      filter: none;
+      border-radius: 46% 46% 2% 2% / 16% 16% 2% 2%;
+      background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 52%, #fff6e3 100%);
+      box-shadow: 0 0 22px 18px #fff7e8;
+    }
+
+    .home-shell .hero-content {
+      width: min(470px, 42vw);
+      padding-top: 42px;
+      margin-inline: auto;
+    }
+
+    .home-shell .hero-logo {
+      width: clamp(142px, 15vw, 185px);
+      height: clamp(142px, 15vw, 185px);
+      margin-bottom: -2px;
+    }
+
+    .home-shell .hero h1 {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: clamp(27px, 2.55vw, 38px);
+      line-height: 1.03;
+    }
+
+    .home-shell .hero-values {
+      margin-top: 6px;
+      margin-bottom: 7px;
+      line-height: 1.15;
+    }
+
+    .home-shell .hero-rule {
+      margin-bottom: 5px;
+    }
+
+    .home-shell .event-place {
+      margin-top: 4px;
+      margin-bottom: 9px;
+    }
+
+    .home-shell .countdown {
+      width: min(350px, 100%);
+      gap: 8px;
+    }
+
+    .home-shell .hero-cta {
+      margin-top: 11px;
+    }
+
+    .home-shell .hero-side {
+      top: 54%;
+    }
+
+    .home-shell .hero-side-left {
+      left: 11.2%;
+    }
+
+    .home-shell .hero-side-right {
+      right: 10.8%;
+    }
+  }
+
+  /* Keep the existing responsive mobile/tablet treatment intact. */
+  @media (max-width: 900px) {
+    .home-shell .hero-art {
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+</style>
