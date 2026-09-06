@@ -9,15 +9,15 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 
 <style is:global>
   /*
-   * Desktop hero fidelity overrides.
-   * Keep the full illustrated Pujo-card composition visible, including both
-   * dhak players, while protecting the central content from artwork/text bleed.
-   * The rest of the homepage remains the approved pixel-matched implementation.
+   * Reference-accurate desktop hero framing.
+   * The full Pujo-card artwork is fitted into the hero so both dhak players
+   * remain visible. A clean cream arch behind the live content prevents any
+   * lettering from the artwork from bleeding into or overlapping the page text.
    */
   @media (min-width: 901px) {
     .home-shell .hero {
-      height: clamp(500px, 44vw, 720px);
-      min-height: 500px;
+      height: clamp(455px, 44vw, 720px);
+      min-height: 455px;
       overflow: hidden;
       background: #930014;
     }
@@ -33,15 +33,15 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     }
 
     .home-shell .hero-center-wash {
-      left: 31.4%;
-      right: 31.4%;
-      top: 28%;
-      bottom: 1.5%;
+      left: 31.3%;
+      right: 31.3%;
+      top: 8%;
+      bottom: 1.2%;
       opacity: 1;
       filter: none;
-      border-radius: 28% 28% 2% 2% / 16% 16% 2% 2%;
-      background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 48%, #fff6e3 100%);
-      box-shadow: 0 0 24px 20px #fff7e8;
+      border-radius: 46% 46% 2% 2% / 16% 16% 2% 2%;
+      background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 52%, #fff6e3 100%);
+      box-shadow: 0 0 22px 18px #fff7e8;
     }
 
     .home-shell .hero-content {
@@ -100,7 +100,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     }
   }
 
-  /* Keep the existing responsive mobile treatment; never stretch the artwork on phones/tablets. */
+  /* Preserve the original responsive treatment on tablets and phones. */
   @media (max-width: 900px) {
     .home-shell .hero-art {
       object-fit: cover;
