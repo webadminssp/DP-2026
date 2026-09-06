@@ -2,33 +2,77 @@
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import ImageCarousel from '@/components/ImageCarousel.astro';
+
+const moments = [
+  { mark: '20', title: 'Years Together', copy: 'A community tradition built year after year, generation after generation.' },
+  { mark: 'ঢাক', title: 'Dhak & Dhunuchi', copy: 'The rhythm, fragrance and energy that make Pujo feel unmistakably like home.' },
+  { mark: '♪', title: 'Cultural Evenings', copy: 'Music, dance and performances that bring our residents onto one shared stage.' },
+  { mark: 'ভোগ', title: 'Bhog & Adda', copy: 'Shared meals, long conversations and the simple joy of celebrating together.' },
+  { mark: '♥', title: 'One Community', copy: 'Different people, same prayers — stronger bonds through faith and celebration.' },
+];
 ---
 
-<section id="our-journey" class="py-16 sm:py-20" style="background: var(--palette-cream-dk);">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="mx-auto max-w-2xl text-center">
-      <p class="mb-3 text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
-        Our History
-      </p>
-      <h2 class="mb-5 text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
-        Durga Puja Over the Years
-      </h2>
-      <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
-        Placeholder copy — a glimpse of the moments, faces, and festivities from Pujos
-        past, from the very first celebration to last year's.
-      </p>
+<section id="our-journey" class="journey-section">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+    <div class="journey-head">
+      <div>
+        <p class="eyebrow">Our History</p>
+        <h2>Our Journey Over the Years</h2>
+        <p class="intro">Twenty years of devotion, friendships and memories — the Pujo has grown with the Shriram Samruddhi family while keeping its heart unchanged.</p>
+      </div>
+      <a href="/about#history" class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'journey-cta')}>
+        Explore Our Journey <ArrowRight size={18} />
+      </a>
+    </div>
+
+    <div class="memory-rail" aria-label="What defines our Pujo journey">
+      {moments.map((moment, i) => (
+        <article class={`memory-card memory-${i + 1}`}>
+          <span class="memory-mark bengali-text" aria-hidden="true">{moment.mark}</span>
+          <div>
+            <h3>{moment.title}</h3>
+            <p>{moment.copy}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="journey-quote">
+      <span aria-hidden="true">❁</span>
+      <p>Same spirit. Bigger together.</p>
+      <span aria-hidden="true">❁</span>
     </div>
   </div>
-
-  <div class="mt-10">
-    <ImageCarousel />
-  </div>
-
-  <div class="mt-4 text-center">
-    <a href="/about#history" class={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
-      Explore Our Journey
-      <ArrowRight size={18} />
-    </a>
-  </div>
 </section>
+
+<style>
+  .journey-section {
+    color:var(--palette-cream);
+    background:
+      radial-gradient(circle at 10% 0%, color-mix(in oklch,var(--palette-gold) 16%,transparent), transparent 30rem),
+      linear-gradient(135deg,var(--palette-crimson-dk),var(--palette-crimson) 55%,oklch(.29 .13 22));
+    border-block:1px solid color-mix(in oklch,var(--palette-gold) 48%,transparent);
+  }
+  .journey-head { display:flex; align-items:end; justify-content:space-between; gap:2rem; }
+  .eyebrow { margin-bottom:.45rem; color:var(--palette-gold-on-dark); font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .journey-head h2 { font-size:clamp(2rem,4vw,3rem); color:var(--palette-cream); }
+  .intro { max-width:46rem; margin-top:.7rem; color:color-mix(in oklch,var(--palette-cream) 78%,transparent); line-height:1.7; }
+  .journey-cta { flex:none; color:var(--palette-cream); border-color:color-mix(in oklch,var(--palette-gold) 58%,transparent); background:rgb(255 255 255 / .04); text-decoration:none; }
+  .journey-cta:hover { color:var(--palette-crimson-dk); background:var(--palette-gold-on-dark); }
+  .memory-rail { margin-top:2.4rem; display:grid; grid-template-columns:repeat(5,1fr); gap:.75rem; }
+  .memory-card {
+    min-height:16rem; padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;
+    border:1px solid color-mix(in oklch,var(--palette-gold) 35%,transparent); border-radius:1rem;
+    background:
+      linear-gradient(180deg,rgb(255 255 255 / .08),rgb(255 255 255 / .02)),
+      radial-gradient(circle at 90% 0%,color-mix(in oklch,var(--palette-gold) 22%,transparent),transparent 55%);
+    box-shadow:inset 0 1px 0 rgb(255 255 255 / .09);
+  }
+  .memory-mark { color:var(--palette-gold-on-dark); font-family:var(--font-heading); font-size:clamp(2rem,4vw,3.3rem); font-weight:650; line-height:1; }
+  .memory-card h3 { color:var(--palette-cream); font-size:1.2rem; }
+  .memory-card p { margin-top:.45rem; color:color-mix(in oklch,var(--palette-cream) 72%,transparent); font-size:.82rem; line-height:1.55; }
+  .journey-quote { margin-top:2rem; display:flex; align-items:center; justify-content:center; gap:.8rem; color:var(--palette-gold-on-dark); }
+  .journey-quote p { font-family:var(--font-heading); font-size:clamp(1.1rem,2.5vw,1.5rem); font-style:italic; }
+  @media(max-width:1000px){ .memory-rail{grid-template-columns:repeat(3,1fr)} }
+  @media(max-width:700px){ .journey-head{align-items:flex-start;flex-direction:column}.memory-rail{grid-template-columns:1fr}.memory-card{min-height:10.5rem}.journey-cta{width:100%;justify-content:center} }
+</style>
