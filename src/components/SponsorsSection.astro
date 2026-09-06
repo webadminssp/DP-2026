@@ -2,110 +2,89 @@
 import Award from '@lucide/astro/icons/award';
 import Handshake from '@lucide/astro/icons/handshake';
 import Building2 from '@lucide/astro/icons/building-2';
-import ArrowRight from '@lucide/astro/icons/arrow-right';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 const tiers = [
   {
     icon: Award,
     name: "Title Sponsor",
-    price: "Placeholder amount",
-    perks: ["Logo on pandal & banners", "Top billing on website", "Stage mentions all 5 days"],
+    label: "Premier partnership",
+    perks: ["Highest brand visibility", "Prominent placement across event branding", "Stage recognition during key programmes"],
   },
   {
     icon: Building2,
     name: "Co-Sponsor",
-    price: "Placeholder amount",
-    perks: ["Logo on website & booklet", "Stage mentions on key days", "Social media shoutouts"],
+    label: "Major partnership",
+    perks: ["Logo visibility on key event touchpoints", "Recognition during selected programmes", "Digital and community visibility"],
   },
   {
     icon: Handshake,
     name: "Supporting Sponsor",
-    price: "Placeholder amount",
-    perks: ["Name in printed booklet", "Listing on website", "A heartfelt thank-you"],
+    label: "Community partnership",
+    perks: ["Website recognition", "Event acknowledgement", "Association with a beloved community tradition"],
   },
 ];
-
-const pastSponsorLogo = "https://placehold.co/160x64/ffffff/cccccc?text=Logo";
 ---
 
-<section id="sponsors" class="py-16 sm:py-20" style="background: var(--palette-cream-dk);">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="mx-auto max-w-2xl text-center">
-      <p class="mb-3 text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
-        Partner With Us
-      </p>
-      <h2 class="mb-5 text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
-        Become a Sponsor
-      </h2>
-      <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
-        Placeholder copy — reach hundreds of families across a five-day celebration
-        while supporting a beloved community tradition.
-      </p>
+<section id="sponsors" class="sponsor-section">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Partner With Us</p>
+      <h2>Become a Sponsor</h2>
+      <p class="intro">Celebrate the 20th year with us and connect your brand with a vibrant community through a partnership built around visibility, culture and goodwill.</p>
     </div>
 
-    <div class="mx-auto mt-6 flex max-w-2xl justify-center gap-8 text-center">
-      {[
-        ["XXX+", "Families Reached"],
-        ["X", "Days of Visibility"],
-        ["X,XXX+", "Total Footfall"],
-      ].map(([value, label]) => (
-        <div>
-          <p class="text-2xl font-semibold sm:text-3xl" style="color: var(--palette-crimson); font-family: var(--font-heading);">
-            {value}
-          </p>
-          <p class="mt-1 text-xs sm:text-sm" style="color: var(--muted-foreground);">
-            {label}
-          </p>
-        </div>
+    <div class="tier-grid">
+      {tiers.map(({ icon: Icon, name, label, perks }, i) => (
+        <article class={`tier-card tier-${i + 1}`}>
+          <div class="tier-top">
+            <span class="tier-icon"><Icon size={22} /></span>
+            <div><h3>{name}</h3><p>{label}</p></div>
+          </div>
+          <ul>{perks.map((perk) => <li><span aria-hidden="true">✓</span>{perk}</li>)}</ul>
+          <div class="tier-note">Custom partnership details available from the Pujo committee.</div>
+        </article>
       ))}
     </div>
 
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
-      {tiers.map(({ icon: Icon, name, price, perks }) => (
-        <div
-          class="flex flex-col gap-4 rounded-2xl border p-6"
-          style="border-color: var(--border); background: var(--card);"
-        >
-          <div
-            class="flex h-10 w-10 items-center justify-center rounded-full"
-            style="background: var(--palette-cream-dk); color: var(--palette-crimson);"
-          >
-            <Icon size={20} />
-          </div>
-          <div>
-            <h3 class="text-xl" style="color: var(--palette-crimson);">{name}</h3>
-            <p class="mt-0.5 text-sm" style="color: var(--muted-foreground);">{price}</p>
-          </div>
-          <ul class="flex flex-1 flex-col gap-2 text-sm" style="color: var(--foreground);">
-            {perks.map((perk) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--palette-gold);"></span>
-                {perk}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-
-    <div class="mt-12 text-center">
-      <p class="mb-5 text-sm font-medium" style="color: var(--muted-foreground);">
-        Our Past Sponsors
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-6">
-        {Array.from({ length: 4 }).map(() => (
-          <img src={pastSponsorLogo} alt="Placeholder sponsor logo" width="120" height="48" class="rounded-md opacity-70" />
-        ))}
-      </div>
-    </div>
-
-    <div class="mt-10 text-center">
-      <a href="/sponsor" class={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
-        Become a Sponsor
-        <ArrowRight size={18} />
-      </a>
+    <div class="sponsor-foot">
+      <span aria-hidden="true">❁</span>
+      <p>Support a tradition. Be seen by a community. Celebrate something meaningful.</p>
+      <span aria-hidden="true">❁</span>
     </div>
   </div>
 </section>
+
+<style>
+  .sponsor-section {
+    background:
+      radial-gradient(circle at 50% 0%, color-mix(in oklch,var(--palette-gold) 12%,transparent), transparent 34rem),
+      var(--palette-cream-dk);
+    border-top:1px solid color-mix(in oklch,var(--palette-gold) 20%,transparent);
+  }
+  .eyebrow { margin-bottom:.45rem; color:var(--palette-gold); font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  h2 { color:var(--palette-crimson); font-size:clamp(2rem,4vw,3rem); }
+  .intro { margin-top:.7rem; color:var(--muted-foreground); line-height:1.7; }
+  .tier-grid { margin-top:2.5rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  .tier-card {
+    position:relative; overflow:hidden; min-height:20rem; display:flex; flex-direction:column; padding:1.5rem;
+    border-radius:1rem; border:1px solid color-mix(in oklch,var(--palette-gold) 32%,var(--border));
+    background:linear-gradient(180deg,#fffdf7,var(--palette-cream));
+    box-shadow:0 18px 42px -34px rgb(67 12 13 / .5), inset 0 0 0 3px rgb(255 255 255 / .55);
+  }
+  .tier-card::after { content:""; position:absolute; inset:auto -2rem -3.5rem auto; width:8rem; height:8rem; border-radius:50%; background:color-mix(in oklch,var(--palette-gold) 8%,transparent); }
+  .tier-1 { border-top:4px solid var(--palette-gold); }
+  .tier-2 { border-top:4px solid color-mix(in oklch,var(--palette-crimson) 62%,var(--palette-gold)); }
+  .tier-3 { border-top:4px solid var(--palette-crimson); }
+  .tier-top { display:flex; align-items:center; gap:.9rem; }
+  .tier-icon { width:2.8rem; height:2.8rem; flex:none; display:grid; place-items:center; border-radius:50%; color:var(--palette-crimson); background:color-mix(in oklch,var(--palette-gold) 14%,var(--palette-cream)); }
+  .tier-top h3 { color:var(--palette-crimson); font-size:1.3rem; }
+  .tier-top p { margin-top:.1rem; color:var(--muted-foreground); font-size:.76rem; }
+  ul { margin-top:1.35rem; display:flex; flex-direction:column; gap:.72rem; padding:0; list-style:none; }
+  li { display:flex; align-items:flex-start; gap:.55rem; color:var(--foreground); font-size:.84rem; line-height:1.45; }
+  li span { color:var(--palette-gold); font-weight:800; }
+  .tier-note { margin-top:auto; padding-top:1.4rem; color:var(--muted-foreground); font-size:.72rem; line-height:1.5; }
+  .sponsor-foot { margin-top:2rem; display:flex; align-items:center; justify-content:center; gap:.75rem; color:var(--palette-crimson); text-align:center; }
+  .sponsor-foot p { font-family:var(--font-heading); font-size:clamp(1rem,2vw,1.25rem); font-style:italic; }
+  .sponsor-foot span { color:var(--palette-gold); }
+  @media(max-width:850px){ .tier-grid{grid-template-columns:1fr}.tier-card{min-height:auto} }
+</style>
