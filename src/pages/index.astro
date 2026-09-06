@@ -20,7 +20,7 @@ const heroSiteSrc = `data:image/webp;base64,${heroSiteData.trim()}`;
 </Layout>
 
 <style is:global>
-  /* Hero Site: show the supplied artwork itself, completely and without overlays. */
+  /* Show the supplied Hero Site artwork itself: full width, correct ratio, no crop or overlay. */
   .home-shell .hero {
     position: relative !important;
     width: 100% !important;
@@ -36,27 +36,24 @@ const heroSiteSrc = `data:image/webp;base64,${heroSiteData.trim()}`;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
-    aspect-ratio: auto !important;
+    aspect-ratio: 1780 / 883 !important;
     overflow: hidden !important;
     background: #fff7e8 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
+    display: block !important;
   }
 
   .home-shell .hero-art {
-    position: relative !important;
-    inset: auto !important;
+    position: absolute !important;
+    inset: 0 !important;
     display: block !important;
     width: 100% !important;
-    height: auto !important;
-    max-width: 1780px !important;
+    height: 100% !important;
+    max-width: none !important;
     min-width: 0 !important;
-    min-height: 1px !important;
-    aspect-ratio: 1780 / 883 !important;
+    min-height: 0 !important;
     object-fit: contain !important;
     object-position: center top !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -72,41 +69,23 @@ const heroSiteSrc = `data:image/webp;base64,${heroSiteData.trim()}`;
     display: none !important;
   }
 
-  @media (min-width: 1780px) {
-    .home-shell .hero-scene {
-      background: #fff7e8 !important;
-    }
-    .home-shell .hero-art {
-      width: 1780px !important;
-    }
-  }
-
   @media (max-width: 900px) {
+    .home-shell .hero-scene {
+      aspect-ratio: 1780 / 883 !important;
+    }
     .home-shell .hero-art {
       width: 100% !important;
-      height: auto !important;
-      max-width: none !important;
-      aspect-ratio: 1780 / 883 !important;
+      height: 100% !important;
       object-fit: contain !important;
       object-position: center top !important;
     }
   }
 
   @media (max-width: 600px) {
-    .home-shell .hero {
-      overflow-x: hidden !important;
-    }
+    .home-shell .hero,
     .home-shell .hero-scene {
       width: 100% !important;
       overflow: hidden !important;
-    }
-    .home-shell .hero-art {
-      width: 100% !important;
-      height: auto !important;
-      max-width: none !important;
-      aspect-ratio: 1780 / 883 !important;
-      object-fit: contain !important;
-      object-position: center top !important;
     }
   }
 </style>
