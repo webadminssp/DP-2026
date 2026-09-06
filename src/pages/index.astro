@@ -1,25 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HomePageDesign from "../components/HomePageDesign.astro";
+import heroSiteData from "../data/hero-site-image.txt?raw";
+
+const heroSiteSrc = `data:image/webp;base64,${heroSiteData.trim()}`;
 ---
 
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
+
+  <script define:vars={{ heroSiteSrc }}>
+    const heroImage = document.querySelector('.home-shell .hero-art');
+    if (heroImage) {
+      heroImage.setAttribute('src', heroSiteSrc);
+      heroImage.removeAttribute('srcset');
+      heroImage.removeAttribute('sizes');
+    }
+  </script>
 </Layout>
 
 <style is:global>
-  /*
-   * HERO SITE — render the supplied artwork exactly as an image.
-   * No CSS background conversion, no cover crop, no masks and no live
-   * text/logo/countdown layered over the artwork.
-   */
+  /* Hero Site: show the supplied artwork itself, completely and without overlays. */
   .home-shell .hero {
     position: relative !important;
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
-    overflow: visible !important;
-    background: #8e0014 !important;
+    overflow: hidden !important;
+    background: #fff7e8 !important;
   }
 
   .home-shell .hero-scene {
@@ -29,9 +37,11 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     min-height: 0 !important;
     max-height: none !important;
     aspect-ratio: auto !important;
-    overflow: visible !important;
-    background: transparent !important;
-    background-image: none !important;
+    overflow: hidden !important;
+    background: #fff7e8 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
   }
 
   .home-shell .hero-art {
@@ -40,18 +50,20 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-width: none !important;
-    min-height: 0 !important;
+    max-width: 1780px !important;
+    min-width: 0 !important;
+    min-height: 1px !important;
+    aspect-ratio: 1780 / 883 !important;
     object-fit: contain !important;
-    object-position: center !important;
-    margin: 0 !important;
+    object-position: center top !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    z-index: 1 !important;
   }
 
-  /* The supplied Hero Site artwork already contains the anniversary logo.
-     Remove every legacy/generated element that used to sit on top of it. */
+  /* The supplied Hero Site image already contains the anniversary artwork/logo. */
   .home-shell .hero-content,
   .home-shell .hero-logo,
   .home-shell .side-eraser,
@@ -60,28 +72,41 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     display: none !important;
   }
 
-  @media (max-width: 1050px) {
-    .home-shell .hero-scene,
+  @media (min-width: 1780px) {
+    .home-shell .hero-scene {
+      background: #fff7e8 !important;
+    }
     .home-shell .hero-art {
-      width: 100% !important;
-      height: auto !important;
-      min-height: 0 !important;
-      max-height: none !important;
-      aspect-ratio: auto !important;
+      width: 1780px !important;
     }
   }
 
-  @media (max-width: 760px) {
-    .home-shell .hero,
-    .home-shell .hero-scene {
-      overflow-x: hidden !important;
-    }
-
+  @media (max-width: 900px) {
     .home-shell .hero-art {
       width: 100% !important;
       height: auto !important;
+      max-width: none !important;
+      aspect-ratio: 1780 / 883 !important;
       object-fit: contain !important;
-      object-position: center !important;
+      object-position: center top !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .home-shell .hero {
+      overflow-x: hidden !important;
+    }
+    .home-shell .hero-scene {
+      width: 100% !important;
+      overflow: hidden !important;
+    }
+    .home-shell .hero-art {
+      width: 100% !important;
+      height: auto !important;
+      max-width: none !important;
+      aspect-ratio: 1780 / 883 !important;
+      object-fit: contain !important;
+      object-position: center top !important;
     }
   }
 </style>
