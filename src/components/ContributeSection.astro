@@ -1,7 +1,8 @@
 ---
 import QrCode from '@lucide/astro/icons/qr-code';
+import Heart from '@lucide/astro/icons/heart';
+import Sparkles from '@lucide/astro/icons/sparkles';
 import qrCode from '../assets/images/qr.png';
-import trustedPartners from '../assets/images/trusted-partners.svg';
 
 const reasons = [
   "Pandal decor & alpona artistry",
@@ -11,49 +12,55 @@ const reasons = [
 ];
 ---
 
-<section id="contribute" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-  <div
-    class="mx-auto max-w-4xl rounded-2xl border px-6 py-12 sm:px-12"
-    style="border-color: var(--border); background: var(--card);"
-  >
-    <div class="flex flex-col items-center gap-10 md:flex-row md:items-center md:gap-14">
-      <div class="flex flex-col items-center gap-3 md:flex-1 md:items-start">
-        <p class="text-sm font-semibold tracking-wide uppercase" style="color: var(--palette-gold);">
-          Every Bit Helps
-        </p>
-        <h2 class="text-3xl sm:text-4xl" style="color: var(--palette-crimson);">
-          Contribute to This Year's Pujo
-        </h2>
-        <p class="text-base leading-relaxed sm:text-lg" style="color: var(--muted-foreground);">
-          Whatever you're able to give, big or small, goes directly toward making this year's
-          celebration possible. Your contribution helps fund:
-        </p>
-        <ul class="mt-1 flex flex-col gap-2 text-sm sm:text-base" style="color: var(--foreground);">
-          {reasons.map((reason) => (
-            <li class="flex items-center gap-2">
-              <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--palette-gold);"></span>
-              {reason}
-            </li>
-          ))}
+<section id="contribute" class="contribute-section">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+    <div class="contribute-shell">
+      <div class="contribute-copy">
+        <p class="eyebrow"><Heart size={15} fill="currentColor" /> Every Bit Helps</p>
+        <h2>Contribute to the Celebration</h2>
+        <p class="lead">Small acts of generosity create a grand celebration. Your support helps keep our traditions vibrant and our community connected.</p>
+        <ul>
+          {reasons.map((reason) => <li><Sparkles size={15} />{reason}</li>)}
         </ul>
+        <p class="impact-line">Every contribution matters in our 20th year.</p>
       </div>
 
-      <div class="flex w-full max-w-xs flex-col items-center gap-4">
-        <p class="text-center text-sm font-semibold" style="color: var(--palette-crimson);">
-          Contribute via UPI
-        </p>
-        <div class="rounded-xl border p-4" style="border-color: var(--border); background: #ffffff;">
-          <img src={qrCode.src} alt="UPI QR code for Pujo contributions" width="180" height="180" />
-        </div>
-        <p class="flex items-center gap-1.5 text-xs font-medium" style="color: var(--muted-foreground);">
-          <QrCode size={14} />
-          Scan the QR code to contribute
-        </p>
+      <div class="qr-panel">
+        <div class="qr-heading"><QrCode size={18} /><span>Contribute via UPI</span></div>
+        <div class="qr-frame"><img src={qrCode.src} alt="UPI QR code for Pujo contributions" width="210" height="210" /></div>
+        <p>Scan the QR code to contribute</p>
       </div>
-    </div>
-
-    <div class="mt-10 flex justify-center border-t pt-6 sm:justify-end" style="border-color: var(--border);">
-      <img src={trustedPartners.src} alt="Trusted partners" class="h-8 w-auto sm:h-10" />
     </div>
   </div>
 </section>
+
+<style>
+  .contribute-section { background:var(--palette-cream); }
+  .contribute-shell {
+    position:relative; overflow:hidden; display:grid; grid-template-columns:1.45fr .75fr; gap:3rem; align-items:center;
+    padding:clamp(1.6rem,4vw,3.2rem); border:1px solid color-mix(in oklch,var(--palette-gold) 38%,var(--border)); border-radius:1.25rem;
+    background:
+      radial-gradient(circle at 0 100%, color-mix(in oklch,var(--palette-gold) 12%,transparent), transparent 38%),
+      linear-gradient(135deg,#fffdf6,var(--palette-cream-dk));
+    box-shadow:0 24px 60px -45px rgb(67 12 13 / .45), inset 0 0 0 4px rgb(255 255 255 / .55);
+  }
+  .contribute-shell::after { content:"❁"; position:absolute; right:29%; bottom:-2.4rem; font-size:10rem; line-height:1; color:color-mix(in oklch,var(--palette-gold) 10%,transparent); pointer-events:none; }
+  .eyebrow { display:flex; align-items:center; gap:.45rem; color:var(--palette-gold); font-size:.78rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+  h2 { margin-top:.45rem; color:var(--palette-crimson); font-size:clamp(2rem,4vw,3rem); }
+  .lead { max-width:42rem; margin-top:.7rem; color:var(--muted-foreground); line-height:1.7; }
+  ul { margin-top:1.4rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem 1rem; padding:0; list-style:none; }
+  li { display:flex; align-items:center; gap:.5rem; color:var(--foreground); font-size:.86rem; }
+  li :global(svg) { flex:none; color:var(--palette-gold); }
+  .impact-line { margin-top:1.4rem; color:var(--palette-crimson); font-family:var(--font-heading); font-weight:620; font-style:italic; }
+  .qr-panel {
+    position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:.75rem; padding:1.25rem;
+    border-radius:1rem; color:var(--palette-cream); background:linear-gradient(155deg,var(--palette-crimson),var(--palette-crimson-dk));
+    border:1px solid color-mix(in oklch,var(--palette-gold) 46%,transparent); box-shadow:0 18px 36px -24px rgb(48 6 10 / .65);
+  }
+  .qr-heading { display:flex; align-items:center; gap:.5rem; color:var(--palette-gold-on-dark); font-weight:750; }
+  .qr-frame { padding:.7rem; border-radius:.7rem; background:white; box-shadow:inset 0 0 0 1px rgb(0 0 0 / .06); }
+  .qr-frame img { display:block; width:min(13rem,100%); height:auto; }
+  .qr-panel p { font-size:.74rem; color:color-mix(in oklch,var(--palette-cream) 76%,transparent); }
+  @media(max-width:800px){ .contribute-shell{grid-template-columns:1fr;gap:1.7rem}.qr-panel{max-width:22rem;width:100%;justify-self:center}.contribute-shell::after{display:none} }
+  @media(max-width:520px){ ul{grid-template-columns:1fr} }
+</style>
