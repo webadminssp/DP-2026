@@ -5,6 +5,44 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
+
+  <script is:inline>
+    (() => {
+      const target = new Date("2026-10-15T17:00:00+05:30").getTime();
+      const scene = document.querySelector(".home-shell .hero-scene");
+      if (!scene || scene.querySelector(".hero-pujo-countdown")) return;
+
+      const widget = document.createElement("div");
+      widget.className = "hero-pujo-countdown";
+      widget.setAttribute("role", "timer");
+      widget.setAttribute("aria-label", "Countdown to Durga Pujo on 15 October 2026 at 5 PM IST");
+      widget.innerHTML = `
+        <div class="countdown-cell"><strong data-pujo-unit="days">--</strong><span>Days</span></div>
+        <div class="countdown-cell"><strong data-pujo-unit="hours">--</strong><span>Hours</span></div>
+        <div class="countdown-cell"><strong data-pujo-unit="minutes">--</strong><span>Minutes</span></div>
+      `;
+      scene.appendChild(widget);
+
+      const setValue = (unit, value, pad = false) => {
+        const el = widget.querySelector(`[data-pujo-unit="${unit}"]`);
+        if (el) el.textContent = pad ? String(value).padStart(2, "0") : String(value);
+      };
+
+      const update = () => {
+        const remaining = Math.max(0, target - Date.now());
+        const totalMinutes = Math.floor(remaining / 60000);
+        const days = Math.floor(totalMinutes / 1440);
+        const hours = Math.floor((totalMinutes % 1440) / 60);
+        const minutes = totalMinutes % 60;
+        setValue("days", days);
+        setValue("hours", hours, true);
+        setValue("minutes", minutes, true);
+      };
+
+      update();
+      window.setInterval(update, 1000);
+    })();
+  </script>
 </Layout>
 
 <style is:global>
@@ -273,41 +311,3 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     }
   }
 </style>
-
-<script is:inline>
-  (() => {
-    const target = new Date("2026-10-15T17:00:00+05:30").getTime();
-    const scene = document.querySelector(".home-shell .hero-scene");
-    if (!scene || scene.querySelector(".hero-pujo-countdown")) return;
-
-    const widget = document.createElement("div");
-    widget.className = "hero-pujo-countdown";
-    widget.setAttribute("role", "timer");
-    widget.setAttribute("aria-label", "Countdown to Durga Pujo on 15 October 2026 at 5 PM IST");
-    widget.innerHTML = `
-      <div class="countdown-cell"><strong data-pujo-unit="days">--</strong><span>Days</span></div>
-      <div class="countdown-cell"><strong data-pujo-unit="hours">--</strong><span>Hours</span></div>
-      <div class="countdown-cell"><strong data-pujo-unit="minutes">--</strong><span>Minutes</span></div>
-    `;
-    scene.appendChild(widget);
-
-    const setValue = (unit, value, pad = false) => {
-      const el = widget.querySelector(`[data-pujo-unit="${unit}"]`);
-      if (el) el.textContent = pad ? String(value).padStart(2, "0") : String(value);
-    };
-
-    const update = () => {
-      const remaining = Math.max(0, target - Date.now());
-      const totalMinutes = Math.floor(remaining / 60000);
-      const days = Math.floor(totalMinutes / 1440);
-      const hours = Math.floor((totalMinutes % 1440) / 60);
-      const minutes = totalMinutes % 60;
-      setValue("days", days);
-      setValue("hours", hours, true);
-      setValue("minutes", minutes, true);
-    };
-
-    update();
-    window.setInterval(update, 1000);
-  })();
-</script>
