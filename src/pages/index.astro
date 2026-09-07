@@ -8,7 +8,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 </Layout>
 
 <style is:global>
-  /* Show the supplied Hero Site artwork itself: full width, correct ratio, no crop or overlay. */
+  /* Show the supplied Hero Site artwork itself: full width, correct ratio, no crop. */
   .home-shell .hero {
     position: relative !important;
     width: 100% !important;
@@ -48,6 +48,33 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     z-index: 1 !important;
   }
 
+  /* Festival line beneath the 20th-year anniversary mark in the supplied artwork. */
+  .home-shell .hero-scene::after {
+    content: "আলো, আনন্দ, ভোগ আর বিজয়ার বন্ধনে — Shriram Samruddhi Durga Puja 2026";
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 57.2%;
+    transform: translateX(-50%);
+    width: min(74%, 1220px);
+    margin: 0;
+    padding: 0.22em 0.9em 0.3em;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+    color: #8f0b16;
+    font-family: "Noto Serif Bengali", "Noto Sans Bengali", "Hind Siliguri", Georgia, "Times New Roman", serif;
+    font-size: clamp(12px, 1.42vw, 25px);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.005em;
+    text-shadow: 0 1px 0 #fffdf7, 0 2px 5px rgba(104, 37, 17, 0.12);
+    border-top: 1px solid rgba(197, 142, 54, 0.35);
+    border-bottom: 1px solid rgba(197, 142, 54, 0.35);
+    background: linear-gradient(90deg, rgba(255,249,234,0), rgba(255,249,234,0.72) 18%, rgba(255,249,234,0.82) 50%, rgba(255,249,234,0.72) 82%, rgba(255,249,234,0));
+    pointer-events: none;
+  }
+
   /* The supplied Hero Site image already contains the anniversary artwork/logo. */
   .home-shell .hero-content,
   .home-shell .hero-logo,
@@ -67,6 +94,10 @@ import HomePageDesign from "../components/HomePageDesign.astro";
       object-fit: contain !important;
       object-position: center top !important;
     }
+    .home-shell .hero-scene::after {
+      width: 82%;
+      font-size: clamp(10px, 1.5vw, 17px);
+    }
   }
 
   @media (max-width: 600px) {
@@ -74,6 +105,14 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     .home-shell .hero-scene {
       width: 100% !important;
       overflow: hidden !important;
+    }
+    .home-shell .hero-scene::after {
+      top: 56.5%;
+      width: 88%;
+      padding: 0.18em 0.45em 0.24em;
+      white-space: normal;
+      font-size: clamp(8px, 2.65vw, 13px);
+      line-height: 1.22;
     }
   }
 </style>
