@@ -1,22 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HomePageDesign from "../components/HomePageDesign.astro";
-import heroSiteData from "../data/hero-site-image.txt?raw";
-
-const heroSiteSrc = `data:image/webp;base64,${heroSiteData.trim()}`;
 ---
 
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
-
-  <script define:vars={{ heroSiteSrc }}>
-    const heroImage = document.querySelector('.home-shell .hero-art');
-    if (heroImage) {
-      heroImage.setAttribute('src', heroSiteSrc);
-      heroImage.removeAttribute('srcset');
-      heroImage.removeAttribute('sizes');
-    }
-  </script>
 </Layout>
 
 <style is:global>
