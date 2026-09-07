@@ -1,11 +1,10 @@
 ---
 import logoPart1 from "../data/dpc-logo-part1.txt?raw";
 import logoPart2 from "../data/dpc-logo-part2.txt?raw";
-import heroSiteData from "../data/hero-site-image.txt?raw";
+import heroSite from "../assets/images/hero-site.webp";
 import qrCode from "../assets/images/qr.png";
 
 const logo = `data:image/webp;base64,${logoPart1.trim()}${logoPart2.trim()}`;
-const hero = `data:image/webp;base64,${heroSiteData.trim()}`;
 
 const days = [
   { icon:"🪔", tithi:"Panchami", date:"15 Oct 2026", weekday:"Thursday", note:"The auspicious beginning" },
@@ -52,7 +51,7 @@ const tiers = [
   <main>
     <section class="hero" aria-label="Shriram Samruddhi Durga Pujo 2026">
       <div class="hero-scene">
-        <img src={hero} alt="Durga Pujo pandal with two dhak players" class="hero-art" fetchpriority="high" />
+        <img src={heroSite.src} alt="Durga Pujo pandal with two dhak players" class="hero-art" fetchpriority="high" />
         <span class="side-eraser side-eraser-left" aria-hidden="true"></span>
         <span class="side-eraser side-eraser-right" aria-hidden="true"></span>
         <div class="hero-content">
