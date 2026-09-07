@@ -10,7 +10,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 <style is:global>
   @import url("https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap");
 
-  /* Keep the supplied Hero Site artwork as the single hero image source. */
+  /* Keep Hero Site.png as the single hero artwork source. */
   .home-shell .hero {
     position: relative !important;
     width: 100% !important;
@@ -35,6 +35,8 @@ import HomePageDesign from "../components/HomePageDesign.astro";
   .home-shell .hero-art {
     position: absolute !important;
     inset: 0 !important;
+    left: 0 !important;
+    top: 0 !important;
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -43,6 +45,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     min-height: 0 !important;
     object-fit: contain !important;
     object-position: center top !important;
+    transform: none !important;
     margin: 0 !important;
     padding: 0 !important;
     visibility: visible !important;
@@ -93,39 +96,82 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     display: none !important;
   }
 
+  /* Tablet: gently crop the extreme sides instead of shrinking the whole banner too far. */
   @media (max-width: 900px) {
     .home-shell .hero-scene {
-      aspect-ratio: 1780 / 883 !important;
+      aspect-ratio: 16 / 9 !important;
     }
 
     .home-shell .hero-art {
+      inset: 0 !important;
+      left: 0 !important;
+      top: 0 !important;
       width: 100% !important;
       height: 100% !important;
-      object-fit: contain !important;
+      object-fit: cover !important;
       object-position: center top !important;
+      transform: none !important;
     }
 
     .home-shell .hero-scene::after {
-      width: 84%;
-      font-size: clamp(13px, 2.05vw, 24px);
+      top: 56.5%;
+      width: 78%;
+      padding: 0;
+      white-space: normal;
+      text-wrap: balance;
+      font-size: clamp(17px, 2.7vw, 25px);
+      line-height: 1.18;
+      letter-spacing: 0.008em;
     }
   }
 
+  /* Phone: use a taller crop so the central Pujo artwork and Bengali line remain legible. */
   @media (max-width: 600px) {
     .home-shell .hero,
     .home-shell .hero-scene {
       width: 100% !important;
+      min-height: 0 !important;
       overflow: hidden !important;
     }
 
+    .home-shell .hero-scene {
+      aspect-ratio: 3 / 2 !important;
+    }
+
+    .home-shell .hero-art {
+      position: absolute !important;
+      inset: 0 !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: 50% 0% !important;
+      transform: none !important;
+    }
+
     .home-shell .hero-scene::after {
-      top: 56.3%;
-      width: 89%;
+      top: 56.2%;
+      width: 76%;
       padding: 0;
       white-space: normal;
-      font-size: clamp(10px, 3.25vw, 17px);
+      text-wrap: balance;
+      overflow-wrap: normal;
+      font-size: clamp(16px, 4.7vw, 21px);
       line-height: 1.18;
-      letter-spacing: 0.006em;
+      letter-spacing: 0.004em;
+      text-shadow:
+        0 1px 0 rgba(255, 250, 240, 0.98),
+        0 1px 3px rgba(122, 38, 18, 0.16);
+    }
+  }
+
+  @media (max-width: 380px) {
+    .home-shell .hero-scene::after {
+      top: 55.8%;
+      width: 80%;
+      font-size: 16px;
+      line-height: 1.16;
     }
   }
 </style>
