@@ -8,7 +8,9 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 </Layout>
 
 <style is:global>
-  /* Show the supplied Hero Site artwork itself: full width, correct ratio, no crop. */
+  @import url("https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap");
+
+  /* Keep the supplied Hero Site artwork as the single hero image source. */
   .home-shell .hero {
     position: relative !important;
     width: 100% !important;
@@ -48,27 +50,33 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     z-index: 1 !important;
   }
 
-  /* Bengali festival line beneath the 20th-year anniversary mark. */
+  /* Traditional Bengali-calligraphy festival line below the 20th-year logo. */
   .home-shell .hero-scene::after {
     content: "আলো, আনন্দ, ভোগ আর বিজয়ার বন্ধনে";
     position: absolute;
     z-index: 4;
     left: 50%;
-    top: 57.2%;
+    top: 56.9%;
     transform: translateX(-50%);
-    width: min(70%, 980px);
+    width: min(80%, 1320px);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-align: center;
     white-space: nowrap;
     color: #8f0b16;
-    font-family: "Noto Serif Bengali", "Noto Sans Bengali", "Hind Siliguri", Georgia, "Times New Roman", serif;
-    font-size: clamp(13px, 1.55vw, 27px);
-    font-weight: 700;
-    line-height: 1.35;
-    letter-spacing: 0.005em;
-    text-shadow: 0 1px 0 #fffdf7, 0 2px 5px rgba(104, 37, 17, 0.12);
+    font-family: "Tiro Bangla", "Noto Serif Bengali", "Hind Siliguri", "Noto Sans Bengali", serif;
+    font-size: clamp(17px, 1.95vw, 34px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.012em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-shadow:
+      0 1px 0 rgba(255, 250, 240, 0.96),
+      0 2px 3px rgba(122, 38, 18, 0.18),
+      0 0 9px rgba(217, 157, 53, 0.12);
     border: 0;
     outline: 0;
     background: transparent;
@@ -76,7 +84,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     pointer-events: none;
   }
 
-  /* The supplied Hero Site image already contains the anniversary artwork/logo. */
+  /* Hero artwork already contains the anniversary mark; suppress legacy overlays. */
   .home-shell .hero-content,
   .home-shell .hero-logo,
   .home-shell .side-eraser,
@@ -89,15 +97,17 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     .home-shell .hero-scene {
       aspect-ratio: 1780 / 883 !important;
     }
+
     .home-shell .hero-art {
       width: 100% !important;
       height: 100% !important;
       object-fit: contain !important;
       object-position: center top !important;
     }
+
     .home-shell .hero-scene::after {
-      width: 78%;
-      font-size: clamp(11px, 1.7vw, 18px);
+      width: 84%;
+      font-size: clamp(13px, 2.05vw, 24px);
     }
   }
 
@@ -107,13 +117,15 @@ import HomePageDesign from "../components/HomePageDesign.astro";
       width: 100% !important;
       overflow: hidden !important;
     }
+
     .home-shell .hero-scene::after {
-      top: 56.5%;
-      width: 86%;
+      top: 56.3%;
+      width: 89%;
       padding: 0;
       white-space: normal;
-      font-size: clamp(9px, 2.8vw, 14px);
-      line-height: 1.22;
+      font-size: clamp(10px, 3.25vw, 17px);
+      line-height: 1.18;
+      letter-spacing: 0.006em;
     }
   }
 </style>
