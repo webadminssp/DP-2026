@@ -8,3 +8,24 @@ import GalleryGrid from "../components/GalleryGrid.astro";
         <GalleryGrid />
     </main>
 </Layout>
+
+<style is:global>
+    /* Denser gallery: keep the justified layout, but render more/smaller tiles per row. */
+    .gallery-grid {
+        --row-h: 110px !important;
+        --gap: 0.3rem !important;
+    }
+
+    @media (min-width: 640px) {
+        .gallery-grid {
+            --row-h: 145px !important;
+            --gap: 0.4rem !important;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .gallery-grid {
+            --row-h: 170px !important;
+        }
+    }
+</style>
