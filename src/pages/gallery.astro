@@ -10,22 +10,74 @@ import GalleryGrid from "../components/GalleryGrid.astro";
 </Layout>
 
 <style is:global>
-    /* Denser gallery: keep the justified layout, but render more/smaller tiles per row. */
+    /* Extra-dense gallery: more media per row without changing the lightbox. */
     .gallery-grid {
-        --row-h: 110px !important;
-        --gap: 0.3rem !important;
+        --row-h: 78px !important;
+        --gap: 0.22rem !important;
     }
 
     @media (min-width: 640px) {
         .gallery-grid {
-            --row-h: 145px !important;
-            --gap: 0.4rem !important;
+            --row-h: 100px !important;
+            --gap: 0.28rem !important;
         }
     }
 
     @media (min-width: 1024px) {
         .gallery-grid {
-            --row-h: 170px !important;
+            --row-h: 122px !important;
+            --gap: 0.32rem !important;
         }
+    }
+
+    /* Videos use a centered camera glyph instead of the old VIDEO/play badge. */
+    .gallery-item.is-video .video-badge {
+        left: 50% !important;
+        bottom: 50% !important;
+        width: 2.55rem !important;
+        height: 2.55rem !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        transform: translate(-50%, 50%);
+        border: 1px solid rgb(255 255 255 / 55%);
+        border-radius: 999px !important;
+        background: rgb(24 8 12 / 82%) !important;
+        box-shadow: 0 3px 12px rgb(0 0 0 / 30%);
+        color: white;
+        font-size: 0 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .gallery-item.is-video .video-play {
+        display: none !important;
+    }
+
+    .gallery-item.is-video .video-badge::before {
+        content: "";
+        position: absolute;
+        left: 0.67rem;
+        top: 0.83rem;
+        width: 0.9rem;
+        height: 0.64rem;
+        border: 2px solid currentColor;
+        border-radius: 0.14rem;
+        box-sizing: border-box;
+    }
+
+    .gallery-item.is-video .video-badge::after {
+        content: "";
+        position: absolute;
+        left: 1.53rem;
+        top: 0.93rem;
+        width: 0;
+        height: 0;
+        border-top: 0.22rem solid transparent;
+        border-bottom: 0.22rem solid transparent;
+        border-left: 0.36rem solid currentColor;
+    }
+
+    .gallery-item.is-video:hover .video-badge {
+        background: rgb(141 0 19 / 92%) !important;
+        transform: translate(-50%, 50%) scale(1.08);
     }
 </style>
