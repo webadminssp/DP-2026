@@ -6,73 +6,9 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 <Layout title="Shriram Samruddhi Durga Pujo 2026 | 20th Year" chrome={false}>
   <HomePageDesign />
 
-  <!--
-    Single production hero-content block.
-    HomePageDesign supplies Hero Site.png; this template replaces its legacy hero-content
-    so the artwork remains the single hero image source while all overlay copy stays crisp.
-  -->
-  <template id="hero-content-template">
-    <div class="hero-content hero-content-production">
-      <p class="hero-bengali-line">আলো, আনন্দ, ভোগ আর বিজয়ার বন্ধনে</p>
-
-      <div class="hero-event-info" aria-label="Durga Pujo dates and venue">
-        <div class="hero-event-ornament" aria-hidden="true">
-          <i></i>
-          <span>◇ ❖ ◇</span>
-          <i></i>
-        </div>
-
-        <div class="hero-event-row hero-event-date">
-          <svg class="hero-event-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 2v3M17 2v3M4.5 8.5h15M5.5 4h13A1.5 1.5 0 0 1 20 5.5v14a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19.5v-14A1.5 1.5 0 0 1 5.5 4Z" />
-            <path d="M8 12h2v2H8zM14 12h2v2h-2zM8 16h2v2H8zM14 16h2v2h-2z" class="icon-fill" />
-          </svg>
-          <strong>15 – 21 October 2026</strong>
-        </div>
-
-        <div class="hero-event-row hero-event-location">
-          <svg class="hero-event-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 22s7-6.2 7-13a7 7 0 1 0-14 0c0 6.8 7 13 7 13Z" />
-            <circle cx="12" cy="9" r="2.35" class="icon-fill" />
-          </svg>
-          <span>Shriram Samruddhi Apartment,<br />Munnekolala, Bengaluru</span>
-        </div>
-      </div>
-
-      <div
-        class="hero-pujo-countdown"
-        id="hero-pujo-countdown"
-        role="timer"
-        aria-live="polite"
-        aria-label="Countdown to Durga Pujo on 15 October 2026 at 5 PM IST"
-      >
-        <div class="countdown-cell">
-          <strong data-pujo-unit="days">--</strong>
-          <span>Days</span>
-        </div>
-        <div class="countdown-cell">
-          <strong data-pujo-unit="hours">--</strong>
-          <span>Hours</span>
-        </div>
-        <div class="countdown-cell">
-          <strong data-pujo-unit="minutes">--</strong>
-          <span>Minutes</span>
-        </div>
-      </div>
-    </div>
-  </template>
-
   <script is:inline>
     (() => {
-      const scene = document.querySelector(".home-shell .hero-scene");
-      const template = document.getElementById("hero-content-template");
-      const legacyContent = scene?.querySelector(".hero-content");
-      if (!scene || !template || !legacyContent) return;
-
-      const replacement = template.content.firstElementChild.cloneNode(true);
-      legacyContent.replaceWith(replacement);
-
-      const widget = scene.querySelector("#hero-pujo-countdown");
+      const widget = document.querySelector(".home-shell #hero-pujo-countdown");
       if (!widget) return;
 
       const target = new Date("2026-10-15T17:00:00+05:30").getTime();
@@ -145,7 +81,6 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     z-index: 1 !important;
   }
 
-  /* Disable the former pseudo-element copy; all hero overlay content now lives in one DOM block. */
   .home-shell .hero-scene::after {
     content: none !important;
     display: none !important;
@@ -167,7 +102,6 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     pointer-events: none !important;
   }
 
-  /* A little more breathing room below the anniversary logo baked into Hero Site.png. */
   .home-shell .hero-bengali-line {
     margin: 0 0 clamp(7px, 0.7vw, 12px) !important;
     padding: 0 !important;
@@ -188,7 +122,6 @@ import HomePageDesign from "../components/HomePageDesign.astro";
       0 0 8px rgba(217, 157, 53, 0.10);
   }
 
-  /* Reference-inspired date/location composition above the countdown. */
   .home-shell .hero-event-info {
     width: min(470px, 84%);
     margin: 0 auto clamp(9px, 0.9vw, 15px);
@@ -265,7 +198,6 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     line-height: 1.12;
   }
 
-  /* Aesthetic three-cell countdown: Days · Hours · Minutes. */
   .home-shell .hero-pujo-countdown {
     width: min(360px, 72%);
     display: grid;
@@ -322,7 +254,6 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     text-transform: uppercase;
   }
 
-  /* Artwork already includes the anniversary logo; suppress only legacy helper layers. */
   .home-shell .hero-logo,
   .home-shell .side-eraser,
   .home-shell .hero-side,
@@ -330,7 +261,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     display: none !important;
   }
 
-  /* Tablet: preserve the central Pujo composition while gently cropping side artwork. */
+  /* Tablet and mobile landscape behaviour remains unchanged. */
   @media (max-width: 900px) {
     .home-shell .hero-scene {
       aspect-ratio: 16 / 9 !important;
@@ -375,7 +306,7 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     }
   }
 
-  /* Phone: taller crop, compact information stack, all overlay content stays inside the cream centre. */
+  /* Existing <=600px rules are intentionally preserved for landscape compatibility. */
   @media (max-width: 600px) {
     .home-shell .hero,
     .home-shell .hero-scene {
@@ -492,6 +423,93 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 
     .home-shell .hero-pujo-countdown {
       width: min(255px, 84%);
+    }
+  }
+
+  /* Portrait-only repair: give the central composition real vertical room without stretching the PNG. */
+  @media (max-width: 600px) and (orientation: portrait) {
+    .home-shell .hero-scene {
+      aspect-ratio: auto !important;
+      height: clamp(500px, 145vw, 620px) !important;
+      min-height: 500px !important;
+      max-height: 620px !important;
+    }
+
+    .home-shell .hero-art {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: 50% 0% !important;
+      transform: none !important;
+    }
+
+    .home-shell .hero-content.hero-content-production {
+      top: 57.5% !important;
+      bottom: auto !important;
+      width: min(88%, 390px) !important;
+      transform: translateX(-50%) !important;
+    }
+
+    .home-shell .hero-bengali-line {
+      margin-bottom: 8px !important;
+      font-size: clamp(16px, 4.7vw, 20px) !important;
+      line-height: 1.2 !important;
+      letter-spacing: 0.003em !important;
+      white-space: normal !important;
+      text-wrap: balance;
+    }
+
+    .home-shell .hero-event-info {
+      width: min(96%, 350px) !important;
+      margin-bottom: 10px !important;
+    }
+
+    .home-shell .hero-event-ornament {
+      margin-bottom: 6px !important;
+    }
+
+    .home-shell .hero-event-date strong {
+      font-size: clamp(13px, 3.8vw, 16px) !important;
+    }
+
+    .home-shell .hero-event-location span {
+      font-size: clamp(9.5px, 2.75vw, 12px) !important;
+      line-height: 1.12 !important;
+    }
+
+    .home-shell .hero-pujo-countdown {
+      width: min(290px, 86%) !important;
+      border-radius: 10px !important;
+    }
+
+    .home-shell .hero-pujo-countdown .countdown-cell {
+      min-height: 48px !important;
+      padding: 5px 5px 4px !important;
+    }
+
+    .home-shell .hero-pujo-countdown strong {
+      font-size: clamp(19px, 5.7vw, 24px) !important;
+    }
+
+    .home-shell .hero-pujo-countdown span {
+      margin-top: 4px !important;
+      font-size: 7px !important;
+      letter-spacing: 0.11em !important;
+    }
+  }
+
+  @media (max-width: 380px) and (orientation: portrait) {
+    .home-shell .hero-scene {
+      height: 520px !important;
+      min-height: 520px !important;
+      max-height: 520px !important;
+    }
+
+    .home-shell .hero-content.hero-content-production {
+      top: 56.8% !important;
+      width: 90% !important;
     }
   }
 </style>
