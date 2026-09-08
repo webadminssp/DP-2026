@@ -3,14 +3,6 @@ import { galleryYears as years } from "../data/gallery";
 ---
 
 <section class="gallery">
-    <div class="gallery-intro">
-        <p class="gallery-kicker">Memories through the years</p>
-        <h1>Pujo Gallery</h1>
-        <p>
-            A changing selection of photographs and videos from our community archive.
-        </p>
-    </div>
-
     <div class="gallery-rail-wrap">
         <div class="gallery-rail" role="group" aria-label="Filter gallery by year">
             <button type="button" class="gallery-chip is-active" data-year="all">All</button>
@@ -24,7 +16,7 @@ import { galleryYears as years } from "../data/gallery";
         </div>
     </div>
 
-    <div class="gallery-years" id="gallery-years">
+    <div class="gallery-years">
         {
             years.map((year) => (
                 <section class="year-section" data-year-section={year}>
@@ -32,14 +24,9 @@ import { galleryYears as years } from "../data/gallery";
                         <h2>{year}</h2>
                         <span class="year-count" data-year-count={year}>Loading…</span>
                     </div>
-                    <div
-                        class="gallery-grid"
-                        id={`gallery-${year}`}
-                        data-year-grid={year}
-                        aria-live="polite"
-                    >
-                        <div class="gallery-loading" data-year-loading={year}>
-                            <span class="loading-dot" aria-hidden="true" />
+                    <div class="gallery-grid" data-year-grid={year} aria-live="polite">
+                        <div class="gallery-loading">
+                            <span class="loading-dot" aria-hidden="true"></span>
                             Reading the archive…
                         </div>
                     </div>
@@ -49,36 +36,16 @@ import { galleryYears as years } from "../data/gallery";
     </div>
 </section>
 
-<div
-    class="lightbox"
-    id="lightbox"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Gallery viewer"
-    hidden
->
-    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close viewer">
-        &times;
-    </button>
-    <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous item">
-        &#8249;
-    </button>
-    <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next item">
-        &#8250;
-    </button>
-
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Gallery viewer" hidden>
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close viewer">&times;</button>
+    <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous item">&#8249;</button>
+    <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next item">&#8250;</button>
     <div class="lightbox-stage" id="lightbox-stage">
-        <div class="lightbox-spinner" id="lightbox-spinner" aria-hidden="true" />
+        <div class="lightbox-spinner" id="lightbox-spinner" aria-hidden="true"></div>
         <img id="lightbox-img" alt="" hidden />
-        <iframe
-            id="lightbox-video"
-            title="Pujo video"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            hidden
-        />
+        <iframe id="lightbox-video" title="Pujo video" allow="autoplay; fullscreen" allowfullscreen hidden></iframe>
     </div>
-    <p class="lightbox-caption" id="lightbox-caption" />
+    <p class="lightbox-caption" id="lightbox-caption"></p>
 </div>
 
 <style>
@@ -88,37 +55,8 @@ import { galleryYears as years } from "../data/gallery";
         padding: 1.5rem 1rem 4rem;
     }
 
-    .gallery-intro {
-        max-width: 46rem;
-        margin: 0 auto 1.75rem;
-        text-align: center;
-    }
-
-    .gallery-kicker {
-        margin: 0 0 0.35rem;
-        color: var(--palette-crimson);
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-    }
-
-    .gallery-intro h1 {
-        margin: 0;
-        font-family: var(--font-display, inherit);
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        line-height: 1.05;
-    }
-
-    .gallery-intro > p:last-child {
-        margin: 0.65rem auto 0;
-        color: var(--muted-foreground);
-    }
-
     @media (min-width: 640px) {
-        .gallery {
-            padding: 2rem 1.5rem 5rem;
-        }
+        .gallery { padding: 2rem 1.5rem 5rem; }
     }
 
     .gallery-rail-wrap {
@@ -146,9 +84,7 @@ import { galleryYears as years } from "../data/gallery";
         -webkit-overflow-scrolling: touch;
     }
 
-    .gallery-rail::-webkit-scrollbar {
-        display: none;
-    }
+    .gallery-rail::-webkit-scrollbar { display: none; }
 
     .gallery-chip {
         flex: 0 0 auto;
@@ -185,12 +121,10 @@ import { galleryYears as years } from "../data/gallery";
 
     .gallery-years {
         display: grid;
-        gap: 2.5rem;
+        gap: 2.6rem;
     }
 
-    .year-section[hidden] {
-        display: none;
-    }
+    .year-section[hidden] { display: none; }
 
     .year-heading {
         display: flex;
@@ -198,8 +132,8 @@ import { galleryYears as years } from "../data/gallery";
         justify-content: space-between;
         gap: 1rem;
         margin-bottom: 0.8rem;
-        border-bottom: 1px solid var(--border);
         padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
     }
 
     .year-heading h2 {
@@ -221,7 +155,7 @@ import { galleryYears as years } from "../data/gallery";
         flex-wrap: wrap;
         align-items: flex-start;
         gap: var(--gap);
-        min-height: 4rem;
+        min-height: 6rem;
     }
 
     @media (min-width: 640px) {
@@ -232,9 +166,7 @@ import { galleryYears as years } from "../data/gallery";
     }
 
     @media (min-width: 1024px) {
-        .gallery-grid {
-            --row-h: 245px;
-        }
+        .gallery-grid { --row-h: 245px; }
     }
 
     .gallery-loading,
@@ -250,9 +182,7 @@ import { galleryYears as years } from "../data/gallery";
         font-size: 0.9rem;
     }
 
-    .gallery-error {
-        color: var(--palette-crimson);
-    }
+    .gallery-error { color: var(--palette-crimson); }
 
     .loading-dot {
         width: 0.55rem;
@@ -263,10 +193,7 @@ import { galleryYears as years } from "../data/gallery";
     }
 
     @keyframes pulse {
-        to {
-            opacity: 0.25;
-            transform: scale(0.8);
-        }
+        to { opacity: 0.25; transform: scale(0.8); }
     }
 
     .gallery-item {
@@ -288,23 +215,16 @@ import { galleryYears as years } from "../data/gallery";
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-            100deg,
-            transparent 20%,
-            color-mix(in oklab, var(--background) 60%, transparent) 50%,
-            transparent 80%
-        );
+        background: linear-gradient(100deg, transparent 20%, color-mix(in oklab, var(--background) 60%, transparent) 50%, transparent 80%);
         background-size: 220% 100%;
-        animation: gallery-shimmer 1.6s linear infinite;
+        animation: shimmer 1.6s linear infinite;
         pointer-events: none;
     }
 
     .gallery-item.is-loaded::after,
-    .gallery-item.is-broken::after {
-        display: none;
-    }
+    .gallery-item.is-broken::after { display: none; }
 
-    @keyframes gallery-shimmer {
+    @keyframes shimmer {
         from { background-position: 120% 0; }
         to { background-position: -120% 0; }
     }
@@ -318,17 +238,9 @@ import { galleryYears as years } from "../data/gallery";
         transition: opacity 300ms ease, transform 300ms ease;
     }
 
-    .gallery-item.is-loaded img {
-        opacity: 1;
-    }
-
-    .gallery-item:hover img {
-        transform: scale(1.035);
-    }
-
-    .gallery-item.is-video {
-        cursor: pointer;
-    }
+    .gallery-item.is-loaded img { opacity: 1; }
+    .gallery-item:hover img { transform: scale(1.035); }
+    .gallery-item.is-video { cursor: pointer; }
 
     .video-badge {
         position: absolute;
@@ -374,9 +286,7 @@ import { galleryYears as years } from "../data/gallery";
         background: oklch(0.12 0.03 21 / 95%);
     }
 
-    .lightbox[hidden] {
-        display: none;
-    }
+    .lightbox[hidden] { display: none; }
 
     .lightbox-stage {
         position: relative;
@@ -404,18 +314,14 @@ import { galleryYears as years } from "../data/gallery";
         transition: opacity 180ms ease;
     }
 
-    .lightbox-stage img.is-loaded {
-        opacity: 1;
-    }
+    .lightbox-stage img.is-loaded { opacity: 1; }
 
     .lightbox-stage iframe {
         width: min(92vw, 72rem);
         height: min(76vh, 45rem);
     }
 
-    .lightbox-stage [hidden] {
-        display: none;
-    }
+    .lightbox-stage [hidden] { display: none; }
 
     .lightbox-spinner {
         position: absolute;
@@ -424,16 +330,12 @@ import { galleryYears as years } from "../data/gallery";
         border: 2px solid oklch(1 0 0 / 25%);
         border-top-color: var(--palette-gold);
         border-radius: 50%;
-        animation: lightbox-spin 700ms linear infinite;
+        animation: spin 700ms linear infinite;
     }
 
-    .lightbox-spinner[hidden] {
-        display: none;
-    }
+    .lightbox-spinner[hidden] { display: none; }
 
-    @keyframes lightbox-spin {
-        to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .lightbox-close,
     .lightbox-nav {
@@ -452,9 +354,7 @@ import { galleryYears as years } from "../data/gallery";
     }
 
     .lightbox-close:hover,
-    .lightbox-nav:hover {
-        background: oklch(1 0 0 / 22%);
-    }
+    .lightbox-nav:hover { background: oklch(1 0 0 / 22%); }
 
     .lightbox-close {
         top: 1rem;
@@ -491,18 +391,10 @@ import { galleryYears as years } from "../data/gallery";
     @media (prefers-reduced-motion: reduce) {
         .gallery-item::after,
         .loading-dot,
-        .lightbox-spinner {
-            animation: none;
-        }
-
+        .lightbox-spinner { animation: none; }
         .gallery-item img,
-        .lightbox-stage img {
-            transition: none;
-        }
-
-        .gallery-item:hover img {
-            transform: none;
-        }
+        .lightbox-stage img { transition: none; }
+        .gallery-item:hover img { transform: none; }
     }
 </style>
 
@@ -519,69 +411,55 @@ import { galleryYears as years } from "../data/gallery";
         media: GalleryMedia[];
     };
 
-    const years = Array.from(
-        document.querySelectorAll<HTMLElement>("[data-year-section]"),
-    ).map((section) => Number(section.dataset.yearSection));
-
-    const chips = Array.from(
-        document.querySelectorAll<HTMLButtonElement>(".gallery-chip"),
-    );
-
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-year-section]"));
+    const years = sections.map((section) => Number(section.dataset.yearSection));
+    const chips = Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-chip"));
     const loadedYears = new Set<number>();
     const loadingYears = new Map<number, Promise<void>>();
 
-    const shuffle = <T>(values: T[]): T[] => {
+    function shuffle(values: GalleryMedia[]): GalleryMedia[] {
         const copy = [...values];
         for (let i = copy.length - 1; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             [copy[i], copy[j]] = [copy[j], copy[i]];
         }
         return copy;
-    };
+    }
 
-    const uniqueById = (items: GalleryMedia[]) => {
+    function uniqueById(items: GalleryMedia[]): GalleryMedia[] {
         const seen = new Set<string>();
         return items.filter((item) => {
             if (seen.has(item.id)) return false;
             seen.add(item.id);
             return true;
         });
-    };
+    }
 
-    const selectForYear = (pool: GalleryMedia[]): GalleryMedia[] => {
+    function selectForYear(pool: GalleryMedia[]): GalleryMedia[] {
         const unique = uniqueById(pool);
         const images = shuffle(unique.filter((item) => item.type === "image"));
         const videos = shuffle(unique.filter((item) => item.type === "video"));
-
-        const requestedPhotos = 8 + Math.floor(Math.random() * 5); // 8–12
+        const requestedPhotos = 8 + Math.floor(Math.random() * 5);
         const photoCount = Math.min(images.length, requestedPhotos);
         const videoCount = videos.length === 0 ? 0 : Math.min(videos.length, 1 + Math.floor(Math.random() * 2));
-
-        return shuffle([
-            ...images.slice(0, photoCount),
-            ...videos.slice(0, videoCount),
-        ]);
-    };
+        return shuffle([...images.slice(0, photoCount), ...videos.slice(0, videoCount)]);
+    }
 
     const driveThumb = (id: string, width = 800) =>
         `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${width}`;
-
     const driveFullImage = (id: string) => driveThumb(id, 2400);
+    const driveVideo = (id: string) => `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
 
-    const driveVideo = (id: string) =>
-        `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
-
-    const setCount = (year: number, text: string) => {
+    function setCount(year: number, text: string) {
         const counter = document.querySelector<HTMLElement>(`[data-year-count="${year}"]`);
         if (counter) counter.textContent = text;
-    };
+    }
 
-    const makeTile = (media: GalleryMedia, year: number, eager: boolean) => {
+    function makeTile(media: GalleryMedia, year: number, eager: boolean): HTMLButtonElement {
         const button = document.createElement("button");
         button.type = "button";
         button.className = `gallery-item${media.type === "video" ? " is-video" : ""}`;
         button.dataset.year = String(year);
-        button.dataset.mediaId = media.id;
         button.dataset.mediaType = media.type;
         button.dataset.full = media.type === "image" ? driveFullImage(media.id) : driveVideo(media.id);
         button.dataset.caption = media.name;
@@ -596,24 +474,15 @@ import { galleryYears as years } from "../data/gallery";
         img.draggable = false;
         if (eager) img.setAttribute("fetchpriority", "high");
 
-        img.addEventListener(
-            "load",
-            () => {
-                if (img.naturalWidth && img.naturalHeight) {
-                    const ratio = Math.max(0.65, Math.min(2.1, img.naturalWidth / img.naturalHeight));
-                    button.style.setProperty("--r", String(ratio));
-                }
-                button.classList.add("is-loaded");
-            },
-            { once: true },
-        );
+        img.addEventListener("load", () => {
+            if (img.naturalWidth && img.naturalHeight) {
+                const ratio = Math.max(0.65, Math.min(2.1, img.naturalWidth / img.naturalHeight));
+                button.style.setProperty("--r", String(ratio));
+            }
+            button.classList.add("is-loaded");
+        }, { once: true });
 
-        img.addEventListener(
-            "error",
-            () => button.classList.add("is-broken"),
-            { once: true },
-        );
-
+        img.addEventListener("error", () => button.classList.add("is-broken"), { once: true });
         button.append(img);
 
         if (media.type === "video") {
@@ -625,9 +494,9 @@ import { galleryYears as years } from "../data/gallery";
 
         button.addEventListener("click", () => openLightbox(button));
         return button;
-    };
+    }
 
-    const renderYear = (year: number, pool: GalleryMedia[]) => {
+    function renderYear(year: number, pool: GalleryMedia[]) {
         const grid = document.querySelector<HTMLElement>(`[data-year-grid="${year}"]`);
         if (!grid) return;
 
@@ -643,9 +512,7 @@ import { galleryYears as years } from "../data/gallery";
             return;
         }
 
-        selected.forEach((media, index) => {
-            grid.append(makeTile(media, year, year === years[0] && index < 6));
-        });
+        selected.forEach((media, index) => grid.append(makeTile(media, year, year === years[0] && index < 6)));
 
         for (let i = 0; i < 6; i += 1) {
             const filler = document.createElement("i");
@@ -656,24 +523,18 @@ import { galleryYears as years } from "../data/gallery";
 
         const photos = selected.filter((item) => item.type === "image").length;
         const videos = selected.filter((item) => item.type === "video").length;
-        setCount(
-            year,
-            videos ? `${photos} photos · ${videos} video${videos === 1 ? "" : "s"}` : `${photos} photos`,
-        );
-    };
+        setCount(year, videos ? `${photos} photos · ${videos} video${videos === 1 ? "" : "s"}` : `${photos} photos`);
+    }
 
-    const loadYear = (year: number) => {
+    function loadYear(year: number): Promise<void> {
         if (loadedYears.has(year)) return Promise.resolve();
         const existing = loadingYears.get(year);
         if (existing) return existing;
 
         const task = (async () => {
             try {
-                const response = await fetch(`/api/gallery?year=${year}`, {
-                    headers: { accept: "application/json" },
-                });
+                const response = await fetch(`/api/gallery?year=${year}`, { headers: { accept: "application/json" } });
                 if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
-
                 const data = (await response.json()) as GalleryResponse;
                 renderYear(year, data.media ?? []);
                 loadedYears.add(year);
@@ -694,43 +555,26 @@ import { galleryYears as years } from "../data/gallery";
 
         loadingYears.set(year, task);
         return task;
-    };
+    }
 
-    const sections = Array.from(
-        document.querySelectorAll<HTMLElement>("[data-year-section]"),
-    );
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            for (const entry of entries) {
-                if (!entry.isIntersecting) continue;
-                const section = entry.target as HTMLElement;
-                const year = Number(section.dataset.yearSection);
-                void loadYear(year);
-                observer.unobserve(section);
-            }
-        },
-        { rootMargin: "500px 0px" },
-    );
+    const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const section = entry.target as HTMLElement;
+            void loadYear(Number(section.dataset.yearSection));
+            observer.unobserve(section);
+        }
+    }, { rootMargin: "500px 0px" });
 
     for (const section of sections) observer.observe(section);
     if (years[0]) void loadYear(years[0]);
 
-    const applyFilter = (year: string) => {
+    function applyFilter(year: string) {
         for (const section of sections) {
-            const show = year === "all" || section.dataset.yearSection === year;
-            section.hidden = !show;
+            section.hidden = year !== "all" && section.dataset.yearSection !== year;
         }
-
-        if (year !== "all") {
-            const numericYear = Number(year);
-            void loadYear(numericYear);
-            document.querySelector(`[data-year-section="${year}"]`)?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-        }
-    };
+        if (year !== "all") void loadYear(Number(year));
+    }
 
     for (const chip of chips) {
         chip.addEventListener("click", () => {
@@ -747,22 +591,20 @@ import { galleryYears as years } from "../data/gallery";
     const btnClose = document.getElementById("lightbox-close")!;
     const btnPrev = document.getElementById("lightbox-prev")!;
     const btnNext = document.getElementById("lightbox-next")!;
-
     let position = 0;
     let lastFocused: HTMLElement | null = null;
 
-    const visibleItems = () =>
-        Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-item")).filter(
+    function visibleItems(): HTMLButtonElement[] {
+        return Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-item")).filter(
             (item) => !item.closest<HTMLElement>(".year-section")?.hidden,
         );
+    }
 
-    const showItem = (index: number) => {
+    function showItem(index: number) {
         const visible = visibleItems();
         if (!visible.length) return;
-
         position = (index + visible.length) % visible.length;
         const item = visible[position];
-        const type = item.dataset.mediaType;
         const source = item.dataset.full ?? "";
 
         spinner.hidden = false;
@@ -773,31 +615,21 @@ import { galleryYears as years } from "../data/gallery";
         lightboxVideo.removeAttribute("src");
         caption.textContent = item.dataset.caption ?? "";
 
-        if (type === "video") {
+        if (item.dataset.mediaType === "video") {
             lightboxVideo.hidden = false;
             lightboxVideo.src = source;
         } else {
             lightboxImg.hidden = false;
             lightboxImg.src = source;
             lightboxImg.alt = item.dataset.caption ?? "Pujo photograph";
-
-            for (const offset of [1, -1]) {
-                const neighbour = visible[(position + offset + visible.length) % visible.length];
-                if (neighbour?.dataset.mediaType === "image" && neighbour.dataset.full) {
-                    new Image().src = neighbour.dataset.full;
-                }
-            }
         }
-    };
+    }
 
     lightboxImg.addEventListener("load", () => {
         spinner.hidden = true;
         lightboxImg.classList.add("is-loaded");
     });
-
-    lightboxVideo.addEventListener("load", () => {
-        spinner.hidden = true;
-    });
+    lightboxVideo.addEventListener("load", () => { spinner.hidden = true; });
 
     function openLightbox(item: HTMLButtonElement) {
         const visible = visibleItems();
@@ -808,14 +640,14 @@ import { galleryYears as years } from "../data/gallery";
         btnClose.focus();
     }
 
-    const closeLightbox = () => {
+    function closeLightbox() {
         lightbox.hidden = true;
         document.body.style.overflow = "";
         lightboxImg.removeAttribute("src");
         lightboxVideo.removeAttribute("src");
         caption.textContent = "";
         lastFocused?.focus();
-    };
+    }
 
     btnClose.addEventListener("click", closeLightbox);
     btnPrev.addEventListener("click", () => showItem(position - 1));
@@ -834,19 +666,11 @@ import { galleryYears as years } from "../data/gallery";
     });
 
     let touchStartX = 0;
-    lightbox.addEventListener(
-        "touchstart",
-        (event) => {
-            touchStartX = event.changedTouches[0].clientX;
-        },
-        { passive: true },
-    );
-    lightbox.addEventListener(
-        "touchend",
-        (event) => {
-            const dx = event.changedTouches[0].clientX - touchStartX;
-            if (Math.abs(dx) > 50) showItem(position + (dx < 0 ? 1 : -1));
-        },
-        { passive: true },
-    );
+    lightbox.addEventListener("touchstart", (event) => {
+        touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    lightbox.addEventListener("touchend", (event) => {
+        const dx = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) showItem(position + (dx < 0 ? 1 : -1));
+    }, { passive: true });
 </script>
