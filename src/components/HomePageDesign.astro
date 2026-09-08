@@ -54,20 +54,44 @@ const tiers = [
         <img src={heroSite.src} alt="Durga Pujo pandal with two dhak players" class="hero-art" fetchpriority="high" />
         <span class="side-eraser side-eraser-left" aria-hidden="true"></span>
         <span class="side-eraser side-eraser-right" aria-hidden="true"></span>
-        <div class="hero-content">
-          <img src={logo} alt="Shriram Samruddhi Durga Pujo 20th Year Celebrations" class="hero-logo" />
-          <h1>Shriram Samruddhi Durga Pujo 2026</h1>
-          <p class="hero-values">Faith <span>|</span> Culture <span>|</span> Community <span>|</span> Together for 20 Glorious Years</p>
-          <div class="hero-rule" aria-hidden="true"></div>
-          <div class="event-date"><span>▣</span><strong>15 – 21 October 2026</strong></div>
-          <p class="event-place"><span>●</span> Shriram Samruddhi Apartment,<br />Munnekolala, Bengaluru</p>
-          <div class="countdown" data-countdown data-target="2026-10-15T00:00:00+05:30">
-            <div><strong data-unit="days">--</strong><span>Days</span></div>
-            <div><strong data-unit="hours">--</strong><span>Hours</span></div>
-            <div><strong data-unit="minutes">--</strong><span>Minutes</span></div>
-            <div><strong data-unit="seconds">--</strong><span>Seconds</span></div>
+        <div class="hero-content hero-content-production">
+          <p class="hero-bengali-line">আলো, আনন্দ, ভোগ আর বিজয়ার বন্ধনে</p>
+
+          <div class="hero-event-info" aria-label="Durga Pujo dates and venue">
+            <div class="hero-event-ornament" aria-hidden="true">
+              <i></i>
+              <span>◇ ❖ ◇</span>
+              <i></i>
+            </div>
+
+            <div class="hero-event-row hero-event-date">
+              <svg class="hero-event-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 2v3M17 2v3M4.5 8.5h15M5.5 4h13A1.5 1.5 0 0 1 20 5.5v14a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19.5v-14A1.5 1.5 0 0 1 5.5 4Z" />
+                <path d="M8 12h2v2H8zM14 12h2v2h-2zM8 16h2v2H8zM14 16h2v2h-2z" class="icon-fill" />
+              </svg>
+              <strong>15 – 21 October 2026</strong>
+            </div>
+
+            <div class="hero-event-row hero-event-location">
+              <svg class="hero-event-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 22s7-6.2 7-13a7 7 0 1 0-14 0c0 6.8 7 13 7 13Z" />
+                <circle cx="12" cy="9" r="2.35" class="icon-fill" />
+              </svg>
+              <span>Shriram Samruddhi Apartment,<br />Munnekolala, Bengaluru</span>
+            </div>
           </div>
-          <a class="hero-cta" href="#schedule">Be a Part of the Celebration <span>→</span></a>
+
+          <div
+            class="hero-pujo-countdown"
+            id="hero-pujo-countdown"
+            role="timer"
+            aria-live="polite"
+            aria-label="Countdown to Durga Pujo on 15 October 2026 at 5 PM IST"
+          >
+            <div class="countdown-cell"><strong data-pujo-unit="days">--</strong><span>Days</span></div>
+            <div class="countdown-cell"><strong data-pujo-unit="hours">--</strong><span>Hours</span></div>
+            <div class="countdown-cell"><strong data-pujo-unit="minutes">--</strong><span>Minutes</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -134,25 +158,5 @@ const tiers = [
   const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
   menuButton?.addEventListener('click', () => {
     if (mobileMenu) mobileMenu.hidden = !mobileMenu.hidden;
-  });
-
-  document.querySelectorAll('[data-countdown]').forEach((el) => {
-    const root = el as HTMLElement;
-    const target = new Date(root.dataset.target ?? '').getTime();
-    const field = (name:string) => root.querySelector(`[data-unit="${name}"]`);
-    const tick = () => {
-      const diff = Math.max(0, target - Date.now());
-      const total = Math.floor(diff / 1000);
-      const days = Math.floor(total / 86400);
-      const hours = Math.floor((total % 86400) / 3600);
-      const minutes = Math.floor((total % 3600) / 60);
-      const seconds = total % 60;
-      const set = (name:string, value:number, pad=false) => {
-        const node = field(name);
-        if (node) node.textContent = pad ? String(value).padStart(2,'0') : String(value);
-      };
-      set('days',days); set('hours',hours,true); set('minutes',minutes,true); set('seconds',seconds,true);
-    };
-    tick(); window.setInterval(tick,1000);
   });
 </script>
