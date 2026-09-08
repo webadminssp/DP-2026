@@ -1,25 +1,19 @@
 ---
-import { photos, years } from "../data/gallery";
-
-// The first row's worth of images load eagerly so the top of the page paints
-// immediately; everything below is lazy.
-const EAGER_COUNT = 6;
-
-// Invisible flex items that soak up leftover width on the final row, so a row
-// with two photos doesn't blow them up to full width.
-const FILLER_COUNT = 6;
+import { galleryYears as years } from "../data/gallery";
 ---
 
 <section class="gallery">
+    <div class="gallery-intro">
+        <p class="gallery-kicker">Memories through the years</p>
+        <h1>Pujo Gallery</h1>
+        <p>
+            A changing selection of photographs and videos from our community archive.
+        </p>
+    </div>
+
     <div class="gallery-rail-wrap">
-        <div
-            class="gallery-rail"
-            role="group"
-            aria-label="Filter photos by year"
-        >
-            <button type="button" class="gallery-chip is-active" data-year="all"
-                >All</button
-            >
+        <div class="gallery-rail" role="group" aria-label="Filter gallery by year">
+            <button type="button" class="gallery-chip is-active" data-year="all">All</button>
             {
                 years.map((year) => (
                     <button type="button" class="gallery-chip" data-year={year}>
@@ -30,73 +24,61 @@ const FILLER_COUNT = 6;
         </div>
     </div>
 
-    <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-years" id="gallery-years">
         {
-            photos.map((photo, i) => (
-                <button
-                    type="button"
-                    class="gallery-item"
-                    style={`--r: ${photo.ratio};`}
-                    data-year={photo.year}
-                    data-index={i}
-                    data-full={photo.full}
-                    aria-label={`Open ${photo.alt}`}
-                >
-                    <img
-                        src={photo.thumb}
-                        alt={photo.alt}
-                        loading={i < EAGER_COUNT ? "eager" : "lazy"}
-                        fetchpriority={i < EAGER_COUNT ? "high" : "auto"}
-                        decoding="async"
-                        draggable="false"
-                    />
-                </button>
-            ))
-        }
-        {
-            Array.from({ length: FILLER_COUNT }).map(() => (
-                <i class="gallery-filler" aria-hidden="true" />
+            years.map((year) => (
+                <section class="year-section" data-year-section={year}>
+                    <div class="year-heading">
+                        <h2>{year}</h2>
+                        <span class="year-count" data-year-count={year}>Loading…</span>
+                    </div>
+                    <div
+                        class="gallery-grid"
+                        id={`gallery-${year}`}
+                        data-year-grid={year}
+                        aria-live="polite"
+                    >
+                        <div class="gallery-loading" data-year-loading={year}>
+                            <span class="loading-dot" aria-hidden="true" />
+                            Reading the archive…
+                        </div>
+                    </div>
+                </section>
             ))
         }
     </div>
-
-    <p class="gallery-empty" id="gallery-empty" hidden>
-        No photos for this year yet.
-    </p>
 </section>
 
-<!-- Lightbox -->
 <div
     class="lightbox"
     id="lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Photo viewer"
+    aria-label="Gallery viewer"
     hidden
 >
-    <button
-        type="button"
-        class="lightbox-close"
-        id="lightbox-close"
-        aria-label="Close viewer">&times;</button
-    >
-    <button
-        type="button"
-        class="lightbox-nav lightbox-prev"
-        id="lightbox-prev"
-        aria-label="Previous photo">&#8249;</button
-    >
-    <button
-        type="button"
-        class="lightbox-nav lightbox-next"
-        id="lightbox-next"
-        aria-label="Next photo">&#8250;</button
-    >
-    <div class="lightbox-stage">
-        <div class="lightbox-spinner" id="lightbox-spinner" aria-hidden="true">
-        </div>
-        <img id="lightbox-img" alt="" />
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close viewer">
+        &times;
+    </button>
+    <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous item">
+        &#8249;
+    </button>
+    <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next item">
+        &#8250;
+    </button>
+
+    <div class="lightbox-stage" id="lightbox-stage">
+        <div class="lightbox-spinner" id="lightbox-spinner" aria-hidden="true" />
+        <img id="lightbox-img" alt="" hidden />
+        <iframe
+            id="lightbox-video"
+            title="Pujo video"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            hidden
+        />
     </div>
+    <p class="lightbox-caption" id="lightbox-caption" />
 </div>
 
 <style>
@@ -106,29 +88,53 @@ const FILLER_COUNT = 6;
         padding: 1.5rem 1rem 4rem;
     }
 
+    .gallery-intro {
+        max-width: 46rem;
+        margin: 0 auto 1.75rem;
+        text-align: center;
+    }
+
+    .gallery-kicker {
+        margin: 0 0 0.35rem;
+        color: var(--palette-crimson);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .gallery-intro h1 {
+        margin: 0;
+        font-family: var(--font-display, inherit);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1.05;
+    }
+
+    .gallery-intro > p:last-child {
+        margin: 0.65rem auto 0;
+        color: var(--muted-foreground);
+    }
+
     @media (min-width: 640px) {
         .gallery {
             padding: 2rem 1.5rem 5rem;
         }
     }
 
-    /* ── Year filter rail ─────────────────────────────────────────────── */
-
-    /* Pinned just under the site header (h-10 + py-3 ≈ 4rem tall). */
     .gallery-rail-wrap {
         position: sticky;
         top: 0;
         z-index: 20;
-        margin: 0 -1rem 1.25rem;
+        margin: 0 -1rem 1.5rem;
         padding: 0.75rem 1rem;
-        background: color-mix(in oklab, var(--background) 88%, transparent);
-        backdrop-filter: blur(8px);
+        background: color-mix(in oklab, var(--background) 90%, transparent);
+        backdrop-filter: blur(10px);
     }
 
     @media (min-width: 640px) {
         .gallery-rail-wrap {
-            margin: 0 -1.5rem 1.5rem;
-            padding: 0.75rem 1.5rem;
+            margin-inline: -1.5rem;
+            padding-inline: 1.5rem;
         }
     }
 
@@ -146,20 +152,16 @@ const FILLER_COUNT = 6;
 
     .gallery-chip {
         flex: 0 0 auto;
-        padding: 0.4rem 0.9rem;
+        padding: 0.42rem 0.9rem;
         border: 1px solid var(--border);
         border-radius: 999px;
         background: transparent;
         color: var(--muted-foreground);
-        font-family: inherit;
+        font: inherit;
         font-size: 0.875rem;
-        font-weight: 500;
-        line-height: 1.4;
+        font-weight: 600;
         cursor: pointer;
-        transition:
-            background-color 150ms ease,
-            color 150ms ease,
-            border-color 150ms ease;
+        transition: 150ms ease;
     }
 
     .gallery-chip:hover {
@@ -173,25 +175,53 @@ const FILLER_COUNT = 6;
         color: var(--palette-cream);
     }
 
-    .gallery-chip:focus-visible {
+    .gallery-chip:focus-visible,
+    .gallery-item:focus-visible,
+    .lightbox-close:focus-visible,
+    .lightbox-nav:focus-visible {
         outline: 2px solid var(--palette-gold);
         outline-offset: 2px;
     }
 
-    /* ── Justified rows ───────────────────────────────────────────────────
-     *
-     * Each item gets `flex-basis: r × H` and `flex-grow: r`. Free space is then
-     * handed out in proportion to r, so every width lands at r × (H + slack)
-     * — i.e. widths stay proportional to aspect ratio and every item in a row
-     * resolves to the identical height, with the row edges flush. No JS.
-     */
+    .gallery-years {
+        display: grid;
+        gap: 2.5rem;
+    }
+
+    .year-section[hidden] {
+        display: none;
+    }
+
+    .year-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.8rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.5rem;
+    }
+
+    .year-heading h2 {
+        margin: 0;
+        color: var(--palette-crimson);
+        font-family: var(--font-display, inherit);
+        font-size: clamp(1.45rem, 3vw, 2rem);
+    }
+
+    .year-count {
+        color: var(--muted-foreground);
+        font-size: 0.78rem;
+    }
+
     .gallery-grid {
         --row-h: 150px;
         --gap: 0.375rem;
         display: flex;
         flex-wrap: wrap;
-        align-items: flex-start; /* let aspect-ratio set height, not stretch */
+        align-items: flex-start;
         gap: var(--gap);
+        min-height: 4rem;
     }
 
     @media (min-width: 640px) {
@@ -203,23 +233,54 @@ const FILLER_COUNT = 6;
 
     @media (min-width: 1024px) {
         .gallery-grid {
-            --row-h: 260px;
+            --row-h: 245px;
+        }
+    }
+
+    .gallery-loading,
+    .gallery-empty,
+    .gallery-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        width: 100%;
+        min-height: 6rem;
+        color: var(--muted-foreground);
+        font-size: 0.9rem;
+    }
+
+    .gallery-error {
+        color: var(--palette-crimson);
+    }
+
+    .loading-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 999px;
+        background: var(--palette-gold);
+        animation: pulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+        to {
+            opacity: 0.25;
+            transform: scale(0.8);
         }
     }
 
     .gallery-item {
-        flex-grow: var(--r);
-        flex-basis: calc(var(--r) * var(--row-h));
-        aspect-ratio: var(--r);
+        flex-grow: var(--r, 1.45);
+        flex-basis: calc(var(--r, 1.45) * var(--row-h));
+        aspect-ratio: var(--r, 1.45);
         position: relative;
         min-width: 0;
         margin: 0;
         padding: 0;
         border: 0;
-        border-radius: 0.375rem;
+        border-radius: 0.42rem;
         overflow: hidden;
         cursor: zoom-in;
-        /* Skeleton tile: holds the exact space until the photo fades in. */
         background: var(--muted);
     }
 
@@ -235,19 +296,17 @@ const FILLER_COUNT = 6;
         );
         background-size: 220% 100%;
         animation: gallery-shimmer 1.6s linear infinite;
+        pointer-events: none;
     }
 
-    .gallery-item.is-loaded::after {
+    .gallery-item.is-loaded::after,
+    .gallery-item.is-broken::after {
         display: none;
     }
 
     @keyframes gallery-shimmer {
-        from {
-            background-position: 120% 0;
-        }
-        to {
-            background-position: -120% 0;
-        }
+        from { background-position: 120% 0; }
+        to { background-position: -120% 0; }
     }
 
     .gallery-item img {
@@ -256,9 +315,7 @@ const FILLER_COUNT = 6;
         height: 100%;
         object-fit: cover;
         opacity: 0;
-        transition:
-            opacity 350ms ease,
-            transform 350ms ease;
+        transition: opacity 300ms ease, transform 300ms ease;
     }
 
     .gallery-item.is-loaded img {
@@ -266,16 +323,38 @@ const FILLER_COUNT = 6;
     }
 
     .gallery-item:hover img {
-        transform: scale(1.03);
+        transform: scale(1.035);
     }
 
-    .gallery-item:focus-visible {
-        outline: 2px solid var(--palette-gold);
-        outline-offset: 3px;
+    .gallery-item.is-video {
+        cursor: pointer;
     }
 
-    .gallery-item[hidden] {
-        display: none;
+    .video-badge {
+        position: absolute;
+        left: 0.65rem;
+        bottom: 0.65rem;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.36rem 0.62rem;
+        border-radius: 999px;
+        background: oklch(0.12 0.03 21 / 78%);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    .video-play {
+        width: 0;
+        height: 0;
+        border-top: 0.28rem solid transparent;
+        border-bottom: 0.28rem solid transparent;
+        border-left: 0.42rem solid currentColor;
     }
 
     .gallery-filler {
@@ -284,14 +363,6 @@ const FILLER_COUNT = 6;
         height: 0;
     }
 
-    .gallery-empty {
-        padding: 3rem 0;
-        text-align: center;
-        color: var(--muted-foreground);
-    }
-
-    /* ── Lightbox ─────────────────────────────────────────────────────── */
-
     .lightbox {
         position: fixed;
         inset: 0;
@@ -299,8 +370,8 @@ const FILLER_COUNT = 6;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
-        background: oklch(0.12 0.03 21 / 94%);
+        padding: 3.5rem 1rem 3rem;
+        background: oklch(0.12 0.03 21 / 95%);
     }
 
     .lightbox[hidden] {
@@ -312,24 +383,40 @@ const FILLER_COUNT = 6;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        height: 100%;
+        width: min(92vw, 88rem);
+        height: min(82vh, 60rem);
+    }
+
+    .lightbox-stage img,
+    .lightbox-stage iframe {
+        max-width: 100%;
+        max-height: 100%;
+        border: 0;
+        border-radius: 0.3rem;
+        background: #000;
     }
 
     .lightbox-stage img {
-        max-width: 100%;
-        max-height: 100%;
+        width: auto;
+        height: auto;
         object-fit: contain;
-        border-radius: 0.25rem;
         opacity: 0;
-        transition: opacity 200ms ease;
+        transition: opacity 180ms ease;
     }
 
     .lightbox-stage img.is-loaded {
         opacity: 1;
     }
 
-    /* The one place a spinner earns its keep: a single, real wait. */
+    .lightbox-stage iframe {
+        width: min(92vw, 72rem);
+        height: min(76vh, 45rem);
+    }
+
+    .lightbox-stage [hidden] {
+        display: none;
+    }
+
     .lightbox-spinner {
         position: absolute;
         width: 2rem;
@@ -345,15 +432,13 @@ const FILLER_COUNT = 6;
     }
 
     @keyframes lightbox-spin {
-        to {
-            transform: rotate(360deg);
-        }
+        to { transform: rotate(360deg); }
     }
 
     .lightbox-close,
     .lightbox-nav {
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -361,10 +446,9 @@ const FILLER_COUNT = 6;
         border-radius: 999px;
         background: oklch(1 0 0 / 10%);
         color: var(--palette-cream);
-        font-family: inherit;
+        font: inherit;
         line-height: 1;
         cursor: pointer;
-        transition: background-color 150ms ease;
     }
 
     .lightbox-close:hover,
@@ -372,39 +456,41 @@ const FILLER_COUNT = 6;
         background: oklch(1 0 0 / 22%);
     }
 
-    .lightbox-close:focus-visible,
-    .lightbox-nav:focus-visible {
-        outline: 2px solid var(--palette-gold);
-        outline-offset: 2px;
-    }
-
     .lightbox-close {
         top: 1rem;
         right: 1rem;
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 1.75rem;
+        width: 2.6rem;
+        height: 2.6rem;
+        font-size: 1.8rem;
     }
 
     .lightbox-nav {
         top: 50%;
-        width: 2.75rem;
-        height: 2.75rem;
-        margin-top: -1.375rem;
+        width: 2.8rem;
+        height: 2.8rem;
+        margin-top: -1.4rem;
         font-size: 2rem;
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.2rem;
     }
 
-    .lightbox-prev {
-        left: 0.75rem;
-    }
+    .lightbox-prev { left: 0.65rem; }
+    .lightbox-next { right: 0.65rem; }
 
-    .lightbox-next {
-        right: 0.75rem;
+    .lightbox-caption {
+        position: absolute;
+        bottom: 0.85rem;
+        left: 50%;
+        max-width: min(80vw, 60rem);
+        margin: 0;
+        transform: translateX(-50%);
+        color: oklch(0.92 0.02 85);
+        font-size: 0.8rem;
+        text-align: center;
     }
 
     @media (prefers-reduced-motion: reduce) {
         .gallery-item::after,
+        .loading-dot,
         .lightbox-spinner {
             animation: none;
         }
@@ -421,57 +507,242 @@ const FILLER_COUNT = 6;
 </style>
 
 <script>
-    const grid = document.getElementById("gallery-grid")!;
-    const empty = document.getElementById("gallery-empty")!;
-    const items = Array.from(
-        grid.querySelectorAll<HTMLButtonElement>(".gallery-item"),
-    );
+    type GalleryMedia = {
+        id: string;
+        name: string;
+        type: "image" | "video";
+    };
 
-    // ── Skeleton → photo fade ────────────────────────────────────────────
-    // Images already in cache never fire `load`, so check `complete` too.
-    const markLoaded = (item: HTMLElement) => item.classList.add("is-loaded");
+    type GalleryResponse = {
+        year: number;
+        count: number;
+        media: GalleryMedia[];
+    };
 
-    for (const item of items) {
-        const img = item.querySelector("img")!;
-        if (img.complete && img.naturalWidth > 0) {
-            markLoaded(item);
-        } else {
-            img.addEventListener("load", () => markLoaded(item), { once: true });
-            // A broken image should still drop the shimmer rather than spin forever.
-            img.addEventListener("error", () => markLoaded(item), { once: true });
-        }
-    }
+    const years = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-year-section]"),
+    ).map((section) => Number(section.dataset.yearSection));
 
-    // ── Year filter ──────────────────────────────────────────────────────
     const chips = Array.from(
         document.querySelectorAll<HTMLButtonElement>(".gallery-chip"),
     );
 
-    // Which items are currently on screen — the lightbox steps through these,
-    // so prev/next never jumps to a photo the filter has hidden.
-    let visible: HTMLButtonElement[] = items;
+    const loadedYears = new Set<number>();
+    const loadingYears = new Map<number, Promise<void>>();
+
+    const shuffle = <T>(values: T[]): T[] => {
+        const copy = [...values];
+        for (let i = copy.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    };
+
+    const uniqueById = (items: GalleryMedia[]) => {
+        const seen = new Set<string>();
+        return items.filter((item) => {
+            if (seen.has(item.id)) return false;
+            seen.add(item.id);
+            return true;
+        });
+    };
+
+    const selectForYear = (pool: GalleryMedia[]): GalleryMedia[] => {
+        const unique = uniqueById(pool);
+        const images = shuffle(unique.filter((item) => item.type === "image"));
+        const videos = shuffle(unique.filter((item) => item.type === "video"));
+
+        const requestedPhotos = 8 + Math.floor(Math.random() * 5); // 8–12
+        const photoCount = Math.min(images.length, requestedPhotos);
+        const videoCount = videos.length === 0 ? 0 : Math.min(videos.length, 1 + Math.floor(Math.random() * 2));
+
+        return shuffle([
+            ...images.slice(0, photoCount),
+            ...videos.slice(0, videoCount),
+        ]);
+    };
+
+    const driveThumb = (id: string, width = 800) =>
+        `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${width}`;
+
+    const driveFullImage = (id: string) => driveThumb(id, 2400);
+
+    const driveVideo = (id: string) =>
+        `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
+
+    const setCount = (year: number, text: string) => {
+        const counter = document.querySelector<HTMLElement>(`[data-year-count="${year}"]`);
+        if (counter) counter.textContent = text;
+    };
+
+    const makeTile = (media: GalleryMedia, year: number, eager: boolean) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `gallery-item${media.type === "video" ? " is-video" : ""}`;
+        button.dataset.year = String(year);
+        button.dataset.mediaId = media.id;
+        button.dataset.mediaType = media.type;
+        button.dataset.full = media.type === "image" ? driveFullImage(media.id) : driveVideo(media.id);
+        button.dataset.caption = media.name;
+        button.setAttribute("aria-label", `${media.type === "video" ? "Play" : "Open"} ${media.name}`);
+        button.style.setProperty("--r", "1.45");
+
+        const img = document.createElement("img");
+        img.src = driveThumb(media.id, 800);
+        img.alt = media.name;
+        img.loading = eager ? "eager" : "lazy";
+        img.decoding = "async";
+        img.draggable = false;
+        if (eager) img.setAttribute("fetchpriority", "high");
+
+        img.addEventListener(
+            "load",
+            () => {
+                if (img.naturalWidth && img.naturalHeight) {
+                    const ratio = Math.max(0.65, Math.min(2.1, img.naturalWidth / img.naturalHeight));
+                    button.style.setProperty("--r", String(ratio));
+                }
+                button.classList.add("is-loaded");
+            },
+            { once: true },
+        );
+
+        img.addEventListener(
+            "error",
+            () => button.classList.add("is-broken"),
+            { once: true },
+        );
+
+        button.append(img);
+
+        if (media.type === "video") {
+            const badge = document.createElement("span");
+            badge.className = "video-badge";
+            badge.innerHTML = '<span class="video-play" aria-hidden="true"></span>Video';
+            button.append(badge);
+        }
+
+        button.addEventListener("click", () => openLightbox(button));
+        return button;
+    };
+
+    const renderYear = (year: number, pool: GalleryMedia[]) => {
+        const grid = document.querySelector<HTMLElement>(`[data-year-grid="${year}"]`);
+        if (!grid) return;
+
+        const selected = selectForYear(pool);
+        grid.replaceChildren();
+
+        if (!selected.length) {
+            const empty = document.createElement("div");
+            empty.className = "gallery-empty";
+            empty.textContent = "No photographs or videos are available for this year yet.";
+            grid.append(empty);
+            setCount(year, "No media yet");
+            return;
+        }
+
+        selected.forEach((media, index) => {
+            grid.append(makeTile(media, year, year === years[0] && index < 6));
+        });
+
+        for (let i = 0; i < 6; i += 1) {
+            const filler = document.createElement("i");
+            filler.className = "gallery-filler";
+            filler.setAttribute("aria-hidden", "true");
+            grid.append(filler);
+        }
+
+        const photos = selected.filter((item) => item.type === "image").length;
+        const videos = selected.filter((item) => item.type === "video").length;
+        setCount(
+            year,
+            videos ? `${photos} photos · ${videos} video${videos === 1 ? "" : "s"}` : `${photos} photos`,
+        );
+    };
+
+    const loadYear = (year: number) => {
+        if (loadedYears.has(year)) return Promise.resolve();
+        const existing = loadingYears.get(year);
+        if (existing) return existing;
+
+        const task = (async () => {
+            try {
+                const response = await fetch(`/api/gallery?year=${year}`, {
+                    headers: { accept: "application/json" },
+                });
+                if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
+
+                const data = (await response.json()) as GalleryResponse;
+                renderYear(year, data.media ?? []);
+                loadedYears.add(year);
+            } catch (error) {
+                console.error(`Unable to load gallery ${year}`, error);
+                const grid = document.querySelector<HTMLElement>(`[data-year-grid="${year}"]`);
+                if (grid) {
+                    const message = document.createElement("div");
+                    message.className = "gallery-error";
+                    message.textContent = "This year's archive could not be loaded right now.";
+                    grid.replaceChildren(message);
+                }
+                setCount(year, "Unavailable");
+            } finally {
+                loadingYears.delete(year);
+            }
+        })();
+
+        loadingYears.set(year, task);
+        return task;
+    };
+
+    const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-year-section]"),
+    );
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                const section = entry.target as HTMLElement;
+                const year = Number(section.dataset.yearSection);
+                void loadYear(year);
+                observer.unobserve(section);
+            }
+        },
+        { rootMargin: "500px 0px" },
+    );
+
+    for (const section of sections) observer.observe(section);
+    if (years[0]) void loadYear(years[0]);
 
     const applyFilter = (year: string) => {
-        visible = items.filter((item) => {
-            const match = year === "all" || item.dataset.year === year;
-            item.hidden = !match;
-            return match;
-        });
-        empty.hidden = visible.length > 0;
+        for (const section of sections) {
+            const show = year === "all" || section.dataset.yearSection === year;
+            section.hidden = !show;
+        }
+
+        if (year !== "all") {
+            const numericYear = Number(year);
+            void loadYear(numericYear);
+            document.querySelector(`[data-year-section="${year}"]`)?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
     };
 
     for (const chip of chips) {
         chip.addEventListener("click", () => {
-            for (const c of chips) c.classList.toggle("is-active", c === chip);
-            applyFilter(chip.dataset.year!);
+            for (const other of chips) other.classList.toggle("is-active", other === chip);
+            applyFilter(chip.dataset.year ?? "all");
         });
     }
 
-    // ── Lightbox ─────────────────────────────────────────────────────────
     const lightbox = document.getElementById("lightbox")!;
-    const lightboxImg = document.getElementById(
-        "lightbox-img",
-    ) as HTMLImageElement;
+    const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+    const lightboxVideo = document.getElementById("lightbox-video") as HTMLIFrameElement;
+    const caption = document.getElementById("lightbox-caption")!;
     const spinner = document.getElementById("lightbox-spinner")!;
     const btnClose = document.getElementById("lightbox-close")!;
     const btnPrev = document.getElementById("lightbox-prev")!;
@@ -480,19 +751,42 @@ const FILLER_COUNT = 6;
     let position = 0;
     let lastFocused: HTMLElement | null = null;
 
-    const show = (index: number) => {
+    const visibleItems = () =>
+        Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-item")).filter(
+            (item) => !item.closest<HTMLElement>(".year-section")?.hidden,
+        );
+
+    const showItem = (index: number) => {
+        const visible = visibleItems();
+        if (!visible.length) return;
+
         position = (index + visible.length) % visible.length;
         const item = visible[position];
+        const type = item.dataset.mediaType;
+        const source = item.dataset.full ?? "";
 
-        lightboxImg.classList.remove("is-loaded");
         spinner.hidden = false;
-        lightboxImg.src = item.dataset.full!;
-        lightboxImg.alt = item.querySelector("img")!.alt;
+        lightboxImg.hidden = true;
+        lightboxImg.classList.remove("is-loaded");
+        lightboxImg.removeAttribute("src");
+        lightboxVideo.hidden = true;
+        lightboxVideo.removeAttribute("src");
+        caption.textContent = item.dataset.caption ?? "";
 
-        // Warm the neighbours so arrowing through feels instant.
-        for (const offset of [1, -1]) {
-            const neighbour = visible[(position + offset + visible.length) % visible.length];
-            if (neighbour !== item) new Image().src = neighbour.dataset.full!;
+        if (type === "video") {
+            lightboxVideo.hidden = false;
+            lightboxVideo.src = source;
+        } else {
+            lightboxImg.hidden = false;
+            lightboxImg.src = source;
+            lightboxImg.alt = item.dataset.caption ?? "Pujo photograph";
+
+            for (const offset of [1, -1]) {
+                const neighbour = visible[(position + offset + visible.length) % visible.length];
+                if (neighbour?.dataset.mediaType === "image" && neighbour.dataset.full) {
+                    new Image().src = neighbour.dataset.full;
+                }
+            }
         }
     };
 
@@ -501,45 +795,44 @@ const FILLER_COUNT = 6;
         lightboxImg.classList.add("is-loaded");
     });
 
-    const open = (item: HTMLButtonElement) => {
+    lightboxVideo.addEventListener("load", () => {
+        spinner.hidden = true;
+    });
+
+    function openLightbox(item: HTMLButtonElement) {
+        const visible = visibleItems();
         lastFocused = item;
         lightbox.hidden = false;
         document.body.style.overflow = "hidden";
-        show(visible.indexOf(item));
+        showItem(Math.max(0, visible.indexOf(item)));
         btnClose.focus();
-    };
+    }
 
-    const close = () => {
+    const closeLightbox = () => {
         lightbox.hidden = true;
         document.body.style.overflow = "";
         lightboxImg.removeAttribute("src");
+        lightboxVideo.removeAttribute("src");
+        caption.textContent = "";
         lastFocused?.focus();
     };
 
-    for (const item of items) {
-        item.addEventListener("click", () => open(item));
-    }
+    btnClose.addEventListener("click", closeLightbox);
+    btnPrev.addEventListener("click", () => showItem(position - 1));
+    btnNext.addEventListener("click", () => showItem(position + 1));
 
-    btnClose.addEventListener("click", close);
-    btnPrev.addEventListener("click", () => show(position - 1));
-    btnNext.addEventListener("click", () => show(position + 1));
-
-    // Clicking the backdrop or the empty space around the photo closes; the
-    // photo itself and the controls don't (they have their own handlers).
     lightbox.addEventListener("click", (event) => {
         const target = event.target as HTMLElement;
-        if (target === lightbox || target.classList.contains("lightbox-stage"))
-            close();
+        if (target === lightbox || target.id === "lightbox-stage") closeLightbox();
     });
 
     document.addEventListener("keydown", (event) => {
         if (lightbox.hidden) return;
-        if (event.key === "Escape") close();
-        else if (event.key === "ArrowLeft") show(position - 1);
-        else if (event.key === "ArrowRight") show(position + 1);
+        if (event.key === "Escape") closeLightbox();
+        else if (event.key === "ArrowLeft") showItem(position - 1);
+        else if (event.key === "ArrowRight") showItem(position + 1);
     });
 
-    // Swipe between photos on touch devices.
     let touchStartX = 0;
     lightbox.addEventListener(
         "touchstart",
@@ -552,7 +845,7 @@ const FILLER_COUNT = 6;
         "touchend",
         (event) => {
             const dx = event.changedTouches[0].clientX - touchStartX;
-            if (Math.abs(dx) > 50) show(position + (dx < 0 ? 1 : -1));
+            if (Math.abs(dx) > 50) showItem(position + (dx < 0 ? 1 : -1));
         },
         { passive: true },
     );
