@@ -1,0 +1,221 @@
+/* Blood donation page refinements: homepage-aligned navigation and safe hero spacing. */
+
+.blood-shell .event-header {
+  background: linear-gradient(#9d0015, #850011) !important;
+  color: #fff7e8 !important;
+  border-bottom: 1px solid #d99d35 !important;
+  box-shadow: 0 3px 12px #4e000a45 !important;
+}
+
+.blood-shell .event-header::before {
+  display: none !important;
+}
+
+.blood-shell .header-inner {
+  width: min(1240px, calc(100% - 44px)) !important;
+  min-height: 54px !important;
+  grid-template-columns: 300px 1fr auto !important;
+  gap: 18px !important;
+}
+
+.blood-shell .brand {
+  gap: 10px !important;
+  color: #fff7e8 !important;
+}
+
+.blood-shell .brand img {
+  width: 50px !important;
+  height: 47px !important;
+}
+
+.blood-shell .brand span {
+  display: grid !important;
+  line-height: 1.02 !important;
+}
+
+.blood-shell .brand small,
+.blood-shell .brand strong {
+  color: #fff7e8 !important;
+  font-family: var(--font-heading) !important;
+}
+
+.blood-shell .brand small {
+  font-size: 12px !important;
+  font-weight: 650 !important;
+}
+
+.blood-shell .brand strong {
+  font-size: 19px !important;
+  font-weight: 750 !important;
+}
+
+.blood-shell .brand em {
+  display: none !important;
+}
+
+.blood-shell .desktop-nav {
+  gap: 25px !important;
+}
+
+.blood-shell .desktop-nav a {
+  color: #fff9ec !important;
+  padding: 18px 0 14px !important;
+  font: 650 14px var(--font-heading) !important;
+}
+
+.blood-shell .desktop-nav a:hover,
+.blood-shell .desktop-nav a.active {
+  color: #ffe09a !important;
+}
+
+.blood-shell .desktop-nav a.active::after,
+.blood-shell .desktop-nav a:hover::after {
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 6px !important;
+  height: 2px !important;
+  border-radius: 0 !important;
+  background: #f1ca70 !important;
+}
+
+.blood-shell .community-link {
+  min-height: 36px !important;
+  padding: 0 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  border-radius: 7px !important;
+  border: 1px solid #f5ce66 !important;
+  background: linear-gradient(#f8dc87, #e5ab3c) !important;
+  color: #880913 !important;
+  box-shadow: none !important;
+  font: 800 13px var(--font-heading) !important;
+}
+
+/* Keep all hero copy well below the central 20th-year logo artwork. */
+.blood-shell .hero {
+  min-height: 760px !important;
+}
+
+.blood-shell .hero-soften {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 246, 230, 0) 0 43%,
+    rgba(255, 247, 231, 0.35) 50%,
+    rgba(255, 248, 232, 0.9) 62%,
+    #fff8e8 86%,
+    #fff8e8 100%
+  ) !important;
+}
+
+.blood-shell .hero-copy {
+  top: 60.5% !important;
+  width: min(650px, 50vw) !important;
+}
+
+.blood-shell .hero h1 {
+  margin: 0 !important;
+  font-size: clamp(44px, 4.8vw, 74px) !important;
+  line-height: 0.96 !important;
+}
+
+.blood-shell .hero-note {
+  top: 64% !important;
+}
+
+@media (max-width: 1100px) {
+  .blood-shell .header-inner {
+    grid-template-columns: 250px 1fr auto !important;
+  }
+
+  .blood-shell .desktop-nav {
+    gap: 18px !important;
+  }
+
+  .blood-shell .hero {
+    min-height: 760px !important;
+  }
+
+  .blood-shell .hero-copy {
+    top: 59% !important;
+    width: min(660px, 60vw) !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .blood-shell .header-inner {
+    width: calc(100% - 32px) !important;
+    min-height: 54px !important;
+  }
+
+  .blood-shell .brand img {
+    width: 46px !important;
+    height: 43px !important;
+  }
+
+  .blood-shell .brand small {
+    font-size: 10px !important;
+  }
+
+  .blood-shell .brand strong {
+    font-size: 17px !important;
+  }
+
+  .blood-shell .menu-button {
+    color: #fff7e8 !important;
+  }
+
+  .blood-shell .mobile-nav {
+    background: linear-gradient(#960014, #7d000f) !important;
+    border-top: 1px solid #d99d35 !important;
+    box-shadow: 0 12px 26px #4e000a55 !important;
+  }
+
+  .blood-shell .mobile-nav a {
+    color: #fff9ec !important;
+  }
+
+  .blood-shell .mobile-nav a.active {
+    background: rgba(255, 255, 255, 0.09) !important;
+    color: #ffe09a !important;
+  }
+
+  .blood-shell .hero {
+    min-height: 790px !important;
+  }
+
+  .blood-shell .hero-copy {
+    top: 56% !important;
+    width: 86% !important;
+  }
+
+  .blood-shell .hero h1 {
+    font-size: clamp(46px, 9vw, 60px) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .blood-shell .brand span {
+    display: grid !important;
+  }
+
+  .blood-shell .brand small {
+    font-size: 9px !important;
+  }
+
+  .blood-shell .brand strong {
+    font-size: 15px !important;
+  }
+
+  .blood-shell .hero {
+    min-height: 820px !important;
+  }
+
+  .blood-shell .hero-copy {
+    top: 54% !important;
+    width: 90% !important;
+  }
+
+  .blood-shell .hero h1 {
+    font-size: 46px !important;
+  }
+}
