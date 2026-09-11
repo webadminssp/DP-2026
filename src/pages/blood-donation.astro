@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Heart from '@lucide/astro/icons/heart';
+import Users from '@lucide/astro/icons/users';
+
+const calendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Shriram+Samruddhi+Blood+Donation+Drive&dates=20260926T040000Z/20260926T090000Z&details=Blood+Donation+Drive+organised+by+Shriram+Samruddhi+Durga+Puja+Committee+with+Jeeva+Raksha+Blood+Centre.+A+Gift+of+Life+as+part+of+our+20th+year+celebration.&location=Shriram+Samruddhi+Club+House%2C+Bengaluru';
+const shareUrl = 'https://wa.me/?text=Join%20the%20Shriram%20Samruddhi%20Blood%20Donation%20Drive%20on%2026%20September%202026%2C%209%3A30%20AM%E2%80%932%3A30%20PM%20at%20the%20Club%20House.%20A%20Gift%20of%20Life%20for%20our%2020th%20year%20celebration.%20https%3A%2F%2Fshriramsamruddhipujo.org%2Fblood-donation';
+---
+
+<Layout title="Blood Donation Drive 2026 | Shriram Samruddhi Durga Pujo">
+  <main class="blood-page">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="chip"><Heart size={14} fill="currentColor" /> 20th Year • Community Seva</div>
+          <p class="bengali-text bengali">শারদীয়া দুর্গোৎসব • জীবনের উপহার</p>
+          <h1>Blood Donation <span>Drive</span></h1>
+          <p class="gift">A Gift of Life</p>
+          <p class="intro">This Pujo, let our 20th year be remembered not only for celebration, but for compassion. Join the Shriram Samruddhi community in giving something truly priceless — the gift of life.</p>
+          <div class="partner"><span>♥</span><div><small>In association with</small><strong>Jeeva Raksha Blood Centre</strong></div></div>
+          <div class="actions">
+            <a class="primary" href={calendarUrl} target="_blank" rel="noreferrer">＋ Add to Calendar</a>
+            <a class="secondary" href={shareUrl} target="_blank" rel="noreferrer">↗ Share with Neighbours</a>
+          </div>
+        </div>
+
+        <div class="poster" aria-label="Blood donation event summary">
+          <div class="poster-top"><span class="twenty">20<small>YEARS</small></span><span class="bengali-text">শারদীয়া<br />দুর্গোৎসব</span></div>
+          <div class="durga">◢ ◆ ◣</div>
+          <p class="poster-org">Shriram Samruddhi<br /><strong>Durga Puja Committee</strong></p>
+          <p class="celebrate">Celebrating 20 Years</p>
+          <div class="drop">♥</div>
+          <h2>BLOOD</h2>
+          <h3>DONATION DRIVE</h3>
+          <p class="with">With Associated <strong>Jeeva Raksha Blood Centre</strong></p>
+          <div class="poster-info"><span><b>26 SEP</b><small>2026</small></span><span><b>9:30 AM</b><small>to 2:30 PM</small></span><span><b>CLUB HOUSE</b><small>Venue</small></span></div>
+          <div class="save">DONATE BLOOD<br /><strong>SAVE LIVES</strong></div>
+          <p class="poster-gift">A Gift of Life!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="event-grid" aria-label="Event details">
+      <article><span>📅</span><div><small>Date</small><strong>26th September 2026</strong><p>Saturday</p></div></article>
+      <article><span>🕤</span><div><small>Time</small><strong>9:30 AM – 2:30 PM</strong><p>Five-hour donation window</p></div></article>
+      <article><span>📍</span><div><small>Venue</small><strong>Club House</strong><p>Shriram Samruddhi</p></div></article>
+    </section>
+
+    <section class="purpose section">
+      <div>
+        <p class="eyebrow">A celebration with purpose</p>
+        <h2>Let our 20th year become <em>A Gift of Life</em></h2>
+        <p>Durga Pujo brings our community together through faith, culture and togetherness. This year, we add another expression of that spirit: <strong>seva</strong>. Blood donation is a simple act of generosity that can support patients and families when they need it most.</p>
+        <blockquote><span class="bengali-text">“রক্তদান — জীবনের উপহার”</span><small>Donate blood. Give hope. Strengthen our community.</small></blockquote>
+      </div>
+      <aside><div class="big-heart">♥</div><h3>Donate Blood.<br /><span>Save Lives.</span></h3><p>Your single donation can make a life-saving difference.</p><div class="mini"><span><Heart size={17} /> Save a Life</span><span><Users size={17} /> Stronger Community</span></div></aside>
+    </section>
+
+    <section class="section journey">
+      <p class="eyebrow">What to expect</p>
+      <h2>A simple, guided donor journey</h2>
+      <p class="sub">The Jeeva Raksha Blood Centre team will manage the clinical process and confirm donor eligibility at the camp.</p>
+      <div class="steps">
+        <article><b>01</b><h3>Registration</h3><p>Check in with the camp team and provide the information required for donation.</p></article>
+        <article><b>02</b><h3>Health Screening</h3><p>A trained medical professional will review your eligibility and answer any questions.</p></article>
+        <article><b>03</b><h3>Blood Donation</h3><p>Eligible donors proceed with the donation under the supervision of the blood-centre team.</p></article>
+        <article><b>04</b><h3>Rest & Refresh</h3><p>Take a short rest after donating and follow the post-donation guidance given by the team.</p></article>
+      </div>
+    </section>
+
+    <section class="section prepare">
+      <p class="eyebrow">Before you arrive</p>
+      <h2>Prepare for a comfortable donation</h2>
+      <div class="checks">
+        <span>✓ Be well-rested before the camp.</span>
+        <span>✓ Eat a normal meal rather than arriving on an empty stomach.</span>
+        <span>✓ Stay well hydrated.</span>
+        <span>✓ Carry a valid photo ID if requested by the blood-centre team.</span>
+        <span>✓ Tell the medical team about medicines, recent illness or health concerns.</span>
+        <span>✓ Final donor eligibility is decided by the medical professionals at the camp.</span>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <p class="bengali-text">একটি ছোট্ট উদ্যোগ, কারও জীবনে বড় আশীর্বাদ</p>
+      <h2>Be part of our 20th year’s most meaningful celebration.</h2>
+      <strong>26th September 2026 • 9:30 AM – 2:30 PM • Club House</strong>
+      <div class="actions centered"><a class="primary" href={calendarUrl} target="_blank" rel="noreferrer">＋ Add to Calendar</a><a class="secondary" href={shareUrl} target="_blank" rel="noreferrer">↗ Share on WhatsApp</a></div>
+      <small>Medical screening and final donor eligibility will be managed by Jeeva Raksha Blood Centre.</small>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .blood-page{overflow:hidden;background:linear-gradient(#fffaf0,#fffdf9 55%,#fff5e5);color:#4d1017}.hero{position:relative;background:radial-gradient(circle at 80% 10%,#d39a4233,transparent 30%),linear-gradient(120deg,#4d000c,#8f0921 55%,#5a0010);border-bottom:1px solid #c78f36;color:#fff8e9}.hero-inner,.section{width:min(1120px,calc(100% - 36px));margin:auto}.hero-inner{min-height:720px;display:grid;grid-template-columns:1.15fr .7fr;gap:70px;align-items:center;padding:72px 0}.chip{width:fit-content;display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:linear-gradient(#f8d98f,#d79d3a);color:#45110c;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.bengali{margin:20px 0 6px;color:#f2cd82;font-size:1.25rem}.hero h1{margin:0;color:#fff8e9;font-size:clamp(4rem,7.5vw,7rem);line-height:.9;letter-spacing:-.05em}.hero h1 span{color:#efbb5f}.gift{margin:14px 0 0;color:#f5d99f;font-family:var(--font-heading);font-style:italic;font-size:clamp(2rem,4vw,3.4rem)}.intro{max-width:640px;margin:24px 0 0;color:#fff7e8cc;line-height:1.75}.partner{width:fit-content;display:flex;align-items:center;gap:11px;margin-top:25px;padding:10px 14px;border:1px solid #efc46655;border-radius:16px;background:#33000855}.partner>span{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#fff6e5;color:#9d0c23}.partner div{display:grid}.partner small{color:#fff3df99;font-size:.68rem}.partner strong{font-size:.92rem}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}.actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:11px;font-size:.84rem;font-weight:800;text-decoration:none}.primary{background:linear-gradient(#f9dda0,#dfa849);color:#411109}.secondary{border:1px solid #f0c97c77;background:#4b001155;color:#fff8e9}.poster{padding:25px;border:7px solid #d2a04b;border-radius:24px;background:radial-gradient(circle at 50% 10%,#fff,#fff7e7 35%,#fff0d0);color:#541019;text-align:center;box-shadow:0 28px 70px #24000566;transform:rotate(1deg)}.poster-top{display:flex;justify-content:space-between;align-items:flex-start;color:#970a22}.twenty{width:68px;height:68px;display:grid;place-items:center;border:3px solid #d7a13b;border-radius:50%;background:#8c071f;color:#ffe09b;font-family:var(--font-heading);font-size:2rem;font-weight:800;line-height:.72}.twenty small{font-family:var(--font-body);font-size:.45rem}.durga{margin:-4px 0 4px;color:#980a22;font-size:1.55rem;letter-spacing:.15rem}.poster-org{margin:0;font-family:var(--font-heading);font-size:1rem}.poster-org strong{font-size:1.35rem;color:#8f071e}.celebrate{margin:5px 0 10px;color:#9f7135;font-family:var(--font-heading);font-style:italic}.drop{width:48px;height:48px;display:grid;place-items:center;margin:0 auto 3px;border-radius:55% 55% 55% 0;transform:rotate(-45deg);background:#9f0c25;color:#fff;font-size:1.2rem}.drop{line-height:1}.poster h2{margin:0;color:#9c0a23;font-size:3rem;line-height:.85}.poster h3{margin:4px 0 0;color:#8d071e;font-size:1rem;letter-spacing:.08em}.with{margin:10px 0;color:#6f5147;font-size:.65rem}.with strong{color:#26376c;font-size:.76rem}.poster-info{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}.poster-info span{display:grid;padding:7px 4px;border:1px solid #ebd1a2;border-radius:8px;background:#fffaf0}.poster-info b{font-size:.62rem;color:#8e071e}.poster-info small{font-size:.52rem;color:#8c6d5d}.save{margin-top:10px;padding:9px;border-radius:8px;background:#8d071f;color:#fff7e8;font-size:.75rem;font-weight:850;letter-spacing:.05em}.save strong{color:#f4c65d;font-size:1.12rem}.poster-gift{margin:10px 0 0;color:#90071f;font-family:var(--font-heading);font-size:1.5rem;font-style:italic}.event-grid{position:relative;z-index:2;width:min(1060px,calc(100% - 32px));margin:-26px auto 0;display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;border:1px solid #e7d0a7;border-radius:18px;background:#fffdf8;box-shadow:0 18px 50px #6a220d22}.event-grid article{display:flex;align-items:center;gap:13px;padding:21px 22px}.event-grid article+article{border-left:1px solid #ead7b5}.event-grid article>span{font-size:1.55rem}.event-grid article div{display:grid}.event-grid small,.eyebrow{color:#9b0b24;font-size:.68rem;font-weight:850;text-transform:uppercase;letter-spacing:.11em}.event-grid strong{font-family:var(--font-heading);font-size:1.02rem}.event-grid p{margin:1px 0 0;color:#82675d;font-size:.72rem}.purpose{display:grid;grid-template-columns:1.1fr .65fr;gap:70px;align-items:center;padding:100px 0 84px}.purpose h2,.journey h2,.prepare h2,.final-cta h2{margin:0;color:#4e1017;font-size:clamp(2.25rem,4vw,4rem);line-height:1.03;letter-spacing:-.035em}.purpose h2 em{color:#a00b24;font-weight:500}.purpose>div>p:last-of-type,.sub{color:#735d54;line-height:1.75}.purpose blockquote{margin:26px 0 0;padding:17px 20px;border-left:4px solid #c99636;background:#fff1d5}.purpose blockquote span{display:block;color:#930920;font-size:1.2rem}.purpose blockquote small{color:#7d6256}.purpose aside{padding:34px;border-radius:28px;background:linear-gradient(145deg,#930820,#4e0010);color:#fff8e9;box-shadow:0 24px 60px #6b001222}.big-heart{color:#f3c45e;font-size:3.6rem;line-height:1}.purpose aside h3{margin:12px 0 0;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.98}.purpose aside h3 span{color:#f4c866}.purpose aside p{color:#fff8e9bb}.mini{display:grid;gap:8px;margin-top:23px}.mini span{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700}.journey{padding:66px 0 86px}.sub{max-width:750px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:30px}.steps article{padding:24px 21px;border:1px solid #e9d5b2;border-radius:18px;background:#ffffffaa}.steps b{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#90071f;color:#fff;font-family:var(--font-heading)}.steps h3{margin:18px 0 7px;color:#551018;font-size:1.25rem}.steps p{margin:0;color:#755f56;line-height:1.6;font-size:.88rem}.prepare{margin-bottom:92px;padding:42px;border:1px solid #dfc79d;border-radius:26px;background:#fff8e9;box-shadow:0 20px 60px #64220e15}.prepare h2{font-size:clamp(2rem,3.2vw,3rem)}.checks{display:grid;grid-template-columns:1fr 1fr;gap:13px 20px;margin-top:26px}.checks span{color:#675149;line-height:1.5;font-size:.9rem}.final-cta{padding:82px 18px;text-align:center;background:radial-gradient(circle at 50% 0,#d7a34444,transparent 38%),linear-gradient(140deg,#59000f,#940920 50%,#59000f);color:#fff8e9}.final-cta>p{margin:0 0 8px;color:#f1cd85;font-size:1.12rem}.final-cta h2{max-width:780px;margin:auto;color:#fff8e9}.final-cta>strong{display:block;margin-top:16px;color:#fff8e9bb}.centered{justify-content:center}.final-cta small{display:block;margin-top:18px;color:#fff8e988}.final-cta .secondary{background:#35000866}@media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-copy{display:grid;justify-items:center}.poster{width:min(410px,100%);margin:auto}.event-grid{margin-top:22px}.purpose{grid-template-columns:1fr}.purpose aside{max-width:620px}.steps{grid-template-columns:1fr 1fr}}@media(max-width:680px){.hero-inner{min-height:auto;padding:58px 0}.hero h1{font-size:clamp(3.6rem,18vw,5rem)}.event-grid{grid-template-columns:1fr}.event-grid article+article{border-left:0;border-top:1px solid #ead7b5}.purpose{padding:72px 0 60px}.steps{grid-template-columns:1fr}.prepare{padding:28px 22px}.checks{grid-template-columns:1fr}.actions{width:100%;justify-content:center}.actions a{flex:1 1 210px}.final-cta{padding:68px 18px}}
+</style>
