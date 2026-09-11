@@ -1,166 +1,199 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Heart from '@lucide/astro/icons/heart';
-import Users from '@lucide/astro/icons/users';
+import heroSite from '../assets/images/hero-site.webp';
+import headerAlpona from '../assets/images/header-base-alpona.svg';
+import footerAlpona from '../assets/images/footer-base-alpona.svg';
+import logoPart1 from '../data/dpc-logo-part1.txt?raw';
+import logoPart2 from '../data/dpc-logo-part2.txt?raw';
 
+const logo = `data:image/webp;base64,${logoPart1.trim()}${logoPart2.trim()}`;
 const calendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Shriram+Samruddhi+Blood+Donation+Drive&dates=20260926T040000Z/20260926T090000Z&details=Blood+Donation+Drive+organised+by+Shriram+Samruddhi+Durga+Puja+Committee+with+Jeeva+Raksha+Blood+Centre.+A+Gift+of+Life+as+part+of+our+20th+year+celebration.&location=Shriram+Samruddhi+Club+House%2C+Bengaluru';
-const shareUrl = 'https://wa.me/?text=Join%20the%20Shriram%20Samruddhi%20Blood%20Donation%20Drive%20on%2026%20September%202026%2C%209%3A30%20AM%E2%80%932%3A30%20PM%20at%20the%20Club%20House.%20A%20Gift%20of%20Life%20for%20our%2020th%20year%20celebration.%20https%3A%2F%2Fshriramsamruddhipujo.org%2Fblood-donation';
 const preRegistrationUrl = 'https://docs.google.com/spreadsheets/d/114wnIzvoJME0EHJJLBst9nUQUsZ1wGpE/edit?usp=drivesdk&ouid=105827145223768735098&rtpof=true&sd=true';
 ---
 
-<Layout title="Blood Donation Drive 2026 | Shriram Samruddhi Durga Pujo">
-  <main class="blood-page">
-    <section class="hero">
-      <div class="hero-inner">
+<Layout chrome={false} title="A Gift of Life | Blood Donation | Shriram Samruddhi Durga Pujo 2026">
+  <div class="blood-shell">
+    <header class="event-header" style={`--header-pattern:url(${headerAlpona.src})`}>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Shriram Samruddhi Durga Pujo home">
+          <img src={logo} alt="Shriram Samruddhi Durga Pujo 20th Year" />
+          <span><small>Shriram Samruddhi</small><strong>Durga Pujo</strong><em>20th Year Celebration</em></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          <a href="/">Home</a><a href="/about">About</a><a href="/schedule">Schedule</a><a class="active" href="/blood-donation">Blood Donation</a><a href="/gallery">Gallery</a>
+        </nav>
+        <a class="community-link" href="/#contact">Join Our Community</a>
+        <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" data-menu-button>☰</button>
+      </div>
+      <nav class="mobile-nav" aria-label="Mobile navigation" data-mobile-menu hidden>
+        <a href="/">Home</a><a href="/about">About</a><a href="/schedule">Schedule</a><a class="active" href="/blood-donation">Blood Donation</a><a href="/gallery">Gallery</a><a href="/#contact">Join Our Community</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="A Gift of Life blood donation event">
+        <img src={heroSite.src} class="hero-art" alt="Shriram Samruddhi Durga Pujo 20th year festive arch with dhak players" fetchpriority="high" />
+        <div class="hero-soften" aria-hidden="true"></div>
         <div class="hero-copy">
-          <div class="chip"><Heart size={14} fill="currentColor" /> 20th Year • Community Seva</div>
-          <p class="bengali-text bengali">শারদীয়া দুর্গোৎসব • জীবনের উপহার</p>
-          <h1>Blood Donation <span>Drive</span></h1>
-          <p class="gift">A Gift of Life</p>
-          <p class="intro">This Pujo, let our 20th year be remembered not only for celebration, but for compassion. Join the Shriram Samruddhi community in giving something truly priceless — the gift of life.</p>
-          <div class="partner"><span>♥</span><div><small>In association with</small><strong>Jeeva Raksha Blood Centre</strong></div></div>
-          <div class="actions">
-            <a class="primary" href={preRegistrationUrl} target="_blank" rel="noopener noreferrer">Pre-register to Donate →</a>
-            <a class="secondary" href={calendarUrl} target="_blank" rel="noreferrer">＋ Add to Calendar</a>
-            <a class="secondary" href={shareUrl} target="_blank" rel="noreferrer">↗ Share with Neighbours</a>
-          </div>
-        </div>
+          <p class="committee">Shriram Samruddhi Durga Puja Committee</p>
+          <p class="heritage">Continuing our tradition of service</p>
+          <h1>A Gift of Life</h1>
+          <div class="hero-rule" aria-hidden="true"><span></span><b>♥</b><span></span></div>
+          <p class="event-line">Community Blood Donation <i>•</i> 26 September 2026</p>
+          <p class="save-line">Donate Blood, Save Lives</p>
+          <p class="together">Together for a healthier, stronger community</p>
 
-        <div class="poster" aria-label="Blood donation event summary">
-          <div class="poster-top"><span class="twenty">20<small>YEARS</small></span><span class="bengali-text">শারদীয়া<br />দুর্গোৎসব</span></div>
-          <div class="durga">◢ ◆ ◣</div>
-          <p class="poster-org">Shriram Samruddhi<br /><strong>Durga Puja Committee</strong></p>
-          <p class="celebrate">Celebrating 20 Years</p>
-          <div class="drop">♥</div>
-          <h2>BLOOD</h2>
-          <h3>DONATION DRIVE</h3>
-          <p class="with">With Associated <strong>Jeeva Raksha Blood Centre</strong></p>
-          <div class="poster-info"><span><b>26 SEP</b><small>2026</small></span><span><b>9:30 AM</b><small>to 2:30 PM</small></span><span><b>CLUB HOUSE</b><small>Venue</small></span></div>
-          <div class="save">DONATE BLOOD<br /><strong>SAVE LIVES</strong></div>
-          <p class="poster-gift">A Gift of Life!</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="event-grid" aria-label="Event details">
-      <article><span>📅</span><div><small>Date</small><strong>26th September 2026</strong><p>Saturday</p></div></article>
-      <article><span>🕤</span><div><small>Time</small><strong>9:30 AM – 2:30 PM</strong><p>Five-hour donation window</p></div></article>
-      <article><span>📍</span><div><small>Venue</small><strong>Club House</strong><p>Shriram Samruddhi</p></div></article>
-    </section>
-
-    <section class="purpose section">
-      <div>
-        <p class="eyebrow">A celebration with purpose</p>
-        <h2>Let our 20th year become <em>A Gift of Life</em></h2>
-        <p>Durga Pujo brings our community together through faith, culture and togetherness. This year, we add another expression of that spirit: <strong>seva</strong>. Blood donation is a simple act of generosity that can support patients and families when they need it most.</p>
-        <blockquote><span class="bengali-text">“রক্তদান — জীবনের উপহার”</span><small>Donate blood. Give hope. Strengthen our community.</small></blockquote>
-      </div>
-      <aside><div class="big-heart">♥</div><h3>Donate Blood.<br /><span>Save Lives.</span></h3><p>Your single donation can make a life-saving difference.</p><div class="mini"><span><Heart size={17} /> Save a Life</span><span><Users size={17} /> Stronger Community</span></div></aside>
-    </section>
-
-    <section class="section prereg" id="pre-register" aria-labelledby="pre-register-title">
-      <div class="prereg-shell">
-        <div class="prereg-copy">
-          <div class="prereg-kicker"><span class="pulse-dot"></span> Resident Pre-Registration is Open</div>
-          <p class="prereg-overline">Help us plan a smooth donation experience</p>
-          <h2 id="pre-register-title">Planning to donate?<br /><em>Please pre-register.</em></h2>
-          <p class="prereg-intro">A quick pre-registration helps the committee and Jeeva Raksha Blood Centre plan donor flow, preferred time slots and on-site support. It takes only a minute and makes the day easier for everyone.</p>
-
-          <div class="prereg-benefits" aria-label="Pre-registration benefits">
-            <span><b>01</b><i>Basic details</i><small>Name, mobile number, block and flat</small></span>
-            <span><b>02</b><i>Your preferred slot</i><small>Choose a convenient donation time</small></span>
-            <span><b>03</b><i>Simple & safe</i><small>No sensitive medical information required</small></span>
+          <div class="partner-card">
+            <span class="partner-symbol" aria-hidden="true">♥</span>
+            <span><small>In association with</small><strong>Jeeva Raksha Blood Centre</strong><em>Save a Life • Give Hope • Stronger Community</em></span>
           </div>
 
-          <div class="prereg-action-row">
-            <a class="prereg-button" href={preRegistrationUrl} target="_blank" rel="noopener noreferrer">
-              <span class="button-heart">♥</span>
-              <span><small>Open the shared sheet</small><strong>Pre-register Now</strong></span>
-              <b aria-hidden="true">→</b>
-            </a>
-            <p>Already registered? Thank you. Please arrive close to your selected time slot.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href={preRegistrationUrl} target="_blank" rel="noopener noreferrer"><span>✓</span> Pre-register Now <b>→</b></a>
+            <a class="btn btn-light" href={calendarUrl} target="_blank" rel="noopener noreferrer"><span>▣</span> Add to Calendar</a>
           </div>
         </div>
+        <p class="hero-note left">Same tradition.<br /><strong>Bigger impact.</strong></p>
+        <p class="hero-note right">A stronger community<br /><strong>through compassion.</strong></p>
+      </section>
 
-        <aside class="prereg-side" aria-label="Blood donation drive pre-registration summary">
-          <div class="prereg-medallion"><strong>20</strong><span>YEARS</span></div>
-          <div class="prereg-rule"><span></span><Heart size={16} fill="currentColor" /><span></span></div>
-          <p class="prereg-side-label">Shriram Samruddhi</p>
-          <h3>Blood Donation Drive</h3>
-          <p class="prereg-side-gift">A Gift of Life</p>
-          <dl>
-            <div><dt>Date</dt><dd>26 September 2026</dd></div>
-            <div><dt>Time</dt><dd>9:30 AM – 2:30 PM</dd></div>
-            <div><dt>Venue</dt><dd>Club House</dd></div>
-          </dl>
-          <p class="prereg-side-partner">In association with<br /><strong>Jeeva Raksha Blood Centre</strong></p>
-        </aside>
-      </div>
-    </section>
+      <section class="paper-section event-details">
+        <div class="section-heading">
+          <span>❖</span><div><h2>Event Details</h2><p>Mark your calendar and be a part of this noble cause</p></div><span>❖</span>
+        </div>
+        <div class="detail-grid">
+          <article><span class="round-icon">▣</span><div><small>Date</small><strong>26 September 2026</strong><p>Saturday</p></div></article>
+          <article><span class="round-icon">◷</span><div><small>Time</small><strong>9:30 AM – 2:30 PM</strong><p>Five-hour donation window</p></div></article>
+          <article><span class="round-icon">●</span><div><small>Venue</small><strong>Club House</strong><p>Shriram Samruddhi</p></div></article>
+        </div>
+      </section>
 
-    <section class="section journey">
-      <p class="eyebrow">What to expect</p>
-      <h2>A simple, guided donor journey</h2>
-      <p class="sub">The Jeeva Raksha Blood Centre team will manage the clinical process and confirm donor eligibility at the camp.</p>
-      <div class="steps">
-        <article><b>01</b><h3>Registration</h3><p>Check in with the camp team and provide the information required for donation.</p></article>
-        <article><b>02</b><h3>Health Screening</h3><p>A trained medical professional will review your eligibility and answer any questions.</p></article>
-        <article><b>03</b><h3>Blood Donation</h3><p>Eligible donors proceed with the donation under the supervision of the blood-centre team.</p></article>
-        <article><b>04</b><h3>Rest & Refresh</h3><p>Take a short rest after donating and follow the post-donation guidance given by the team.</p></article>
-      </div>
-    </section>
+      <section class="paper-section why-donate">
+        <div class="section-heading compact">
+          <span>❖</span><div><h2>Why Donate?</h2><p>A small act can make a big difference</p></div><span>❖</span>
+        </div>
+        <div class="why-layout">
+          <div class="why-grid">
+            <article><span>♥</span><h3>Save Lives</h3><p>Your donation can help someone in urgent need.</p></article>
+            <article><span>♟</span><h3>Support Community</h3><p>Stronger, healthier communities for tomorrow.</p></article>
+            <article><span>♥</span><h3>Give Hope</h3><p>A new chance at life for patients and families.</p></article>
+            <article><span>✦</span><h3>Be a Hero</h3><p>Real people. Real impact. A safer tomorrow.</p></article>
+          </div>
+          <aside class="donate-note"><span class="drop-mark">♥</span><strong>Donate Blood.<br />Save Lives.</strong></aside>
+        </div>
+      </section>
 
-    <section class="section prepare">
-      <p class="eyebrow">Before you arrive</p>
-      <h2>Prepare for a comfortable donation</h2>
-      <div class="checks">
-        <span>✓ Be well-rested before the camp.</span>
-        <span>✓ Eat a normal meal rather than arriving on an empty stomach.</span>
-        <span>✓ Stay well hydrated.</span>
-        <span>✓ Carry a valid photo ID if requested by the blood-centre team.</span>
-        <span>✓ Tell the medical team about medicines, recent illness or health concerns.</span>
-        <span>✓ Final donor eligibility is decided by the medical professionals at the camp.</span>
-      </div>
-    </section>
+      <section class="paper-section prereg" id="pre-register" aria-labelledby="pre-register-title">
+        <div class="prereg-card">
+          <div class="clip-art" aria-hidden="true"><span>✓</span></div>
+          <div class="prereg-copy">
+            <p>Be a part of it</p>
+            <h2 id="pre-register-title">Please Pre-register</h2>
+            <p class="prereg-text">All residents planning to donate are requested to pre-register in the shared registration sheet. It helps us plan donor flow, preferred time slots and on-site support so the experience is smooth and comfortable for everyone.</p>
+          </div>
+          <a class="prereg-button" href={preRegistrationUrl} target="_blank" rel="noopener noreferrer">Pre-register Now <span>→</span></a>
+          <p class="hand-note">Your registration<br /><strong>can save a life.</strong></p>
+        </div>
+      </section>
 
-    <section class="final-cta">
-      <p class="bengali-text">একটি ছোট্ট উদ্যোগ, কারও জীবনে বড় আশীর্বাদ</p>
-      <h2>Be part of our 20th year’s most meaningful celebration.</h2>
-      <strong>26th September 2026 • 9:30 AM – 2:30 PM • Club House</strong>
-      <div class="actions centered">
-        <a class="primary" href={preRegistrationUrl} target="_blank" rel="noopener noreferrer">Pre-register to Donate →</a>
-        <a class="secondary" href={calendarUrl} target="_blank" rel="noreferrer">＋ Add to Calendar</a>
-        <a class="secondary" href={shareUrl} target="_blank" rel="noreferrer">↗ Share on WhatsApp</a>
+      <section class="paper-section dual-panels">
+        <article class="info-panel">
+          <div class="section-heading mini"><span>❖</span><div><h2>What to Expect</h2><p>A safe, simple and well-organised process</p></div><span>❖</span></div>
+          <div class="mini-grid">
+            <span><b>▤</b><strong>Quick Registration</strong><small>Check in with the camp team</small></span>
+            <span><b>⌁</b><strong>Health Check-up</strong><small>Eligibility reviewed by medical staff</small></span>
+            <span><b>♥</b><strong>Safe Donation</strong><small>Supervised by the blood-centre team</small></span>
+            <span><b>☕</b><strong>Refreshments</strong><small>Rest briefly after donation</small></span>
+          </div>
+        </article>
+        <article class="info-panel">
+          <div class="section-heading mini"><span>❖</span><div><h2>Before You Arrive</h2><p>A few simple tips for a smooth donation experience</p></div><span>❖</span></div>
+          <div class="mini-grid">
+            <span><b>♨</b><strong>Have a Healthy Meal</strong><small>Do not arrive on an empty stomach</small></span>
+            <span><b>●</b><strong>Stay Hydrated</strong><small>Drink enough water beforehand</small></span>
+            <span><b>☾</b><strong>Get Adequate Rest</strong><small>Be well-rested before the camp</small></span>
+            <span><b>▣</b><strong>Carry Photo ID</strong><small>If requested by the medical team</small></span>
+          </div>
+        </article>
+      </section>
+
+      <section class="closing" style={`--footer-pattern:url(${footerAlpona.src})`}>
+        <p>“ A safer tomorrow is in our hands ”</p>
+        <div><span>Donate Blood</span><b>•</b><span>Spread Hope</span><b>•</b><span>Build a Stronger Community</span></div>
+        <small>Final donor eligibility and medical screening will be managed by Jeeva Raksha Blood Centre.</small>
+      </section>
+    </main>
+
+    <footer class="event-footer" style={`--footer-pattern:url(${footerAlpona.src})`}>
+      <div class="footer-inner">
+        <a class="footer-brand" href="/"><img src={logo} alt="" /><span><strong>Shriram Samruddhi Durga Pujo</strong><small>20th Year Celebration</small></span></a>
+        <nav><a href="/">Home</a><a href="/about">About</a><a href="/schedule">Schedule</a><a href="/blood-donation">Blood Donation</a><a href="/gallery">Gallery</a></nav>
+        <p>❖ <span>Together<br />We Make a Difference</span></p>
       </div>
-      <small>Medical screening and final donor eligibility will be managed by Jeeva Raksha Blood Centre.</small>
-    </section>
-  </main>
+    </footer>
+  </div>
 </Layout>
 
 <style>
-  .blood-page{overflow:hidden;background:linear-gradient(#fffaf0,#fffdf9 55%,#fff5e5);color:#4d1017}
-  .hero{position:relative;background:radial-gradient(circle at 80% 10%,#d39a4233,transparent 30%),linear-gradient(120deg,#4d000c,#8f0921 55%,#5a0010);border-bottom:1px solid #c78f36;color:#fff8e9}
-  .hero-inner,.section{width:min(1120px,calc(100% - 36px));margin:auto}
-  .hero-inner{min-height:720px;display:grid;grid-template-columns:1.15fr .7fr;gap:70px;align-items:center;padding:72px 0}
-  .chip{width:fit-content;display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:linear-gradient(#f8d98f,#d79d3a);color:#45110c;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
-  .bengali{margin:20px 0 6px;color:#f2cd82;font-size:1.25rem}
-  .hero h1{margin:0;color:#fff8e9;font-size:clamp(4rem,7.5vw,7rem);line-height:.9;letter-spacing:-.05em}.hero h1 span{color:#efbb5f}
-  .gift{margin:14px 0 0;color:#f5d99f;font-family:var(--font-heading);font-style:italic;font-size:clamp(2rem,4vw,3.4rem)}
-  .intro{max-width:640px;margin:24px 0 0;color:#fff7e8cc;line-height:1.75}
-  .partner{width:fit-content;display:flex;align-items:center;gap:11px;margin-top:25px;padding:10px 14px;border:1px solid #efc46655;border-radius:16px;background:#33000855}
-  .partner>span{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#fff6e5;color:#9d0c23}.partner div{display:grid}.partner small{color:#fff3df99;font-size:.68rem}.partner strong{font-size:.92rem}
-  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}.actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:11px;font-size:.84rem;font-weight:800;text-decoration:none}.primary{background:linear-gradient(#f9dda0,#dfa849);color:#411109}.secondary{border:1px solid #f0c97c77;background:#4b001155;color:#fff8e9}
-  .poster{padding:25px;border:7px solid #d2a04b;border-radius:24px;background:radial-gradient(circle at 50% 10%,#fff,#fff7e7 35%,#fff0d0);color:#541019;text-align:center;box-shadow:0 28px 70px #24000566;transform:rotate(1deg)}
-  .poster-top{display:flex;justify-content:space-between;align-items:flex-start;color:#970a22}.twenty{width:68px;height:68px;display:grid;place-items:center;border:3px solid #d7a13b;border-radius:50%;background:#8c071f;color:#ffe09b;font-family:var(--font-heading);font-size:2rem;font-weight:800;line-height:.72}.twenty small{font-family:var(--font-body);font-size:.45rem}.durga{margin:-4px 0 4px;color:#980a22;font-size:1.55rem;letter-spacing:.15rem}.poster-org{margin:0;font-family:var(--font-heading);font-size:1rem}.poster-org strong{font-size:1.35rem;color:#8f071e}.celebrate{margin:5px 0 10px;color:#9f7135;font-family:var(--font-heading);font-style:italic}.drop{width:48px;height:48px;display:grid;place-items:center;margin:0 auto 3px;border-radius:55% 55% 55% 0;transform:rotate(-45deg);background:#9f0c25;color:#fff;font-size:1.2rem;line-height:1}.poster h2{margin:0;color:#9c0a23;font-size:3rem;line-height:.85}.poster h3{margin:4px 0 0;color:#8d071e;font-size:1rem;letter-spacing:.08em}.with{margin:10px 0;color:#6f5147;font-size:.65rem}.with strong{color:#26376c;font-size:.76rem}.poster-info{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}.poster-info span{display:grid;padding:7px 4px;border:1px solid #ebd1a2;border-radius:8px;background:#fffaf0}.poster-info b{font-size:.62rem;color:#8e071e}.poster-info small{font-size:.52rem;color:#8c6d5d}.save{margin-top:10px;padding:9px;border-radius:8px;background:#8d071f;color:#fff7e8;font-size:.75rem;font-weight:850;letter-spacing:.05em}.save strong{color:#f4c65d;font-size:1.12rem}.poster-gift{margin:10px 0 0;color:#90071f;font-family:var(--font-heading);font-size:1.5rem;font-style:italic}
-  .event-grid{position:relative;z-index:2;width:min(1060px,calc(100% - 32px));margin:-26px auto 0;display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;border:1px solid #e7d0a7;border-radius:18px;background:#fffdf8;box-shadow:0 18px 50px #6a220d22}.event-grid article{display:flex;align-items:center;gap:13px;padding:21px 22px}.event-grid article+article{border-left:1px solid #ead7b5}.event-grid article>span{font-size:1.55rem}.event-grid article div{display:grid}.event-grid small,.eyebrow{color:#9b0b24;font-size:.68rem;font-weight:850;text-transform:uppercase;letter-spacing:.11em}.event-grid strong{font-family:var(--font-heading);font-size:1.02rem}.event-grid p{margin:1px 0 0;color:#82675d;font-size:.72rem}
-  .purpose{display:grid;grid-template-columns:1.1fr .65fr;gap:70px;align-items:center;padding:100px 0 84px}.purpose h2,.journey h2,.prepare h2,.final-cta h2{margin:0;color:#4e1017;font-size:clamp(2.25rem,4vw,4rem);line-height:1.03;letter-spacing:-.035em}.purpose h2 em{color:#a00b24;font-weight:500}.purpose>div>p:last-of-type,.sub{color:#735d54;line-height:1.75}.purpose blockquote{margin:26px 0 0;padding:17px 20px;border-left:4px solid #c99636;background:#fff1d5}.purpose blockquote span{display:block;color:#930920;font-size:1.2rem}.purpose blockquote small{color:#7d6256}.purpose aside{padding:34px;border-radius:28px;background:linear-gradient(145deg,#930820,#4e0010);color:#fff8e9;box-shadow:0 24px 60px #6b001222}.big-heart{color:#f3c45e;font-size:3.6rem;line-height:1}.purpose aside h3{margin:12px 0 0;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.98}.purpose aside h3 span{color:#f4c866}.purpose aside p{color:#fff8e9bb}.mini{display:grid;gap:8px;margin-top:23px}.mini span{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700}
+  :global(html){scroll-behavior:smooth}
+  :global(body){margin:0;background:#fff8e8;color:#51251f}
+  .blood-shell{--crimson:#980d1b;--deep:#6e0712;--gold:#cc8c2d;--gold2:#efc96f;--cream:#fff8e8;--cream2:#fffdf5;--ink:#56352d;min-height:100vh;background:var(--cream);font-family:var(--font-body)}
 
-  .prereg{padding:10px 0 96px}.prereg-shell{position:relative;display:grid;grid-template-columns:1.35fr .65fr;overflow:hidden;border:1px solid #d6a94e;border-radius:34px;background:linear-gradient(122deg,#52000e 0%,#85051d 56%,#4b000c 100%);box-shadow:0 34px 85px #53000e30}.prereg-shell:before{content:"";position:absolute;inset:-70% 46% auto -12%;height:520px;border-radius:50%;background:radial-gradient(circle,#efc76f24,transparent 68%);pointer-events:none}.prereg-shell:after{content:"";position:absolute;right:-80px;bottom:-105px;width:300px;height:300px;border:1px solid #efcb7c38;border-radius:50%;box-shadow:0 0 0 24px #efcb7c10,0 0 0 50px #efcb7c0a;pointer-events:none}.prereg-copy{position:relative;z-index:1;padding:58px 58px 54px;color:#fff7e7}.prereg-kicker{width:fit-content;display:flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid #f3ca7260;border-radius:999px;background:#2f00094d;color:#f5d58f;font-size:.73rem;font-weight:850;text-transform:uppercase;letter-spacing:.09em}.pulse-dot{width:8px;height:8px;border-radius:50%;background:#f1bd57;box-shadow:0 0 0 5px #f1bd5720}.prereg-overline{margin:28px 0 8px;color:#f0c779;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em}.prereg h2{max-width:780px;margin:0;color:#fff9ec;font-size:clamp(2.5rem,4.5vw,4.5rem);line-height:.98;letter-spacing:-.04em}.prereg h2 em{color:#f2c76e;font-weight:520}.prereg-intro{max-width:680px;margin:22px 0 0;color:#fff5e4c9;line-height:1.7}.prereg-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:31px}.prereg-benefits span{min-width:0;padding:15px;border:1px solid #f0c77435;border-radius:16px;background:#2e000944}.prereg-benefits b{display:grid;place-items:center;width:30px;height:30px;margin-bottom:10px;border-radius:50%;background:#f0c46a;color:#4b000c;font-size:.7rem}.prereg-benefits i{display:block;color:#fff8ea;font-style:normal;font-size:.82rem;font-weight:800}.prereg-benefits small{display:block;margin-top:3px;color:#f8e9ceb0;font-size:.7rem;line-height:1.35}.prereg-action-row{display:flex;align-items:center;gap:18px;margin-top:30px}.prereg-button{min-width:285px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:13px 16px;border-radius:17px;background:linear-gradient(180deg,#ffe2a0,#dfa344);color:#3c0807;text-decoration:none;box-shadow:0 13px 30px #25000544,inset 0 1px 0 #fff8;transition:transform .18s ease,box-shadow .18s ease}.prereg-button:hover{transform:translateY(-2px);box-shadow:0 16px 34px #25000555,inset 0 1px 0 #fff8}.button-heart{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#8d071f;color:#fff7e7;font-size:1.1rem}.prereg-button>span:nth-child(2){display:grid}.prereg-button small{font-size:.63rem;font-weight:750;opacity:.72}.prereg-button strong{font-size:1rem}.prereg-button>b{font-size:1.35rem}.prereg-action-row p{max-width:270px;margin:0;color:#fff2de99;font-size:.72rem;line-height:1.45}.prereg-side{position:relative;z-index:1;display:grid;align-content:center;justify-items:center;padding:45px 32px;border-left:1px solid #efc8734a;background:linear-gradient(165deg,#fff9eb 0%,#ffedca 100%);color:#4d1017;text-align:center}.prereg-medallion{width:96px;height:96px;display:grid;place-items:center;align-content:center;border:4px double #d39a36;border-radius:50%;background:radial-gradient(circle at 35% 25%,#a8172c,#780317 70%);color:#f9d887;box-shadow:0 10px 30px #6a00152d}.prereg-medallion strong{font-family:var(--font-heading);font-size:2.8rem;line-height:.75}.prereg-medallion span{margin-top:7px;font-size:.56rem;font-weight:900;letter-spacing:.16em}.prereg-rule{width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:24px 0 18px;color:#9c0b24}.prereg-rule span{height:1px;background:#d8b065}.prereg-side-label{margin:0;color:#9e7335;font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.14em}.prereg-side h3{margin:6px 0 0;color:#6d0718;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1}.prereg-side-gift{margin:7px 0 20px;color:#a00c24;font-family:var(--font-heading);font-size:1.35rem;font-style:italic}.prereg-side dl{width:100%;margin:0;display:grid;gap:8px}.prereg-side dl div{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid #d9bd874f}.prereg-side dt{color:#9b724c;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.prereg-side dd{margin:0;color:#581119;font-size:.76rem;font-weight:850;text-align:right}.prereg-side-partner{margin:20px 0 0;padding-top:17px;border-top:1px solid #d9bd874f;color:#806758;font-size:.67rem;line-height:1.45}.prereg-side-partner strong{color:#26376c;font-size:.76rem}
+  .event-header{position:sticky;top:0;z-index:80;background:#fff9ea;border-bottom:1px solid #d8ad62;box-shadow:0 4px 18px #62360f1f;isolation:isolate}
+  .event-header::before{content:"";position:absolute;inset:0;z-index:-1;background-image:var(--header-pattern);background-size:560px auto;background-position:left -115px top -72px;opacity:.09;pointer-events:none}
+  .header-inner{width:min(1240px,calc(100% - 32px));min-height:70px;margin:auto;display:grid;grid-template-columns:300px 1fr auto;gap:24px;align-items:center}
+  .brand{display:flex;align-items:center;gap:10px;color:#721019;text-decoration:none}.brand img{width:60px;height:56px;object-fit:contain}.brand span{display:grid;line-height:1}.brand small{font:650 12px var(--font-heading);color:#6a4335}.brand strong{font:800 22px/1 var(--font-heading);color:#94101a}.brand em{margin-top:3px;font:700 9px var(--font-body);font-style:normal;color:#a76e28;letter-spacing:.03em;text-transform:uppercase}
+  .desktop-nav{display:flex;align-items:center;justify-content:center;gap:30px}.desktop-nav a{position:relative;padding:25px 0 20px;color:#3f2e2a;text-decoration:none;font:650 14px var(--font-heading)}.desktop-nav a:hover,.desktop-nav a.active{color:#a10d1d}.desktop-nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:13px;height:2px;border-radius:99px;background:#b40d20}
+  .community-link{padding:11px 18px;border:1px solid #9c1420;border-radius:7px;background:linear-gradient(#a51220,#7d0915);color:#fff6e7;text-decoration:none;font:750 13px var(--font-heading);box-shadow:inset 0 0 0 2px #e9b14a55,0 5px 14px #6a140d20}
+  .menu-button,.mobile-nav{display:none}
 
-  .journey{padding:66px 0 86px}.sub{max-width:750px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:30px}.steps article{padding:24px 21px;border:1px solid #e9d5b2;border-radius:18px;background:#ffffffaa}.steps b{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#90071f;color:#fff;font-family:var(--font-heading)}.steps h3{margin:18px 0 7px;color:#551018;font-size:1.25rem}.steps p{margin:0;color:#755f56;line-height:1.6;font-size:.88rem}
-  .prepare{margin-bottom:92px;padding:42px;border:1px solid #dfc79d;border-radius:26px;background:#fff8e9;box-shadow:0 20px 60px #64220e15}.prepare h2{font-size:clamp(2rem,3.2vw,3rem)}.checks{display:grid;grid-template-columns:1fr 1fr;gap:13px 20px;margin-top:26px}.checks span{color:#675149;line-height:1.5;font-size:.9rem}
-  .final-cta{padding:82px 18px;text-align:center;background:radial-gradient(circle at 50% 0,#d7a34444,transparent 38%),linear-gradient(140deg,#59000f,#940920 50%,#59000f);color:#fff8e9}.final-cta>p{margin:0 0 8px;color:#f1cd85;font-size:1.12rem}.final-cta h2{max-width:780px;margin:auto;color:#fff8e9}.final-cta>strong{display:block;margin-top:16px;color:#fff8e9bb}.centered{justify-content:center}.final-cta small{display:block;margin-top:18px;color:#fff8e988}.final-cta .secondary{background:#35000866}
-  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-copy{display:grid;justify-items:center}.poster{width:min(410px,100%);margin:auto}.event-grid{margin-top:22px}.purpose{grid-template-columns:1fr}.purpose aside{max-width:620px}.prereg-shell{grid-template-columns:1fr}.prereg-side{border-left:0;border-top:1px solid #efc8734a}.prereg-benefits{grid-template-columns:1fr 1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
-  @media(max-width:680px){.hero-inner{min-height:auto;padding:58px 0}.hero h1{font-size:clamp(3.6rem,18vw,5rem)}.event-grid{grid-template-columns:1fr}.event-grid article+article{border-left:0;border-top:1px solid #ead7b5}.purpose{padding:72px 0 60px}.prereg{padding-bottom:70px}.prereg-copy{padding:38px 24px}.prereg-benefits{grid-template-columns:1fr}.prereg-action-row{align-items:stretch;flex-direction:column}.prereg-button{min-width:0;width:100%}.prereg-action-row p{max-width:none}.prereg-side{padding:38px 24px}.steps{grid-template-columns:1fr}.prepare{padding:28px 22px}.checks{grid-template-columns:1fr}.actions{width:100%;justify-content:center}.actions a{flex:1 1 210px}.final-cta{padding:68px 18px}}
-  @media(prefers-reduced-motion:reduce){.prereg-button{transition:none}.prereg-button:hover{transform:none}}
+  main{overflow:hidden;background:#fff9eb}
+  .hero{position:relative;isolation:isolate;min-height:680px;background:#fff5dc;overflow:hidden;border-bottom:1px solid #dba755}
+  .hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:-3}
+  .hero-soften{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,#fff6e600 0 36%,#fff7e7b8 50%,#fff8e8ef 74%,#fff8e8 100%)}
+  .hero-copy{position:absolute;left:50%;top:46%;transform:translateX(-50%);width:min(650px,50vw);text-align:center;color:#5d241e;text-shadow:0 1px #fff9ef;display:flex;flex-direction:column;align-items:center}
+  .committee{margin:0;color:#2b3760;font:750 clamp(13px,1.15vw,18px) var(--font-heading)}
+  .heritage{margin:4px 0 0;color:#6d584c;font:600 clamp(11px,.9vw,14px) var(--font-heading);font-style:italic;letter-spacing:.02em}
+  .hero h1{margin:12px 0 0;color:#a10b1b;font:650 clamp(48px,5.8vw,92px)/.95 var(--font-heading);font-style:italic;letter-spacing:-.045em}
+  .hero-rule{display:flex;align-items:center;gap:9px;width:min(360px,72%);margin:8px auto 4px;color:#a10d1d}.hero-rule span{height:1px;flex:1;background:linear-gradient(90deg,transparent,#c58f3d,#a10d1d)}.hero-rule span:last-child{background:linear-gradient(90deg,#a10d1d,#c58f3d,transparent)}.hero-rule b{font-size:15px}
+  .event-line{margin:4px 0 0;color:#8e1720;font:800 clamp(14px,1.25vw,19px) var(--font-heading)}.event-line i{margin:0 8px;color:#c8953b;font-style:normal}.save-line{margin:9px 0 0;color:#a10c1b;font:750 clamp(17px,1.5vw,23px) var(--font-heading);font-style:italic}.together{margin:2px 0 0;color:#59463d;font:600 12px var(--font-heading)}
+  .partner-card{margin-top:16px;display:flex;align-items:center;gap:12px;padding:10px 18px;border:1px solid #d6ad66;border-radius:12px;background:#fffaf1df;box-shadow:0 9px 22px #71310f17;backdrop-filter:blur(4px)}.partner-symbol{width:43px;height:43px;display:grid;place-items:center;border-radius:55% 55% 55% 0;transform:rotate(-45deg);background:#b10c20;color:#fff;font-size:18px;box-shadow:inset 0 0 0 4px #f4c66666}.partner-symbol::first-letter{transform:rotate(45deg)}.partner-card>span:last-child{display:grid;text-align:left}.partner-card small{color:#72584a;font-size:10px}.partner-card strong{color:#15336a;font:800 17px var(--font-heading)}.partner-card em{color:#775f52;font-size:9px;font-style:normal}
+  .hero-actions{display:flex;justify-content:center;gap:12px;margin-top:15px}.btn{min-height:45px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:10px 21px;border-radius:999px;text-decoration:none;font:800 13px var(--font-heading);transition:transform .16s ease,box-shadow .16s ease}.btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(#a70c1e,#7d0715);color:#fff8e9;border:1px solid #75111b;box-shadow:inset 0 0 0 2px #e9bd6350,0 7px 18px #6e121c2b}.btn-primary b{font-size:16px}.btn-light{background:#fff9efdd;color:#9a101d;border:1px solid #b54b43;box-shadow:0 7px 18px #77401214}
+  .hero-note{position:absolute;top:53%;z-index:2;margin:0;color:#9f4438;font:550 clamp(13px,1.2vw,18px)/1.2 var(--font-heading);font-style:italic;text-align:center}.hero-note strong{font-weight:750}.hero-note.left{left:5.5%}.hero-note.right{right:5.5%}
+
+  .paper-section{position:relative;background-color:#fff9ea;background-image:radial-gradient(#a45c2e17 .65px,transparent .8px);background-size:10px 10px;padding:34px max(22px,5vw)}
+  .section-heading{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center}.section-heading>span{color:#c98e32;font-size:14px}.section-heading h2{margin:0;color:#96111b;font:800 clamp(25px,2.2vw,35px) var(--font-heading);text-transform:uppercase;letter-spacing:.035em}.section-heading p{margin:2px 0 0;color:#7a5f51;font:500 12px var(--font-heading)}.section-heading.compact h2{font-size:28px}.section-heading.mini h2{font-size:23px}.section-heading.mini p{font-size:11px}
+  .detail-grid{width:min(1120px,100%);margin:24px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.detail-grid article{min-height:105px;display:flex;align-items:center;gap:17px;padding:18px 24px;border:1px solid #e3bd78;border-radius:8px;background:linear-gradient(135deg,#fffdf7,#fff4dc);box-shadow:0 7px 17px #79420d13;position:relative}.detail-grid article::before,.detail-grid article::after{content:"";position:absolute;width:18px;height:18px;border-color:#d19b41}.detail-grid article::before{left:6px;top:6px;border-left:1px solid;border-top:1px solid}.detail-grid article::after{right:6px;bottom:6px;border-right:1px solid;border-bottom:1px solid}.round-icon{flex:0 0 50px;width:50px;height:50px;display:grid;place-items:center;border:2px solid #b20f20;border-radius:50%;color:#a10d1b;font-size:21px;background:#fffaf0}.detail-grid div{display:grid}.detail-grid small{color:#173568;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}.detail-grid strong{color:#9a101b;font:800 18px var(--font-heading)}.detail-grid p{margin:2px 0 0;color:#675046;font-size:11px}
+
+  .why-donate{padding-top:30px}.why-layout{width:min(1140px,100%);margin:20px auto 0;padding:22px 24px;display:grid;grid-template-columns:1fr 180px;gap:25px;align-items:center;border:1px solid #e0bf85;border-radius:14px;background:linear-gradient(90deg,#fffaf0,#fff7e6);box-shadow:0 8px 22px #6b351015}.why-grid{display:grid;grid-template-columns:repeat(4,1fr)}.why-grid article{text-align:center;padding:0 20px;border-right:1px solid #e3c791}.why-grid article:last-child{border-right:0}.why-grid article>span{width:54px;height:54px;display:grid;place-items:center;margin:auto;border:1px solid #e5c27d;border-radius:50%;background:#fffef8;color:#aa0e1c;font-size:24px;box-shadow:0 4px 12px #884a1713}.why-grid h3{margin:10px 0 5px;color:#9b111b;font:750 17px var(--font-heading)}.why-grid p{margin:0;color:#735c50;font-size:11px;line-height:1.45}.donate-note{text-align:center;color:#a2161f;font-family:var(--font-heading);font-style:italic}.drop-mark{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 8px;border-radius:55% 55% 55% 0;transform:rotate(-45deg);background:linear-gradient(135deg,#c40f22,#8c0716);color:#fff;font-size:24px;box-shadow:0 8px 18px #7d0b171f}.donate-note strong{display:block;font-size:22px;line-height:1.05;font-weight:600}
+
+  .prereg{padding-top:18px}.prereg-card{width:min(1120px,100%);margin:auto;min-height:170px;display:grid;grid-template-columns:130px 1fr auto 160px;align-items:center;gap:25px;padding:26px 32px;border:1px solid #d7a753;border-radius:10px;background:linear-gradient(110deg,#fffdf6,#fff4d8);box-shadow:0 11px 28px #7435091a;position:relative;overflow:hidden}.prereg-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 8% 100%,#e9b65538,transparent 24%),radial-gradient(circle at 90% 0,#e5b55c22,transparent 23%);pointer-events:none}.clip-art{position:relative;z-index:1;width:92px;height:112px;margin:auto;border:4px solid #b86b19;border-radius:13px;background:#fff9e8;box-shadow:0 8px 16px #7b450e1a}.clip-art::before{content:"";position:absolute;left:19px;right:19px;top:-13px;height:22px;border:4px solid #b86b19;border-radius:8px;background:#f1bd5a}.clip-art::after{content:"≡\A≡\A≡";white-space:pre;position:absolute;left:18px;top:27px;color:#9f4d14;font-size:20px;line-height:1.2}.clip-art span{position:absolute;right:-13px;bottom:-12px;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:#a80c1c;color:#fff;font-size:25px;border:4px solid #fff4dc}.prereg-copy{position:relative;z-index:1}.prereg-copy>p:first-child{margin:0 0 2px;color:#785548;font:800 10px var(--font-heading);text-transform:uppercase;letter-spacing:.12em}.prereg-copy h2{margin:0;color:#95101b;font:800 clamp(30px,3vw,45px) var(--font-heading)}.prereg-text{max-width:620px;margin:7px 0 0;color:#654d43;font-size:12px;line-height:1.55}.prereg-button{position:relative;z-index:1;white-space:nowrap;padding:13px 24px;border-radius:999px;background:linear-gradient(#a60d1e,#7a0714);color:#fff7e7;text-decoration:none;font:800 13px var(--font-heading);box-shadow:inset 0 0 0 2px #e9b85450,0 7px 17px #6f101c25}.prereg-button span{margin-left:10px}.hand-note{position:relative;z-index:1;margin:0;color:#b34e42;font:550 18px/1.1 var(--font-heading);font-style:italic;transform:rotate(-4deg)}.hand-note strong{font-weight:700}
+
+  .dual-panels{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding-top:20px}.info-panel{padding:22px;border:1px solid #dfbd7d;border-radius:12px;background:#fffaf0;box-shadow:0 7px 17px #76400e12}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:20px}.mini-grid>span{display:grid;justify-items:center;text-align:center;padding:0 10px;border-right:1px solid #e5c895}.mini-grid>span:last-child{border-right:0}.mini-grid b{width:48px;height:48px;display:grid;place-items:center;border:1px solid #e0bc79;border-radius:50%;background:#fffef9;color:#a20e1d;font-size:20px}.mini-grid strong{margin-top:8px;color:#4f3b33;font:750 12px/1.15 var(--font-heading)}.mini-grid small{margin-top:4px;color:#796056;font-size:9px;line-height:1.3}
+
+  .closing{padding:42px 20px 52px;text-align:center;background-color:#fff9e9;background-image:linear-gradient(#fff9e9db,#fff9e9db),var(--footer-pattern);background-size:auto,980px auto;background-position:center,center bottom -55px;color:#7f151b;border-top:1px solid #e0c18d}.closing>p{margin:0;font:600 clamp(24px,2.7vw,42px) var(--font-heading);font-style:italic}.closing>div{margin-top:12px;display:flex;justify-content:center;gap:10px;color:#75584c;font-size:11px}.closing>div b{color:#c69339}.closing>small{display:block;margin-top:14px;color:#8a6c5c;font-size:9px}
+
+  .event-footer{background-color:#7c0712;background-image:linear-gradient(#7c0712e8,#7c0712e8),var(--footer-pattern);background-size:auto,760px auto;background-position:center,center bottom;color:#fff2cf;border-top:1px solid #d99d3d}.footer-inner{width:min(1220px,calc(100% - 32px));min-height:98px;margin:auto;display:grid;grid-template-columns:330px 1fr 220px;gap:25px;align-items:center}.footer-brand{display:flex;align-items:center;gap:10px;color:#fff0ce;text-decoration:none}.footer-brand img{width:58px;height:55px;object-fit:contain}.footer-brand span{display:grid}.footer-brand strong{font:700 15px var(--font-heading)}.footer-brand small{color:#e5bd72;font-size:9px}.event-footer nav{display:flex;justify-content:center;gap:28px}.event-footer nav a{color:#fff2d4;text-decoration:none;font:600 11px var(--font-heading)}.event-footer>div>p{justify-self:end;display:flex;align-items:center;gap:10px;margin:0;color:#e8bd68;font-size:21px}.event-footer>div>p span{color:#fff0cf;font:600 14px/1.1 var(--font-heading);font-style:italic}
+
+  @media(max-width:1100px){.header-inner{grid-template-columns:250px 1fr auto}.desktop-nav{gap:18px}.community-link{display:none}.hero-copy{width:min(660px,58vw);top:45%}.hero-note{display:none}.prereg-card{grid-template-columns:110px 1fr auto}.hand-note{display:none}.dual-panels{grid-template-columns:1fr}.footer-inner{grid-template-columns:280px 1fr 170px}.event-footer nav{gap:14px}}
+  @media(max-width:820px){.header-inner{display:flex;min-height:62px}.brand img{width:48px;height:45px}.brand strong{font-size:18px}.brand small{font-size:10px}.brand em{font-size:7px}.desktop-nav{display:none}.menu-button{display:block;margin-left:auto;border:0;background:transparent;color:#8f0f1b;font-size:25px}.mobile-nav{position:absolute;left:0;right:0;top:100%;padding:12px 20px;background:#fff8e8;border-top:1px solid #ddbd82;box-shadow:0 12px 26px #60300f25}.mobile-nav:not([hidden]){display:grid;gap:5px}.mobile-nav a{padding:9px 10px;border-radius:7px;color:#4d312a;text-decoration:none;font:650 13px var(--font-heading)}.mobile-nav a.active{background:#f7ead1;color:#9d0d1b}.hero{min-height:650px}.hero-art{width:auto;min-width:100%;left:50%;transform:translateX(-50%);object-position:center}.hero-soften{background:linear-gradient(180deg,#fff7e600 0 30%,#fff8e8d2 48%,#fff8e8f6 72%,#fff8e8 100%)}.hero-copy{top:42%;width:84%}.committee{font-size:14px}.heritage{font-size:11px}.hero h1{font-size:54px}.partner-card strong{font-size:15px}.paper-section{padding-left:18px;padding-right:18px}.detail-grid{grid-template-columns:1fr}.why-layout{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr 1fr;gap:18px 0}.why-grid article:nth-child(2){border-right:0}.donate-note{display:none}.prereg-card{grid-template-columns:84px 1fr;gap:18px;padding:24px}.clip-art{width:68px;height:84px}.clip-art::after{top:21px;left:13px;font-size:15px}.clip-art span{width:36px;height:36px;font-size:19px}.prereg-button{grid-column:1/-1;justify-self:center}.mini-grid{grid-template-columns:1fr 1fr;gap:20px 0}.mini-grid>span:nth-child(2){border-right:0}.footer-inner{display:flex;flex-direction:column;padding:22px 0;text-align:center}.event-footer nav{flex-wrap:wrap}.event-footer>div>p{justify-self:auto}}
+  @media(max-width:520px){.brand span{display:none}.hero{min-height:620px}.hero-copy{top:39%;width:90%}.hero h1{font-size:47px}.event-line{font-size:13px}.event-line i{margin:0 4px}.together{font-size:10px}.partner-card{padding:9px 12px}.partner-symbol{width:36px;height:36px}.partner-card strong{font-size:13px}.partner-card em{display:none}.hero-actions{flex-direction:column;width:82%;gap:8px}.btn{width:100%}.section-heading h2{font-size:24px}.why-grid{grid-template-columns:1fr}.why-grid article{border-right:0;border-bottom:1px solid #e5c895;padding:13px 10px}.why-grid article:last-child{border-bottom:0}.prereg-card{grid-template-columns:1fr;text-align:center}.clip-art{display:none}.prereg-button{width:100%;text-align:center}.dual-panels{padding-left:12px;padding-right:12px}.mini-grid{grid-template-columns:1fr 1fr}.closing>div{flex-wrap:wrap}.event-footer nav{gap:14px}.event-footer>div>p{display:none}}
+  @media(prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
 </style>
+
+<script>
+  const button = document.querySelector('[data-menu-button]') as HTMLButtonElement | null;
+  const menu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
+  button?.addEventListener('click', () => {
+    if (!menu) return;
+    const willOpen = menu.hidden;
+    menu.hidden = !willOpen;
+    button.setAttribute('aria-expanded', String(willOpen));
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 820 && menu && !menu.hidden) {
+      menu.hidden = true;
+      button?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
