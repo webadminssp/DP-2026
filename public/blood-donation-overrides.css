@@ -1,4 +1,4 @@
-/* Blood donation page refinements: homepage-aligned navigation and safe hero spacing. */
+/* Blood donation page refinements: homepage-aligned navigation and compact, logo-safe hero spacing. */
 
 .blood-shell .event-header {
   background: linear-gradient(#9d0015, #850011) !important;
@@ -91,9 +91,9 @@
   font: 800 13px var(--font-heading) !important;
 }
 
-/* Keep all hero copy well below the central 20th-year logo artwork. */
+/* Keep the content below the artwork logo, but compress its vertical footprint so both CTAs remain visible. */
 .blood-shell .hero {
-  min-height: 760px !important;
+  min-height: 735px !important;
 }
 
 .blood-shell .hero-soften {
@@ -108,18 +108,79 @@
 }
 
 .blood-shell .hero-copy {
-  top: 60.5% !important;
-  width: min(650px, 50vw) !important;
+  top: 58.5% !important;
+  width: min(690px, 54vw) !important;
 }
 
 .blood-shell .hero h1 {
   margin: 0 !important;
-  font-size: clamp(44px, 4.8vw, 74px) !important;
-  line-height: 0.96 !important;
+  font-size: clamp(40px, 4.25vw, 66px) !important;
+  line-height: .9 !important;
+}
+
+.blood-shell .hero-rule {
+  margin: 4px auto 2px !important;
+  width: min(320px, 66%) !important;
+}
+
+.blood-shell .event-line {
+  margin-top: 2px !important;
+  font-size: clamp(13px, 1.05vw, 17px) !important;
+  line-height: 1.1 !important;
+}
+
+.blood-shell .save-line {
+  margin-top: 5px !important;
+  font-size: clamp(15px, 1.3vw, 20px) !important;
+  line-height: 1.05 !important;
+}
+
+.blood-shell .together {
+  margin-top: 1px !important;
+  font-size: 11px !important;
+  line-height: 1.15 !important;
+}
+
+.blood-shell .partner-card {
+  margin-top: 9px !important;
+  padding: 7px 14px !important;
+  gap: 10px !important;
+}
+
+.blood-shell .partner-symbol {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 15px !important;
+}
+
+.blood-shell .partner-card small {
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+}
+
+.blood-shell .partner-card strong {
+  font-size: 15px !important;
+  line-height: 1.05 !important;
+}
+
+.blood-shell .partner-card em {
+  font-size: 8px !important;
+  line-height: 1.05 !important;
+}
+
+.blood-shell .hero-actions {
+  margin-top: 9px !important;
+  gap: 9px !important;
+}
+
+.blood-shell .hero-actions .btn {
+  min-height: 39px !important;
+  padding: 7px 17px !important;
+  font-size: 12px !important;
 }
 
 .blood-shell .hero-note {
-  top: 64% !important;
+  top: 63% !important;
 }
 
 @media (max-width: 1100px) {
@@ -132,12 +193,12 @@
   }
 
   .blood-shell .hero {
-    min-height: 760px !important;
+    min-height: 735px !important;
   }
 
   .blood-shell .hero-copy {
-    top: 59% !important;
-    width: min(660px, 60vw) !important;
+    top: 57.5% !important;
+    width: min(680px, 63vw) !important;
   }
 }
 
@@ -180,16 +241,20 @@
   }
 
   .blood-shell .hero {
-    min-height: 790px !important;
+    min-height: 735px !important;
   }
 
   .blood-shell .hero-copy {
-    top: 56% !important;
-    width: 86% !important;
+    top: 54.5% !important;
+    width: 88% !important;
   }
 
   .blood-shell .hero h1 {
-    font-size: clamp(46px, 9vw, 60px) !important;
+    font-size: clamp(40px, 8vw, 52px) !important;
+  }
+
+  .blood-shell .partner-card {
+    margin-top: 8px !important;
   }
 }
 
@@ -207,15 +272,46 @@
   }
 
   .blood-shell .hero {
-    min-height: 820px !important;
+    min-height: 725px !important;
   }
 
   .blood-shell .hero-copy {
-    top: 54% !important;
-    width: 90% !important;
+    top: 51.5% !important;
+    width: 92% !important;
   }
 
   .blood-shell .hero h1 {
-    font-size: 46px !important;
+    font-size: 40px !important;
+  }
+
+  .blood-shell .event-line {
+    font-size: 12px !important;
+  }
+
+  .blood-shell .save-line {
+    font-size: 16px !important;
+  }
+
+  .blood-shell .together {
+    font-size: 9px !important;
+  }
+
+  .blood-shell .partner-card {
+    margin-top: 7px !important;
+    padding: 6px 10px !important;
+  }
+
+  .blood-shell .partner-card strong {
+    font-size: 13px !important;
+  }
+
+  .blood-shell .hero-actions {
+    margin-top: 7px !important;
+    gap: 6px !important;
+  }
+
+  .blood-shell .hero-actions .btn {
+    min-height: 37px !important;
+    padding: 6px 14px !important;
   }
 }
