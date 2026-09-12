@@ -315,3 +315,149 @@
     padding: 6px 14px !important;
   }
 }
+
+/* Make Pre-register the unmistakable primary action across the page. */
+.blood-shell .hero-actions .btn.btn-primary,
+.blood-shell .prereg-button {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 48px !important;
+  padding: 0 22px !important;
+  border: 1px solid #f0c66a !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #b40f24 0%, #930918 48%, #6f050f 100%) !important;
+  color: #fffdf4 !important;
+  font-family: var(--font-heading) !important;
+  font-size: clamp(14px, 1.05vw, 16px) !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  letter-spacing: .018em !important;
+  text-shadow: 0 1px 1px rgba(74, 0, 10, .35) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 245, 210, .32),
+    inset 0 0 0 1px rgba(119, 4, 18, .35),
+    0 8px 18px rgba(112, 8, 21, .24),
+    0 2px 5px rgba(88, 5, 16, .18) !important;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease !important;
+}
+
+.blood-shell .hero-actions .btn.btn-primary::before,
+.blood-shell .prereg-button::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -35%;
+  top: -120%;
+  width: 34%;
+  height: 340%;
+  transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 244, 204, .20), transparent);
+  transition: left .35s ease;
+}
+
+.blood-shell .hero-actions .btn.btn-primary:hover,
+.blood-shell .prereg-button:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.05) brightness(1.03) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 245, 210, .40),
+    inset 0 0 0 1px rgba(119, 4, 18, .38),
+    0 12px 25px rgba(112, 8, 21, .30),
+    0 3px 7px rgba(88, 5, 16, .20) !important;
+}
+
+.blood-shell .hero-actions .btn.btn-primary:hover::before,
+.blood-shell .prereg-button:hover::before {
+  left: 110%;
+}
+
+.blood-shell .hero-actions .btn.btn-primary:active,
+.blood-shell .prereg-button:active {
+  transform: translateY(0) scale(.985) !important;
+}
+
+.blood-shell .hero-actions .btn.btn-primary:focus-visible,
+.blood-shell .prereg-button:focus-visible {
+  outline: 3px solid #f3cf79 !important;
+  outline-offset: 3px !important;
+}
+
+.blood-shell .hero-actions .btn.btn-primary > span:first-child {
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 24px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(#f8dda0, #e8b64f) !important;
+  color: #850713 !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  text-shadow: none !important;
+  box-shadow: inset 0 0 0 1px rgba(120, 55, 7, .12) !important;
+}
+
+.blood-shell .hero-actions .btn.btn-primary > b {
+  margin-left: 2px !important;
+  color: #f7d88e !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.blood-shell .prereg-button {
+  min-height: 52px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 0 24px !important;
+  font-size: 15.5px !important;
+}
+
+.blood-shell .prereg-button span {
+  width: 26px !important;
+  height: 26px !important;
+  margin-left: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+  background: rgba(255, 244, 210, .15) !important;
+  border: 1px solid rgba(247, 216, 142, .72) !important;
+  color: #f7d88e !important;
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 820px) {
+  .blood-shell .hero-actions .btn.btn-primary {
+    min-height: 44px !important;
+    padding: 0 16px !important;
+    font-size: 13.5px !important;
+  }
+
+  .blood-shell .prereg-button {
+    min-height: 48px !important;
+    padding: 0 19px !important;
+    font-size: 14.5px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .blood-shell .hero-actions .btn.btn-primary,
+  .blood-shell .prereg-button {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .blood-shell .hero-actions .btn.btn-primary {
+    min-height: 43px !important;
+    font-size: 13.5px !important;
+  }
+
+  .blood-shell .prereg-button {
+    min-height: 47px !important;
+    font-size: 14px !important;
+  }
+}
