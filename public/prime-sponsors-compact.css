@@ -1,13 +1,17 @@
-/* Safe compact refinement for Prime Festival Sponsors.
-   Preserve the proven logo layout from prime-sponsors.css; only reduce desktop spacing
-   and replace the central separator artwork with a Bengali Durga Pujo ornament. */
+/* Compact production refinement for Prime Festival Sponsors.
+   Fixes the desktop height bug caused by CSS Grid auto-placement in the
+   nested sponsor-logo grid. The ::before divider is generated before the
+   real <img>; without an explicit grid-row the browser placed the divider
+   in row 1 and both logos in an implicit row 2, nearly doubling the logo
+   block height. Desktop/tablet/landscape now pin all three items to row 1.
+   Mobile portrait intentionally keeps its vertical 3-row stack. */
 
 .home-shell .prime-sponsor-strip {
   min-height: 0 !important;
   height: auto !important;
 }
 
-/* Defensive visibility: never let the two production sponsor marks disappear. */
+/* Defensive visibility: never let either production sponsor mark disappear. */
 .home-shell .prime-sponsor-logo {
   overflow: visible !important;
 }
@@ -27,12 +31,12 @@
   z-index: 2 !important;
 }
 
-/* Desktop: compact the strip without constraining the sponsor logo grid itself. */
+/* Desktop: one single logo row. This is the actual height fix. */
 @media (min-width: 901px) {
   .home-shell .prime-sponsor-inner {
     min-height: 0 !important;
-    padding: 10px 28px 12px !important;
-    gap: 8px !important;
+    padding: 9px 28px 11px !important;
+    gap: 7px !important;
   }
 
   .home-shell .prime-sponsor-left h2::after {
@@ -45,13 +49,42 @@
     margin: 5px auto 0 !important;
   }
 
-  /* Bengali Pujo divider: shankha / lotus / alpona inspired, while retaining
-     the original grid sizing that keeps both sponsor marks visible. */
+  .home-shell .prime-sponsor-logo {
+    grid-template-rows: minmax(0, 118px) !important;
+    align-items: center !important;
+    min-height: 0 !important;
+    height: 118px !important;
+  }
+
+  /* Critical bug fix: force divider + both logos onto the SAME grid row. */
+  .home-shell .prime-sponsor-logo img,
+  .home-shell .prime-sponsor-logo::before,
+  .home-shell .prime-sponsor-logo::after {
+    grid-row: 1 !important;
+    align-self: center !important;
+  }
+
+  .home-shell .prime-sponsor-logo img {
+    width: min(100%, 180px) !important;
+    max-height: 116px !important;
+  }
+
+  /* Bengali Pujo divider: lotus/alpona inspired. */
   .home-shell .prime-sponsor-logo::before {
     content: "" !important;
+    width: 46px !important;
+    height: 104px !important;
     color: transparent !important;
     font-size: 0 !important;
     background: url("/sponsors/pujo-divider-vertical.svg") center / contain no-repeat !important;
+  }
+
+  .home-shell .prime-sponsor-logo::after {
+    width: min(100%, 250px) !important;
+    height: 112px !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
 
   .home-shell .prime-sponsor-strip::before,
@@ -60,28 +93,42 @@
   }
 }
 
-/* Tablet: keep the existing visible logo sizing, only tighten vertical whitespace. */
+/* Tablet: same one-row fix, with slightly smaller sponsor marks. */
 @media (min-width: 641px) and (max-width: 900px) {
   .home-shell .prime-sponsor-inner {
     min-height: 0 !important;
-    padding: 12px 20px 14px !important;
-    gap: 9px !important;
+    padding: 10px 20px 12px !important;
+    gap: 8px !important;
   }
 
   .home-shell .prime-sponsor-left .prime-sponsor-ornament {
-    margin-top: 6px !important;
+    margin-top: 5px !important;
+  }
+
+  .home-shell .prime-sponsor-logo {
+    grid-template-rows: minmax(0, 108px) !important;
+    align-items: center !important;
+    min-height: 0 !important;
+    height: 108px !important;
+  }
+
+  .home-shell .prime-sponsor-logo img,
+  .home-shell .prime-sponsor-logo::before,
+  .home-shell .prime-sponsor-logo::after {
+    grid-row: 1 !important;
+    align-self: center !important;
   }
 
   .home-shell .prime-sponsor-logo::before {
     content: "" !important;
+    height: 94px !important;
     color: transparent !important;
     font-size: 0 !important;
     background: url("/sponsors/pujo-divider-vertical.svg") center / contain no-repeat !important;
   }
 }
 
-/* Mobile portrait: preserve the proven vertical stack and equal logo spacing;
-   only swap the separator artwork to the horizontal Pujo ornament. */
+/* Mobile portrait: intentionally keep the vertical stack with equal spacing. */
 @media (max-width: 640px) and (orientation: portrait) {
   .home-shell .prime-sponsor-logo::before {
     content: "" !important;
@@ -91,8 +138,15 @@
   }
 }
 
-/* Mobile landscape keeps the three-column layout with the Pujo divider. */
+/* Mobile landscape: same-row layout and Pujo divider. */
 @media (max-width: 760px) and (orientation: landscape) {
+  .home-shell .prime-sponsor-logo img,
+  .home-shell .prime-sponsor-logo::before,
+  .home-shell .prime-sponsor-logo::after {
+    grid-row: 1 !important;
+    align-self: center !important;
+  }
+
   .home-shell .prime-sponsor-logo::before {
     content: "" !important;
     color: transparent !important;
