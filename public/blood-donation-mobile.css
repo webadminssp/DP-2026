@@ -1,0 +1,242 @@
+/* Portrait-mobile layout corrections for the Blood Donation page. */
+
+@media (max-width: 820px) and (orientation: portrait) {
+  .blood-shell .event-header .header-inner {
+    width: calc(100% - 24px) !important;
+    min-height: 54px !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 10px !important;
+  }
+
+  .blood-shell .event-header .brand {
+    min-width: 0 !important;
+    max-width: calc(100vw - 86px) !important;
+    overflow: hidden !important;
+  }
+
+  .blood-shell .event-header .brand img {
+    flex: 0 0 auto !important;
+    width: 43px !important;
+    height: 41px !important;
+  }
+
+  .blood-shell .event-header .brand span {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .blood-shell .event-header .brand small,
+  .blood-shell .event-header .brand strong {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .blood-shell .event-header .brand small {
+    font-size: 9px !important;
+  }
+
+  .blood-shell .event-header .brand strong {
+    font-size: 15px !important;
+  }
+
+  .blood-shell .event-header .desktop-nav,
+  .blood-shell .event-header .community-link {
+    display: none !important;
+  }
+
+  .blood-shell .event-header .menu-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(241, 202, 112, .6) !important;
+    border-radius: 7px !important;
+    background: rgba(255, 255, 255, .05) !important;
+    color: #fff7e8 !important;
+    font-size: 22px !important;
+  }
+
+  .blood-shell .event-header .mobile-nav {
+    width: 100% !important;
+    padding: 6px 12px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .blood-shell .event-header .mobile-nav a {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 14px !important;
+    border-radius: 6px !important;
+  }
+
+  /* In portrait, stop absolutely positioning the copy over the hero artwork.
+     The artwork renders at its natural ratio, then the copy flows below it. */
+  .blood-shell .hero {
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff8e8 !important;
+    border-bottom: 1px solid #dba755 !important;
+  }
+
+  .blood-shell .hero-art {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+    z-index: 1 !important;
+    background: #fff5dc !important;
+  }
+
+  .blood-shell .hero-soften {
+    display: none !important;
+  }
+
+  .blood-shell .hero-copy {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    z-index: 2 !important;
+    width: calc(100% - 28px) !important;
+    max-width: 560px !important;
+    margin: -2px auto 0 !important;
+    padding: 12px 0 22px !important;
+    box-sizing: border-box !important;
+  }
+
+  .blood-shell .hero h1 {
+    margin: 0 !important;
+    font-size: clamp(34px, 10vw, 46px) !important;
+    line-height: .94 !important;
+    letter-spacing: -.035em !important;
+  }
+
+  .blood-shell .hero-rule {
+    width: min(260px, 72%) !important;
+    margin: 5px auto 3px !important;
+  }
+
+  .blood-shell .event-line {
+    margin: 2px auto 0 !important;
+    max-width: 330px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+  }
+
+  .blood-shell .save-line {
+    margin-top: 5px !important;
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+  }
+
+  .blood-shell .together {
+    margin-top: 3px !important;
+    padding: 0 8px !important;
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .blood-shell .partner-card {
+    width: min(100%, 350px) !important;
+    margin: 10px auto 0 !important;
+    padding: 8px 10px !important;
+    box-sizing: border-box !important;
+    gap: 9px !important;
+    text-align: left !important;
+  }
+
+  .blood-shell .partner-symbol {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .blood-shell .partner-card span:last-child {
+    min-width: 0 !important;
+  }
+
+  .blood-shell .partner-card small,
+  .blood-shell .partner-card strong,
+  .blood-shell .partner-card em {
+    white-space: normal !important;
+  }
+
+  .blood-shell .partner-card strong {
+    font-size: 13px !important;
+  }
+
+  .blood-shell .hero-actions {
+    width: min(100%, 350px) !important;
+    margin: 9px auto 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .blood-shell .hero-actions .btn {
+    width: 100% !important;
+    min-height: 42px !important;
+    padding: 8px 14px !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+  }
+
+  .blood-shell .hero-note {
+    display: none !important;
+  }
+
+  /* Keep the rest of the page from creating horizontal overflow. */
+  .blood-shell main,
+  .blood-shell .paper-section,
+  .blood-shell .detail-grid,
+  .blood-shell .why-layout,
+  .blood-shell .why-grid,
+  .blood-shell .dual-panels,
+  .blood-shell .mini-grid,
+  .blood-shell .prereg-card {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .blood-shell img,
+  .blood-shell svg {
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 520px) and (orientation: portrait) {
+  .blood-shell .hero-copy {
+    width: calc(100% - 22px) !important;
+    padding-bottom: 18px !important;
+  }
+
+  .blood-shell .hero h1 {
+    font-size: clamp(32px, 10.5vw, 40px) !important;
+  }
+
+  .blood-shell .event-line {
+    max-width: 290px !important;
+    font-size: 11px !important;
+  }
+
+  .blood-shell .save-line {
+    font-size: 15px !important;
+  }
+
+  .blood-shell .partner-card,
+  .blood-shell .hero-actions {
+    width: min(100%, 330px) !important;
+  }
+}
