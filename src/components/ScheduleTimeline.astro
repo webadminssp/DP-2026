@@ -24,6 +24,18 @@ const icons: Record<EventIcon, any> = {
     bhog: Soup,
     bisorjon: WavesHorizontal,
 };
+
+// Keep the full schedule visually continuous with the date-wise icon sequence
+// used in the homepage “Seven Days of Celebration” cards.
+const dayIcons: Record<number, string> = {
+    1: "🍲",
+    2: "🌿",
+    3: "🎶",
+    4: "🌺",
+    5: "🪔",
+    6: "🔥",
+    7: "🙏",
+};
 ---
 
 <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
@@ -54,7 +66,12 @@ const icons: Record<EventIcon, any> = {
             schedule.map((day) => (
                 <article class="schedule-day">
                     <div class="schedule-marker">
-                        <p class="schedule-index">Day {day.index}</p>
+                        <div class="schedule-day-heading">
+                            <span class="schedule-day-icon" aria-hidden="true">
+                                {dayIcons[day.index]}
+                            </span>
+                            <p class="schedule-index">Day {day.index}</p>
+                        </div>
                         <h2 class="schedule-tithi">
                             {day.tithi}
                             {day.part && (
@@ -162,7 +179,30 @@ const icons: Record<EventIcon, any> = {
     }
 
     /* Left marker */
+    .schedule-day-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-height: 2rem;
+    }
+
+    .schedule-day-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid color-mix(in oklab, var(--palette-gold) 45%, transparent);
+        border-radius: 50%;
+        background: color-mix(in oklab, var(--palette-gold) 12%, transparent);
+        font-size: 1.1rem;
+        line-height: 1;
+        box-shadow: 0 2px 8px color-mix(in oklab, var(--palette-gold) 12%, transparent);
+    }
+
     .schedule-index {
+        margin: 0;
         font-size: 0.6875rem;
         font-weight: 600;
         letter-spacing: 0.08em;
@@ -171,7 +211,7 @@ const icons: Record<EventIcon, any> = {
     }
 
     .schedule-tithi {
-        margin-top: 0.25rem;
+        margin-top: 0.35rem;
         font-size: 1.375rem;
         line-height: 1.2;
         color: var(--palette-crimson);
