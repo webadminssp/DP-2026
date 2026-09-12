@@ -7,6 +7,26 @@
   height: auto !important;
 }
 
+/* Defensive visibility: never let the two production sponsor marks disappear. */
+.home-shell .prime-sponsor-logo {
+  overflow: visible !important;
+}
+
+.home-shell .prime-sponsor-logo img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.home-shell .prime-sponsor-logo::after {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 2 !important;
+}
+
 /* Desktop: compact the strip without constraining the sponsor logo grid itself. */
 @media (min-width: 901px) {
   .home-shell .prime-sponsor-inner {
