@@ -8,6 +8,38 @@ import HomePageDesign from "../components/HomePageDesign.astro";
 
   <script is:inline>
     (() => {
+      const hero = document.querySelector(".home-shell .hero");
+      if (!hero || document.querySelector(".home-shell .prime-sponsor-strip")) return;
+
+      const strip = document.createElement("section");
+      strip.className = "prime-sponsor-strip";
+      strip.setAttribute("aria-labelledby", "prime-sponsor-title");
+      strip.innerHTML = `
+        <div class="prime-sponsor-inner">
+          <div class="prime-sponsor-side prime-sponsor-left">
+            <h2 id="prime-sponsor-title">Prime Festival Sponsor</h2>
+            <div class="prime-sponsor-ornament" aria-hidden="true"><span></span><b>◆◆</b><span></span></div>
+            <p>Together in Tradition, For a Brighter Tomorrow</p>
+          </div>
+
+          <span class="prime-sponsor-divider" aria-hidden="true"></span>
+
+          <a class="prime-sponsor-logo" href="#sponsors" aria-label="Tanishq Whitefield — Prime Festival Sponsor">
+            <img src="/sponsors/tanishq-whitefield.png" alt="Tanishq, a Tata Product, Whitefield" loading="eager" />
+          </a>
+
+          <span class="prime-sponsor-divider" aria-hidden="true"></span>
+
+          <div class="prime-sponsor-side prime-sponsor-right">
+            <p>Celebrating<br />Culture, Community<br />and Timeless Bonds</p>
+            <div class="prime-sponsor-ornament" aria-hidden="true"><span></span><b>◆◆</b><span></span></div>
+          </div>
+        </div>`;
+
+      hero.insertAdjacentElement("afterend", strip);
+    })();
+
+    (() => {
       const widget = document.querySelector(".home-shell #hero-pujo-countdown");
       if (!widget) return;
 
@@ -261,6 +293,140 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     display: none !important;
   }
 
+  /* Prime Festival Sponsor strip: exact placement below the hero, with the hero itself untouched. */
+  .home-shell .prime-sponsor-strip {
+    position: relative;
+    z-index: 3;
+    overflow: hidden;
+    width: 100%;
+    color: #6f1a18;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,.9), rgba(255,255,255,0) 43%),
+      linear-gradient(180deg, #fffdf5 0%, #fff8e9 56%, #fdf1d9 100%);
+    border-top: 1px solid rgba(211, 159, 66, .72);
+    border-bottom: 4px solid #970014;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 -1px 0 #e4bb6a,
+      0 6px 15px rgba(107, 42, 19, .08);
+  }
+
+  .home-shell .prime-sponsor-strip::before,
+  .home-shell .prime-sponsor-strip::after {
+    content: "❁";
+    position: absolute;
+    top: 50%;
+    z-index: 0;
+    color: rgba(196, 139, 41, .17);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(118px, 13vw, 210px);
+    line-height: 1;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(-16deg);
+  }
+
+  .home-shell .prime-sponsor-strip::before { left: clamp(-62px, -3.4vw, -25px); }
+  .home-shell .prime-sponsor-strip::after {
+    right: clamp(-62px, -3.4vw, -25px);
+    transform: translateY(-50%) rotate(16deg) scaleX(-1);
+  }
+
+  .home-shell .prime-sponsor-inner {
+    position: relative;
+    z-index: 1;
+    width: min(1240px, calc(100% - 48px));
+    min-height: clamp(180px, 13.2vw, 220px);
+    margin: 0 auto;
+    padding: clamp(19px, 1.7vw, 28px) clamp(22px, 3vw, 44px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(185px, 238px) 1px minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 2.6vw, 42px);
+  }
+
+  .home-shell .prime-sponsor-side {
+    min-width: 0;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .home-shell .prime-sponsor-left h2 {
+    margin: 0;
+    color: #9c0b17;
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: clamp(22px, 1.85vw, 31px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: .005em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.92);
+  }
+
+  .home-shell .prime-sponsor-left p {
+    margin: clamp(8px, .8vw, 12px) 0 0;
+    color: #9a7059;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: italic;
+    line-height: 1.25;
+  }
+
+  .home-shell .prime-sponsor-right p {
+    margin: 0;
+    color: #875943;
+    font-size: clamp(15px, 1.35vw, 21px);
+    font-style: italic;
+    line-height: 1.25;
+  }
+
+  .home-shell .prime-sponsor-ornament {
+    width: min(145px, 72%);
+    margin: clamp(7px, .7vw, 10px) auto 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 6px;
+    color: #bf842d;
+    font-size: 7px;
+  }
+
+  .home-shell .prime-sponsor-ornament span {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184, 120, 33, .65));
+  }
+
+  .home-shell .prime-sponsor-ornament span:last-child {
+    background: linear-gradient(90deg, rgba(184, 120, 33, .65), transparent);
+  }
+
+  .home-shell .prime-sponsor-ornament b {
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .home-shell .prime-sponsor-divider {
+    align-self: stretch;
+    width: 1px;
+    min-height: 115px;
+    margin: auto 0;
+    background: linear-gradient(180deg, transparent 4%, rgba(195, 137, 45, .88) 23%, rgba(151, 67, 22, .72) 50%, rgba(195, 137, 45, .88) 77%, transparent 96%);
+  }
+
+  .home-shell .prime-sponsor-logo {
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: 100%;
+    text-decoration: none;
+  }
+
+  .home-shell .prime-sponsor-logo img {
+    display: block;
+    width: min(100%, 194px);
+    height: auto;
+    max-height: 162px;
+    object-fit: contain;
+    filter: contrast(1.08);
+  }
+
   /* Tablet and mobile landscape behaviour remains unchanged. */
   @media (max-width: 900px) {
     .home-shell .hero-scene {
@@ -304,6 +470,24 @@ import HomePageDesign from "../components/HomePageDesign.astro";
     .home-shell .hero-pujo-countdown {
       width: min(330px, 72%);
     }
+
+    .home-shell .prime-sponsor-inner {
+      width: min(100% - 28px, 980px);
+      min-height: 170px;
+      grid-template-columns: minmax(0, 1fr) 1px minmax(150px, 190px) 1px minmax(0, 1fr);
+      gap: clamp(13px, 2vw, 24px);
+      padding: 18px 18px;
+    }
+
+    .home-shell .prime-sponsor-logo img {
+      width: min(100%, 158px);
+      max-height: 142px;
+    }
+
+    .home-shell .prime-sponsor-left h2 { font-size: clamp(19px, 2.6vw, 25px); }
+    .home-shell .prime-sponsor-left p { font-size: clamp(11px, 1.45vw, 14px); }
+    .home-shell .prime-sponsor-right p { font-size: clamp(13px, 1.85vw, 18px); }
+    .home-shell .prime-sponsor-divider { min-height: 100px; }
   }
 
   /* Existing <=600px rules are intentionally preserved for landscape compatibility. */
@@ -401,6 +585,63 @@ import HomePageDesign from "../components/HomePageDesign.astro";
       font-size: 6.5px;
       letter-spacing: 0.11em;
     }
+  }
+
+  /* Mobile portrait: retain the same hierarchy, stacked for legibility. */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .home-shell .prime-sponsor-strip::before,
+    .home-shell .prime-sponsor-strip::after {
+      font-size: 126px;
+      opacity: .65;
+    }
+
+    .home-shell .prime-sponsor-inner {
+      width: min(100% - 24px, 430px);
+      min-height: 0;
+      padding: 22px 18px 20px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .home-shell .prime-sponsor-left { order: 1; }
+    .home-shell .prime-sponsor-inner > .prime-sponsor-divider:nth-of-type(1) { order: 2; }
+    .home-shell .prime-sponsor-logo { order: 3; }
+    .home-shell .prime-sponsor-inner > .prime-sponsor-divider:nth-of-type(2) { order: 4; }
+    .home-shell .prime-sponsor-right { order: 5; }
+
+    .home-shell .prime-sponsor-divider {
+      width: min(150px, 52vw);
+      min-height: 1px;
+      height: 1px;
+      justify-self: center;
+      background: linear-gradient(90deg, transparent, rgba(195, 137, 45, .9) 25%, rgba(151, 67, 22, .76) 50%, rgba(195, 137, 45, .9) 75%, transparent);
+    }
+
+    .home-shell .prime-sponsor-left h2 { font-size: clamp(22px, 6vw, 27px); }
+    .home-shell .prime-sponsor-left p { margin-top: 7px; font-size: clamp(12px, 3.4vw, 14px); }
+    .home-shell .prime-sponsor-logo img { width: min(42vw, 150px); max-height: none; }
+    .home-shell .prime-sponsor-right p { font-size: clamp(14px, 4vw, 17px); line-height: 1.22; }
+    .home-shell .prime-sponsor-ornament { width: 128px; }
+  }
+
+  /* Mobile landscape: preserve the attached three-column composition. */
+  @media (max-width: 760px) and (orientation: landscape) {
+    .home-shell .prime-sponsor-inner {
+      width: calc(100% - 20px);
+      min-height: 126px;
+      padding: 11px 12px;
+      grid-template-columns: minmax(0, 1fr) 1px minmax(108px, 126px) 1px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .home-shell .prime-sponsor-logo img { width: 105px; max-height: 105px; }
+    .home-shell .prime-sponsor-left h2 { font-size: clamp(15px, 2.7vw, 19px); }
+    .home-shell .prime-sponsor-left p { margin-top: 5px; font-size: clamp(9px, 1.6vw, 11px); }
+    .home-shell .prime-sponsor-right p { font-size: clamp(11px, 2vw, 14px); line-height: 1.18; }
+    .home-shell .prime-sponsor-ornament { width: 92px; margin-top: 5px; }
+    .home-shell .prime-sponsor-divider { min-height: 82px; }
+    .home-shell .prime-sponsor-strip::before,
+    .home-shell .prime-sponsor-strip::after { font-size: 105px; }
   }
 
   @media (max-width: 380px) {
