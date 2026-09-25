@@ -1,0 +1,212 @@
+---
+import Layout from "../layouts/Layout.astro";
+import logoPart1 from "../data/dpc-logo-part1.txt?raw";
+import logoPart2 from "../data/dpc-logo-part2.txt?raw";
+import heroSite from "../assets/images/hero-site.webp";
+
+const logo = `data:image/webp;base64,${logoPart1.trim()}${logoPart2.trim()}`;
+
+const sponsoredLeft = [
+  ["✿", "Maa Durga", "Anjan Majumdar"],
+  ["◒", "Community Bhog", "Nirmalya Halder"],
+  ["❀", "Flower", "Debajit Das"],
+  ["●", "Fruits & Vegetables", "Ashish K Banerjee"],
+  ["▥", "Vastra (Dhuti, Saree)", "Sanjoy Roy Choudhury"],
+  ["◓", "Dashokarma (All days)", "Rangan Sen"],
+  ["◉", "Pujo Sweets", "Suvendu Roy"],
+  ["♨", "Shashthi Pujo", "Abhishek Moulik"],
+];
+
+const sponsoredRight = [
+  ["✿", "Saptami Pujo", "Vinita Banerjee"],
+  ["♆", "Ashtami Pujo", "Subhadeep Sengupta"],
+  ["♟", "Shondhi Pujo", "Amitava Bhattacharya"],
+  ["◒", "Nabami Pujo - Day 1", "Bijoya Das"],
+  ["◒", "Nabami Pujo - Day 2", "Rajarshi Rakshit"],
+  ["▣", "Printing & Transportation", "Bhaskar Bhar"],
+  ["✿", "Lakshmi Pujo", "Sushil Gupta"],
+];
+
+const openLeft = [
+  ["◉", "Dhaki + Kashi (All days)"],
+  ["⬟", "Celebrating Together (Security)"],
+  ["●", "Celebrating Together (Staff)"],
+  ["♨", "Purohit, Brahmin Bhojan"],
+];
+
+const openRight = [
+  ["♥", "Kids Event"],
+  ["●", "Anonymous"],
+  ["♨", "Bisarjan"],
+  ["▣", "Daan Shamogri (Bedding, Utensils)"],
+];
+---
+
+<Layout title="Sponsorship Details | Shriram Samruddhi Durga Pujo 2026" chrome={false}>
+  <div class="sponsor-page">
+    <header class="sponsor-header">
+      <div class="sponsor-header-inner">
+        <a class="brand" href="/" aria-label="Shriram Samruddhi Durga Pujo home">
+          <img src={logo} alt="" />
+          <span>Shriram Samruddhi<br />Durga Pujo</span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/about">About Us</a>
+          <a href="/schedule">Events</a>
+          <a href="/gallery">Gallery</a>
+          <a class="active" href="/sponsorship-details">Sponsorship</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+        <a class="donate" href="/#contribute"><span aria-hidden="true">♥</span> Donate</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="sponsor-hero">
+        <img class="hero-art" src={heroSite.src} alt="" aria-hidden="true" />
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <p>॥ Ya Devi Sarvabhuteshu ॥</p>
+          <h1>Sponsorship Details</h1>
+          <div class="hero-tagline">Together We Celebrate <span>•</span> Together We Keep the Tradition Alive</div>
+          <div class="hero-rule" aria-hidden="true">◆</div>
+        </div>
+        <div class="anniversary" aria-label="Celebrating 20 Years">
+          <div class="wreath">❧</div>
+          <small>Celebrating</small>
+          <strong>20</strong>
+          <b>Years</b>
+          <span>OF FAITH<br/>CULTURE<br/>COMMUNITY</span>
+        </div>
+      </section>
+
+      <section class="sponsored-wrap paper">
+        <div class="thanks-head">
+          <div class="handshake" aria-hidden="true">🤝</div>
+          <div>
+            <h2>Heartfelt Thanks to our Sponsors</h2>
+            <p>Your generous support makes our Pujo celebrations truly special.</p>
+          </div>
+          <div class="namaskar" aria-label="Thank you">
+            <div class="ornament-line"><i></i><span>❦</span><i></i></div>
+            <div class="folded-hands">🙏</div>
+            <div class="ornament-line bottom"><i></i><span>❦</span><i></i></div>
+          </div>
+        </div>
+
+        <div class="sponsor-columns">
+          <div class="sponsor-list">
+            {sponsoredLeft.map(([icon, item, name]) => (
+              <div class="sponsor-row">
+                <span class="row-icon" aria-hidden="true">{icon}</span>
+                <strong>{item}</strong>
+                <span>{name}</span>
+              </div>
+            ))}
+          </div>
+          <div class="sponsor-list">
+            {sponsoredRight.map(([icon, item, name]) => (
+              <div class="sponsor-row">
+                <span class="row-icon" aria-hidden="true">{icon}</span>
+                <strong>{item}</strong>
+                <span>{name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="gratitude-rule"><span></span><b>❦</b><em>Gratitude Builds a Stronger Community</em><b>❦</b><span></span></div>
+      </section>
+
+      <section class="open-wrap">
+        <div class="open-head">
+          <div class="open-badge" aria-hidden="true">♡<small>⌣</small></div>
+          <div>
+            <h2>Open for Sponsorship</h2>
+            <p>Be a part of our journey. Sponsor an item and help us create more memorable moments together.</p>
+          </div>
+          <div class="opportunity">Many Opportunities<br/><span>To Make A Difference</span></div>
+        </div>
+
+        <div class="open-columns">
+          <div class="open-list">
+            {openLeft.map(([icon, item]) => (
+              <div class="open-row"><span class="open-icon" aria-hidden="true">{icon}</span><strong>{item}</strong></div>
+            ))}
+          </div>
+          <div class="open-list">
+            {openRight.map(([icon, item]) => (
+              <div class="open-row"><span class="open-icon" aria-hidden="true">{icon}</span><strong>{item}</strong></div>
+            ))}
+          </div>
+        </div>
+
+        <div class="open-footer">
+          <div class="dhaki" aria-hidden="true">♬</div>
+          <a class="sponsor-now" href="/#contact"><span>♥</span> SPONSOR NOW <b>›</b></a>
+          <div class="together">Same Pujo<br/><strong>Bigger Together!</strong></div>
+        </div>
+        <p class="small-copy">Small Contributions. A Stronger Puja.</p>
+      </section>
+
+      <section class="city-lights" aria-hidden="true">
+        <div class="skyline">⌂　⌂　⌂　⌂　⌂　⌂　⌂</div>
+      </section>
+    </main>
+
+    <footer class="sponsor-footer">
+      <div>◆　 Culture　•　Community　•　A Brighter Tomorrow　 ◆</div>
+      <span>❁　Jai Maa Durga</span>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .sponsor-page{
+    --deep:#670006;--maroon:#7d000a;--red:#930011;--gold:#d49a2d;--gold2:#f0ca70;--cream:#fff4dd;--ink:#4c2520;
+    min-height:100vh;background:#5e0006;color:var(--ink);font-family:Georgia,"Times New Roman",serif
+  }
+  .sponsor-header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#830008,#690006);border-bottom:1px solid #b87a22;box-shadow:0 6px 22px #24000066}
+  .sponsor-header-inner{height:58px;max-width:1180px;margin:auto;padding:0 34px;display:grid;grid-template-columns:260px 1fr 130px;align-items:center;gap:18px}
+  .brand{display:flex;align-items:center;gap:10px;color:#f3d99e;text-decoration:none;font-weight:700;font-size:17px;line-height:1.02}.brand img{width:46px;height:44px;object-fit:contain}
+  nav{display:flex;align-items:center;justify-content:center;gap:27px}nav a{position:relative;color:#f5e7c6;text-decoration:none;font-size:13px;padding:20px 0 17px}nav a.active,nav a:hover{color:#f3c65c}nav a.active:after{content:"";position:absolute;left:0;right:0;bottom:4px;height:3px;background:#e2bd53}
+  .donate{justify-self:end;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:120px;height:35px;border-radius:18px;color:#6f0008;text-decoration:none;font-weight:700;font-size:13px;background:linear-gradient(#f4cf70,#dca036);border:1px solid #e8b857;box-shadow:inset 0 1px #fff3b8}
+
+  .sponsor-hero{height:250px;position:relative;overflow:hidden;border-bottom:1px solid #a86b1c;background:#630006}
+  .hero-art{position:absolute;right:0;top:0;width:52%;height:100%;object-fit:cover;object-position:74% 20%;filter:saturate(1.15) contrast(1.05);opacity:.92}
+  .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,#6d0008 0%,#720008 42%,#6f0007dd 58%,transparent 78%),radial-gradient(circle at 9% 88%,#ffb33033,transparent 30%)}
+  .hero-copy{position:absolute;left:max(7vw,70px);top:43px;color:#f1d083}.hero-copy p{margin:0 0 16px;font-size:17px;letter-spacing:.03em}.hero-copy h1{margin:0;color:#f3cd70;font-size:54px;line-height:1;font-weight:700}.hero-tagline{margin-top:20px;color:#f1d79e;font-size:16px}.hero-tagline span{padding:0 8px;color:#d69c39}.hero-rule{width:270px;margin-top:19px;color:#d2a054;text-align:center;font-size:10px;position:relative}.hero-rule:before,.hero-rule:after{content:"";position:absolute;top:50%;width:110px;height:1px;background:linear-gradient(90deg,transparent,#d3a555)}.hero-rule:before{left:0}.hero-rule:after{right:0;transform:scaleX(-1)}
+  .anniversary{position:absolute;left:57%;top:22px;width:150px;height:205px;text-align:center;color:#f4cd6a}.anniversary .wreath{font-size:65px;line-height:.7;transform:rotate(-16deg)}.anniversary small{display:block;margin-top:-8px;font-size:13px}.anniversary strong{display:block;font-size:63px;line-height:.86}.anniversary b{display:block;margin:2px auto 8px;width:100px;padding:4px 0;background:linear-gradient(90deg,#c9861d,#f4d06f,#c9861d);color:#6b0006;font-size:18px}.anniversary span{font-size:9px;letter-spacing:.24em;line-height:1.25;color:#f3d79d}
+
+  .paper{background-color:#fff4df;background-image:radial-gradient(#b6783d14 1px,transparent 1px);background-size:12px 12px}
+  .sponsored-wrap{max-width:1140px;margin:0 auto;padding:24px 34px 16px;border-left:1px solid #c88c32;border-right:1px solid #c88c32;border-bottom:4px solid #b07620;box-shadow:inset 0 0 0 3px #fff9e8,0 5px 17px #23000030}
+  .thanks-head{display:grid;grid-template-columns:72px 1fr 260px;align-items:center;gap:16px;margin-bottom:14px}.handshake{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:29px;background:radial-gradient(circle at 40% 30%,#f6d37b,#9a5b08 68%,#5c2d00);border:2px solid #e4bd58;box-shadow:0 3px 10px #5b2f0f3a}.thanks-head h2{margin:0;color:#8d0811;font-size:34px;line-height:1}.thanks-head p{margin:7px 0 0;color:#6d5550;font-size:15px}.namaskar{text-align:center;color:#b86c24}.folded-hands{font-size:45px;line-height:1}.ornament-line{display:flex;align-items:center;justify-content:center;gap:7px;color:#c2802d}.ornament-line i{height:1px;width:65px;background:linear-gradient(90deg,transparent,#bd7c2f)}.ornament-line i:last-child{transform:scaleX(-1)}.ornament-line.bottom{margin-top:-4px}
+  .sponsor-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.sponsor-list{border:1px solid #ecd7b5;border-radius:13px;overflow:hidden;background:#fffaf0}.sponsor-row{min-height:42px;display:grid;grid-template-columns:46px minmax(160px,1.05fr) minmax(150px,.95fr);align-items:center;padding:0 12px;color:#374151}.sponsor-row:nth-child(even){background:#f4e7d3}.row-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#9d0b15;background:#f6e5b9;font-size:17px}.sponsor-row strong{color:#9b1018;font-size:16px}.sponsor-row>span:last-child{font-size:15px;color:#4a4c52}
+  .gratitude-rule{margin:15px 0 0;display:flex;align-items:center;justify-content:flex-end;gap:10px;color:#bd7b29}.gratitude-rule span{height:1px;width:38px;background:#c78a3c}.gratitude-rule em{color:#a11c1c;font-size:15px;font-weight:700}
+
+  .open-wrap{max-width:1140px;margin:0 auto;padding:23px 34px 22px;color:#f5e0b5;background:radial-gradient(circle at 50% -30%,#a40015 0,#780009 47%,#690006 100%);border-left:1px solid #c88c32;border-right:1px solid #c88c32;border-bottom:3px solid #b07620;box-shadow:inset 0 0 0 3px #5f0006}
+  .open-head{display:grid;grid-template-columns:72px 1fr 240px;align-items:center;gap:17px}.open-badge{width:64px;height:64px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f2ce71;font-size:29px;border:2px solid #dfb64d;background:#650006;box-shadow:0 0 18px #f0b83a30}.open-badge small{font-size:15px;line-height:.3}.open-head h2{margin:0;color:#f5d37d;font-size:34px;line-height:1}.open-head p{margin:6px 0 0;color:#f4d6a5;font-size:14px;font-style:italic}.opportunity{text-align:right;color:#e5b84e;font-size:17px;font-style:italic;transform:rotate(-3deg)}.opportunity span{font-size:20px}
+  .open-columns{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px}.open-list{display:grid;gap:8px}.open-row{min-height:50px;display:grid;grid-template-columns:58px 1fr;align-items:center;padding:0 16px 0 10px;border:1px solid #a95e1c;border-radius:8px;background:linear-gradient(90deg,#780008,#6c0008);box-shadow:inset 0 1px #c56e272e}.open-icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#8b0610;background:linear-gradient(#f0cb6d,#d4a13e);font-size:18px}.open-row strong{font-size:16px;font-weight:500;color:#f6e2bd}
+  .open-footer{display:grid;grid-template-columns:130px 1fr 180px;align-items:end;margin-top:20px}.dhaki{font-size:69px;color:#ad6a2b;opacity:.72}.sponsor-now{justify-self:center;min-width:350px;height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;gap:18px;text-decoration:none;color:#720009;font-weight:800;font-size:20px;background:linear-gradient(#f7d779,#dfa23a);border:2px solid #edc463;box-shadow:inset 0 0 0 3px #a66619,0 5px 12px #2b000036}.sponsor-now span{font-size:24px}.sponsor-now b{font-size:30px}.together{text-align:right;color:#dfad3f;font-style:italic;font-size:17px;line-height:1.1;transform:rotate(-6deg)}.together strong{font-size:22px}.small-copy{text-align:center;margin:7px 0 0;color:#eacb93;font-size:13px}
+  .city-lights{max-width:1140px;height:95px;margin:0 auto;border-left:1px solid #c88c32;border-right:1px solid #c88c32;background:linear-gradient(#3a1208aa,#5e1908),radial-gradient(circle at 50% 90%,#ffbd3542,transparent 45%);overflow:hidden;position:relative}.city-lights:before{content:"";position:absolute;left:0;right:0;bottom:0;height:65px;background:repeating-linear-gradient(90deg,transparent 0 33px,#d57d1938 34px 36px)}.skyline{position:absolute;left:0;right:0;bottom:12px;text-align:center;color:#e6a33a;font-size:43px;letter-spacing:9px;text-shadow:0 0 8px #ffb641}
+
+  .sponsor-footer{min-height:73px;background:linear-gradient(#790008,#650006);border-top:1px solid #b97b26;color:#d9b46a;display:flex;align-items:center;justify-content:center;position:relative;font-size:13px}.sponsor-footer span{position:absolute;right:max(4vw,40px);color:#e0bd66;font-style:italic;font-size:15px}
+
+  @media(max-width:900px){
+    .sponsor-header-inner{padding:0 18px;grid-template-columns:210px 1fr 96px}.brand span{font-size:14px}nav{gap:13px}nav a{font-size:11px}.donate{min-width:90px}
+    .hero-copy{left:5vw}.hero-copy h1{font-size:44px}.anniversary{left:61%;transform:scale(.9)}
+    .sponsored-wrap,.open-wrap,.city-lights{margin-left:14px;margin-right:14px}.thanks-head{grid-template-columns:58px 1fr 190px}.thanks-head h2,.open-head h2{font-size:28px}.namaskar{transform:scale(.86)}
+    .sponsor-row{grid-template-columns:42px 1fr 1fr}.sponsor-row strong,.sponsor-row>span:last-child,.open-row strong{font-size:14px}
+    .open-head{grid-template-columns:60px 1fr 190px}.sponsor-now{min-width:300px}
+  }
+  @media(max-width:680px){
+    .sponsor-header-inner{height:auto;min-height:58px;display:flex;justify-content:space-between}.brand span{display:none}.brand img{width:42px}.sponsor-header nav{display:none}.donate{min-width:100px}
+    .sponsor-hero{height:320px}.hero-art{width:100%;opacity:.62;object-position:65% 20%}.hero-shade{background:linear-gradient(90deg,#650006f0,#650006ae 70%,#65000655)}.hero-copy{left:22px;top:40px;right:22px}.hero-copy h1{font-size:41px}.hero-copy p{font-size:14px}.hero-tagline{max-width:260px;line-height:1.35}.anniversary{left:auto;right:18px;top:104px;transform:scale(.76);transform-origin:top right}
+    .sponsored-wrap,.open-wrap,.city-lights{margin:0;border-left:0;border-right:0;padding-left:16px;padding-right:16px}.thanks-head{grid-template-columns:52px 1fr}.thanks-head h2{font-size:27px}.thanks-head p{font-size:13px}.namaskar{grid-column:1/-1;justify-self:center;margin-top:4px}.folded-hands{font-size:38px}.sponsor-columns,.open-columns{grid-template-columns:1fr;gap:12px}.sponsor-row{grid-template-columns:40px 1.15fr .85fr;padding:0 8px}.sponsor-row strong{font-size:13px}.sponsor-row>span:last-child{font-size:12px}
+    .gratitude-rule{justify-content:center}.gratitude-rule em{font-size:12px}
+    .open-head{grid-template-columns:54px 1fr}.open-head h2{font-size:28px}.open-head p{font-size:12px}.opportunity{grid-column:1/-1;text-align:center;font-size:14px}.opportunity span{font-size:17px}.open-row strong{font-size:14px}
+    .open-footer{grid-template-columns:65px 1fr 75px}.dhaki{font-size:46px}.sponsor-now{min-width:0;width:100%;height:48px;font-size:17px;gap:10px}.together{font-size:11px}.together strong{font-size:13px}.small-copy{font-size:11px}
+    .sponsor-footer{padding:18px 14px 38px;text-align:center;font-size:11px}.sponsor-footer span{right:auto;bottom:12px}
+  }
+</style>
