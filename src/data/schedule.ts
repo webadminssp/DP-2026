@@ -8,6 +8,7 @@
 
 export type EventIcon =
   | "anandamela"
+  | "dhunuchi"
   | "bodhon"
   | "aaroti"
   | "cultural"
@@ -21,6 +22,7 @@ export type ScheduleEvent = {
   title: string;
   description: string;
   icon: EventIcon;
+  href?: string;
 };
 
 export type ScheduleDay = {
@@ -56,6 +58,12 @@ export const schedule: ScheduleDay[] = [
         title: "Anandamela",
         description: "A festival of food, cooked and shared by our residents.",
         icon: "anandamela",
+      },
+      {
+        title: "Dhunuchi Competition",
+        description: "7:30 PM onwards · 1st Floor Podium.",
+        icon: "dhunuchi",
+        href: "/dhunuchi-competition",
       },
     ],
   },

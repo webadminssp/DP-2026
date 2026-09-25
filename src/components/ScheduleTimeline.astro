@@ -15,6 +15,7 @@ import { schedule, scheduleMeta, type EventIcon } from "../data/schedule";
 
 const icons: Record<EventIcon, any> = {
     anandamela: UtensilsCrossed,
+    dhunuchi: Flame,
     bodhon: Flame,
     aaroti: Bell,
     cultural: Drama,
@@ -104,7 +105,11 @@ const dayIcons: Record<number, string> = {
                                     </span>
                                     <div>
                                         <h3 class="schedule-event-title">
-                                            {event.title}
+                                            {event.href ? (
+                                                <a class="schedule-event-link" href={event.href}>
+                                                    {event.title}
+                                                </a>
+                                            ) : event.title}
                                         </h3>
                                         <p class="schedule-event-desc">
                                             {event.description}
@@ -304,6 +309,23 @@ const dayIcons: Record<number, string> = {
         font-size: 1rem;
         line-height: 1.4;
         color: var(--palette-crimson);
+    }
+
+    .schedule-event-link {
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-color: color-mix(in oklab, var(--palette-gold) 60%, transparent);
+        text-underline-offset: 0.2em;
+    }
+
+    .schedule-event-link:hover {
+        text-decoration-color: currentColor;
+    }
+
+    .schedule-event-link:focus-visible {
+        outline: 2px solid var(--palette-crimson);
+        outline-offset: 3px;
+        border-radius: 2px;
     }
 
     .schedule-event-desc {
