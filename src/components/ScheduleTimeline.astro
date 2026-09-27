@@ -106,7 +106,13 @@ const dayIcons: Record<number, string> = {
                                     <div>
                                         <h3 class="schedule-event-title">
                                             {event.href ? (
-                                                <a class="schedule-event-link" href={event.href}>
+                                                <a
+                                                    class="schedule-event-link"
+                                                    href={event.href}
+                                                    target={event.newTab ? "_blank" : undefined}
+                                                    rel={event.newTab ? "noopener noreferrer" : undefined}
+                                                    aria-label={event.newTab ? `${event.title} poster (opens in a new tab)` : undefined}
+                                                >
                                                     {event.title}
                                                 </a>
                                             ) : event.title}
