@@ -13,7 +13,6 @@ const navLinks = [
   { label: "Schedule", href: "/schedule" },
   { label: "Blood Donation", href: "/blood-donation" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Sponsorship", href: "/sponsorship-details" },
   { label: "Contact", href: "/#contact" },
 ];
 ---
@@ -36,7 +35,7 @@ const navLinks = [
 
       <div class="hidden items-center gap-2 md:flex">
         <a href="/#contribute" class="cta-button cta-donate"><Heart size={16} fill="currentColor" />Donate</a>
-        <a href="/#sponsors" class="cta-button cta-sponsor"><Users size={16} />Sponsor</a>
+        <a href="/sponsorship-details" class="cta-button cta-sponsor"><Users size={16} />Sponsor</a>
       </div>
 
       <button
@@ -59,7 +58,7 @@ const navLinks = [
         ))}
         <div class="mt-2 grid grid-cols-2 gap-2 border-t border-white/15 pt-3">
           <a href="/#contribute" class="cta-button cta-donate justify-center"><Heart size={15} fill="currentColor" />Donate</a>
-          <a href="/#sponsors" class="cta-button cta-sponsor justify-center"><Users size={15} />Sponsor</a>
+          <a href="/sponsorship-details" class="cta-button cta-sponsor justify-center"><Users size={15} />Sponsor</a>
         </div>
       </nav>
     </div>
