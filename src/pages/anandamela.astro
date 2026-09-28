@@ -1,0 +1,231 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const whatsappUrl = "https://wa.me/918884666036?text=Hi%2C%20I%20would%20like%20to%20reserve%20a%20stall%20for%20Anandamela%202026.";
+const heroImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Thakur_Bhog_Platter.jpg/1920px-Thakur_Bhog_Platter.jpg";
+const pujoImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Durga_Puja_Bhog.jpg/1280px-Durga_Puja_Bhog.jpg";
+const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DURGA_PUJA_DISH.jpg/960px-DURGA_PUJA_DISH.jpg";
+---
+
+<Layout title="Anandamela 2026 | Rajbarir Khana Khazana | Shriram Samruddhi Durga Pujo">
+  <main class="am-page">
+    <section class="am-hero">
+      <img class="am-hero-img" src={heroImage} alt="Traditional Bengali festive food platter" fetchpriority="high" />
+      <div class="am-hero-shade"></div>
+      <div class="am-shell am-hero-grid">
+        <div class="am-hero-copy">
+          <p class="am-overline">Shriram Samruddhi · Celebrating 20 Years</p>
+          <h1><em>Anandamela</em><span>Rajbarir Khana Khazana</span></h1>
+          <p class="am-tagline">From our kitchens to the Rajbari courtyard.<br />Cook. Share. Celebrate.</p>
+
+          <div class="am-facts">
+            <div><b>15 October</b><span>2026 · Thursday</span></div>
+            <div><b>6:30 PM</b><span>Onwards</span></div>
+            <div><b>Podium</b><span>Shriram Samruddhi</span></div>
+            <div><b>Residents</b><span>Home-cooked delights</span></div>
+          </div>
+
+          <div class="am-actions">
+            <a class="am-btn am-btn-gold" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Reserve a Stall <span>→</span></a>
+            <a class="am-btn am-btn-outline" href="#details">Event Details</a>
+          </div>
+        </div>
+
+        <figure class="am-poster-card">
+          <img src="/images/anand-mela-2026.jpg" alt="Anandamela 2026 event poster" />
+          <figcaption>
+            <span>Official Event Poster</span>
+            <a href="/images/anand-mela-2026.jpg" target="_blank" rel="noopener noreferrer">View full poster ↗</a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="am-intro am-section">
+      <div class="am-shell am-two">
+        <div>
+          <p class="am-kicker">The first taste of Pujo</p>
+          <h2>A celebration cooked at home,<br />served with heart.</h2>
+          <div class="am-ornament" aria-hidden="true"><i></i><b>✦</b><i></i></div>
+          <p>Our Anandamela brings the community together around something we all love — food made by our own residents. Whether you are known for a signature biryani, a perfect chop, a treasured family recipe, irresistible bakes, or a sweet that disappears in minutes, this is your evening to share it.</p>
+          <p>Come as a cook, come as a foodie, or simply come hungry. The Rajbari courtyard is waiting.</p>
+        </div>
+
+        <div class="am-collage" aria-label="Bengali Pujo food photographs">
+          <figure class="am-pic am-pic-a">
+            <img src={pujoImage} alt="Durga Puja bhog tradition" loading="lazy" />
+          </figure>
+          <figure class="am-pic am-pic-b">
+            <img src={foodImage} alt="Traditional Bengali Durga Puja meal" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="am-spirit am-section">
+      <div class="am-shell">
+        <header class="am-center">
+          <p class="am-kicker">The spirit of Anandamela</p>
+          <h2>Every stall has a story.</h2>
+          <p>It is more than a food fair. It is neighbours sharing family recipes, children discovering new favourites, friends cheering one another on, and the whole community beginning Pujo together.</p>
+        </header>
+
+        <div class="am-story-grid">
+          <article>
+            <span>01</span>
+            <h3>Cook what you love</h3>
+            <p>Savoury, sweet, baked, traditional or completely your own — bring the dish people always ask you to make again.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Set up your table</h3>
+            <p>Turn your corner into a little food adda. Make it warm, inviting and full of the personality behind your food.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Share the evening</h3>
+            <p>Serve neighbours, meet new people and soak in that unmistakable pre-Pujo buzz of laughter, aroma and adda.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="details" class="am-details am-section">
+      <div class="am-shell">
+        <header class="am-center">
+          <p class="am-kicker">Everything you need to know</p>
+          <h2>Anandamela 2026 Details</h2>
+        </header>
+
+        <div class="am-cards">
+          <article><span>▣</span><small>Date</small><b>15 October 2026</b><p>Thursday · Panchami evening</p></article>
+          <article><span>◷</span><small>Time</small><b>6:30 PM onwards</b><p>Come early to set up comfortably</p></article>
+          <article><span>⌖</span><small>Venue</small><b>Shriram Samruddhi Podium</b><p>Inside our community</p></article>
+          <article><span>₹</span><small>Stall Charge</small><b>₹500 per table</b><p>Reserve your primary table</p></article>
+          <article><span>＋</span><small>Extra Table</small><b>₹400 each</b><p>Add another table if you need more space</p></article>
+          <article><span>✓</span><small>Book By</small><b>12 October 2026</b><p>Advance payment + WhatsApp confirmation</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="am-rajbari am-section">
+      <div class="am-shell am-rajbari-grid">
+        <div class="am-feature-photo">
+          <img src={heroImage} alt="Bengali festive food arranged for a Pujo feast" loading="lazy" />
+          <div class="am-photo-caption">A table full of flavour.<br /><b>A courtyard full of community.</b></div>
+        </div>
+
+        <div>
+          <p class="am-kicker am-kicker-light">Rajbarir Khana Khazana</p>
+          <h2>Bring your best from the kitchen to the Rajbari.</h2>
+          <p>Seasoned home chef or enthusiastic first-timer — you are welcome. This is about the joy of making, sharing and celebrating together, not professional perfection.</p>
+
+          <div class="am-mini">
+            <div><b>Home Cooks Welcome</b><span>Share your signature dish</span></div>
+            <div><b>Sweet or Savoury</b><span>Bring what you make best</span></div>
+            <div><b>₹500 / Table</b><span>Extra table ₹400</span></div>
+            <div><b>Book by 12 Oct</b><span>Payment in advance</span></div>
+          </div>
+
+          <a class="am-btn am-btn-gold" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Book Your Stall on WhatsApp <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="am-feast">
+      <img src={pujoImage} alt="" loading="lazy" />
+      <div class="am-feast-shade"></div>
+      <div class="am-shell am-feast-copy">
+        <p>Food. Adda. Pujo.</p>
+        <h2>One delicious evening.</h2>
+        <span>Made by our residents. Shared with our community.</span>
+      </div>
+    </section>
+
+    <section class="am-book am-section">
+      <div class="am-shell am-book-grid">
+        <div>
+          <p class="am-kicker">Stall reservations</p>
+          <h2>Ready to put your signature dish on the table?</h2>
+          <p>Reserve your spot by making the payment in advance and sending a WhatsApp message to the same number by <strong>12 October 2026</strong>.</p>
+          <div class="am-contact">
+            <span>WhatsApp / Payment Contact</span>
+            <a href="tel:+918884666036">+91 88846 66036</a>
+          </div>
+          <a class="am-btn am-btn-crimson" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Reserve on WhatsApp <span>↗</span></a>
+        </div>
+
+        <figure class="am-book-poster">
+          <img src="/images/anand-mela-2026.jpg" alt="Anandamela 2026 Rajbari themed poster" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="am-final">
+      <img src={heroImage} alt="Bengali festive food" loading="lazy" />
+      <div class="am-final-shade"></div>
+      <div class="am-shell am-final-copy">
+        <p>Panchami evening</p>
+        <h2>Come hungry.<br />Leave with memories.</h2>
+        <a class="am-btn am-btn-gold" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Reserve a Stall <span>→</span></a>
+      </div>
+    </section>
+
+    <section class="am-credits">
+      <div class="am-shell">
+        <p>Photography used on this page is from Wikimedia Commons under CC BY-SA 4.0:
+          <a href="https://commons.wikimedia.org/wiki/File:Thakur_Bhog_Platter.jpg" target="_blank" rel="noopener noreferrer">Manali Saha</a>,
+          <a href="https://commons.wikimedia.org/wiki/File:Durga_Puja_Bhog.jpg" target="_blank" rel="noopener noreferrer">Shivangshi Mitra</a>,
+          and <a href="https://commons.wikimedia.org/wiki/File:DURGA_PUJA_DISH.jpg" target="_blank" rel="noopener noreferrer">19Baban92</a>.
+        </p>
+      </div>
+    </section>
+
+    <a class="am-mobile-cta" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Reserve a Stall <span>→</span></a>
+  </main>
+</Layout>
+
+<style>
+  .am-page{--r:#8d0013;--rd:#56000b;--g:#d6a33a;--gl:#f5d27c;--cream:#fff6e5;--ink:#42271e;background:#fffaf0;color:var(--ink);overflow:hidden}
+  .am-page h1,.am-page h2,.am-page h3{font-family:var(--font-heading,Georgia,serif)}
+  .am-shell{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+  .am-section{padding:clamp(64px,7vw,104px) 0}
+  .am-kicker{margin:0 0 10px;color:#9a6b20;font-size:.76rem;font-weight:850;letter-spacing:.15em;text-transform:uppercase}
+  .am-center{max-width:760px;margin:0 auto 42px;text-align:center}.am-center h2{margin:0 0 14px;color:var(--r);font-size:clamp(2.2rem,4.5vw,3.7rem);line-height:1}.am-center>p:last-child{color:#786056;line-height:1.72}
+
+  .am-hero{position:relative;isolation:isolate;min-height:760px;display:grid;align-items:center;background:#2b0906}
+  .am-hero-img{position:absolute;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;object-position:center 52%;filter:saturate(1.06) contrast(1.04)}
+  .am-hero-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(33,0,4,.97) 0%,rgba(65,6,7,.84) 46%,rgba(64,14,6,.44) 72%,rgba(24,0,2,.55)),linear-gradient(0deg,rgba(38,0,4,.65),transparent 48%)}
+  .am-hero:after{content:"";position:absolute;inset:18px;border:1px solid rgba(235,188,84,.38);pointer-events:none}
+  .am-hero-grid{display:grid;grid-template-columns:1.28fr .72fr;gap:56px;align-items:center;padding-block:72px}
+  .am-hero-copy{max-width:740px;color:#fff4dc}.am-overline{color:#f2cc76;font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  .am-hero h1{margin:9px 0 0;line-height:.9}.am-hero h1 em{display:block;color:#f5cc6a;font-size:clamp(4rem,7.8vw,7.4rem);font-weight:560}.am-hero h1 span{display:block;max-width:700px;margin-top:13px;color:#fff1ce;font-size:clamp(2rem,3.9vw,3.8rem);font-weight:570;line-height:.98}
+  .am-tagline{margin:27px 0;color:#f6e8cf;font-family:var(--font-heading,Georgia,serif);font-size:clamp(1.22rem,2.2vw,1.72rem);line-height:1.36}
+  .am-facts{max-width:740px;display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid rgba(235,193,104,.35);padding:16px 0}.am-facts div{padding:0 16px;border-left:1px solid rgba(235,193,104,.25)}.am-facts div:first-child{padding-left:0;border-left:0}.am-facts b,.am-facts span{display:block}.am-facts b{color:#ffda84;font-size:.92rem}.am-facts span{margin-top:4px;color:#eadcc9;font-size:.72rem}
+  .am-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:29px}.am-btn{min-height:47px;display:inline-flex;align-items:center;justify-content:center;gap:.65rem;padding:0 22px;border-radius:9px;text-decoration:none;font-size:.9rem;font-weight:800;transition:transform .15s ease,box-shadow .15s ease}.am-btn:hover{transform:translateY(-2px)}
+  .am-btn-gold{color:#61000c;background:linear-gradient(180deg,#f8dc89,#dca63f);box-shadow:0 10px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.68)}.am-btn-outline{color:#fff2d6;border:1px solid rgba(239,203,126,.6);background:rgba(74,0,10,.35)}.am-btn-crimson{color:#fff7e6;background:linear-gradient(180deg,#aa1022,#7d0010);box-shadow:0 9px 22px rgba(97,0,12,.22)}
+  .am-poster-card{margin:0;padding:10px;background:#fff2d4;border:1px solid #d6a33a;transform:rotate(2deg);box-shadow:0 30px 70px rgba(0,0,0,.34)}.am-poster-card img{display:block;width:100%;max-height:530px;object-fit:cover;object-position:center top}.am-poster-card figcaption{display:flex;justify-content:space-between;gap:12px;padding:11px 4px 3px;color:#8c5d1f;font-family:var(--font-heading,Georgia,serif);font-size:.84rem}.am-poster-card a{color:#7e0d16;font-weight:700;text-decoration:none}
+
+  .am-two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(45px,7vw,90px);align-items:center}.am-two h2,.am-rajbari h2,.am-book h2{margin:0 0 18px;color:var(--r);font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.02}.am-two p:not(.am-kicker){color:#624f45;line-height:1.82}
+  .am-ornament{width:180px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin:20px 0;color:#b37c24}.am-ornament i{height:1px;background:linear-gradient(90deg,transparent,#c7933c)}.am-ornament i:last-child{background:linear-gradient(90deg,#c7933c,transparent)}
+  .am-collage{position:relative;min-height:470px}.am-pic{position:absolute;margin:0;padding:9px;background:#fff5de;border:1px solid #dfbd75;box-shadow:0 22px 48px rgba(78,35,15,.18)}.am-pic img{display:block;width:100%;height:100%;object-fit:cover}.am-pic-a{width:70%;height:320px;left:0;top:28px;transform:rotate(-5deg)}.am-pic-b{width:47%;height:330px;right:2%;bottom:10px;transform:rotate(5deg)}
+
+  .am-spirit{background:linear-gradient(180deg,#f8edd9,#fff8e9);border-block:1px solid #ead3a4}.am-story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.am-story-grid article{position:relative;min-height:245px;padding:34px 28px;border:1px solid #e2c387;background:linear-gradient(145deg,#fffefa,#fff1d2);box-shadow:0 14px 34px rgba(92,49,21,.08)}.am-story-grid article>span{display:block;color:#d19c3d;font-family:Georgia,serif;font-size:2.4rem;font-style:italic}.am-story-grid h3{margin:12px 0 9px;color:#850a16;font-size:1.45rem}.am-story-grid p{margin:0;color:#6f5a50;font-size:.92rem;line-height:1.7}
+
+  .am-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.am-cards article{position:relative;min-height:172px;padding:23px 18px 20px 70px;border:1px solid #ead3a4;background:linear-gradient(145deg,#fffdf7,#fff2d7);box-shadow:0 12px 28px rgba(92,49,21,.07)}.am-cards article>span{position:absolute;left:18px;top:22px;width:38px;height:38px;display:grid;place-items:center;border:1px solid #dfbd72;border-radius:50%;background:#fff;color:#930b18;font-family:Georgia,serif;font-size:.9rem;font-weight:800}.am-cards small{display:block;color:#a27125;font-size:.66rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase}.am-cards b{display:block;margin-top:6px;color:#810a16;font-family:var(--font-heading,Georgia,serif);font-size:1.18rem}.am-cards p{margin:7px 0 0;color:#786158;font-size:.82rem;line-height:1.45}
+
+  .am-rajbari{color:#fff5df;background:radial-gradient(circle at 20% 50%,rgba(222,162,55,.15),transparent 35%),linear-gradient(135deg,#5a000b,#8f0a1a 58%,#500009)}.am-rajbari-grid{display:grid;grid-template-columns:.84fr 1.16fr;gap:clamp(42px,7vw,86px);align-items:center}.am-feature-photo{position:relative}.am-feature-photo:after{content:"";position:absolute;inset:16px -16px -16px 16px;border:1px solid rgba(240,199,105,.5)}.am-feature-photo img{position:relative;z-index:1;display:block;width:100%;min-height:500px;max-height:590px;object-fit:cover;box-shadow:0 28px 65px rgba(20,0,3,.28)}.am-photo-caption{position:absolute;z-index:2;left:22px;right:22px;bottom:18px;padding:13px 16px;color:#fff3d1;background:rgba(65,0,8,.78);backdrop-filter:blur(4px);font-family:var(--font-heading,Georgia,serif);font-size:1rem}.am-kicker-light{color:#f1ca70}.am-rajbari h2{color:#ffe6a6}.am-rajbari-grid>div:last-child>p:not(.am-kicker){color:rgba(255,246,226,.82);line-height:1.75}.am-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:25px 0 28px}.am-mini div{padding:13px 14px;border:1px solid rgba(245,202,105,.28);background:rgba(43,0,6,.25)}.am-mini b,.am-mini span{display:block}.am-mini b{color:#ffe09a;font-size:.86rem}.am-mini span{margin-top:3px;color:rgba(255,245,225,.66);font-size:.74rem}
+
+  .am-feast{position:relative;isolation:isolate;min-height:430px;display:grid;align-items:center;overflow:hidden}.am-feast>img{position:absolute;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;object-position:center 47%}.am-feast-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(69,0,9,.94),rgba(68,7,5,.56) 55%,rgba(20,0,3,.7))}.am-feast-copy{color:#fff1cf}.am-feast-copy p{margin:0;color:#f2ca72;font-size:.76rem;font-weight:850;letter-spacing:.15em;text-transform:uppercase}.am-feast-copy h2{margin:7px 0 9px;color:#fff0c3;font-size:clamp(3.1rem,7vw,6.6rem);font-style:italic;line-height:.92}.am-feast-copy span{font-family:var(--font-heading,Georgia,serif);font-size:clamp(1.05rem,2vw,1.5rem)}
+
+  .am-book{background:radial-gradient(circle at 84% 8%,rgba(205,148,44,.11),transparent 28%),#fff8e9}.am-book-grid{display:grid;grid-template-columns:1.05fr .65fr;gap:clamp(40px,7vw,80px);align-items:center}.am-book>div p:not(.am-kicker){color:#715d53;line-height:1.72}.am-contact{margin:24px 0;display:grid;gap:4px}.am-contact span{color:#9a6b20;font-size:.72rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.am-contact a{width:max-content;color:#8d0013;font-family:var(--font-heading,Georgia,serif);font-size:1.7rem;font-weight:700;text-decoration:none}.am-book-poster{margin:0;padding:9px;background:#fff3dc;border:1px solid #d6a33a;transform:rotate(1.8deg);box-shadow:0 22px 52px rgba(82,39,13,.2)}.am-book-poster img{display:block;width:100%;max-height:590px;object-fit:cover;object-position:center top}
+
+  .am-final{position:relative;isolation:isolate;min-height:470px;display:grid;align-items:center;overflow:hidden}.am-final>img{position:absolute;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;object-position:center 50%}.am-final-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(38,0,5,.84),rgba(108,0,14,.77) 58%,rgba(62,0,9,.52))}.am-final-copy{text-align:right;color:#fff}.am-final-copy p{margin:0;color:#f3cb70;font-family:var(--font-heading,Georgia,serif);font-size:clamp(1.4rem,3vw,2rem);font-style:italic}.am-final-copy h2{margin:0 0 25px;color:#fff0c3;font-size:clamp(2.9rem,6vw,5.4rem);line-height:.94}
+
+  .am-credits{padding:20px 0 78px;background:#fff8e9}.am-credits p{margin:0;color:#8b776d;font-size:.72rem;line-height:1.65;text-align:center}.am-credits a{color:#7f5a1d}
+  .am-mobile-cta{display:none}
+
+  @media(max-width:960px){.am-hero-grid{grid-template-columns:1fr;gap:34px}.am-hero{min-height:980px;align-items:end}.am-hero-shade{background:linear-gradient(0deg,rgba(32,0,5,.98),rgba(43,0,6,.76) 65%,rgba(30,0,4,.28))}.am-poster-card{max-width:520px}.am-two,.am-rajbari-grid,.am-book-grid{grid-template-columns:1fr}.am-collage{max-width:720px}.am-story-grid{grid-template-columns:1fr}.am-cards{grid-template-columns:repeat(2,1fr)}.am-feature-photo{max-width:560px}.am-book-poster{max-width:520px}}
+  @media(max-width:640px){.am-shell{width:calc(100% - 28px)}.am-section{padding:56px 0}.am-hero{min-height:900px}.am-hero:after{inset:10px}.am-hero-grid{padding-block:48px}.am-hero h1 em{font-size:clamp(3.8rem,18vw,5.6rem)}.am-hero h1 span{font-size:clamp(1.9rem,9vw,2.8rem)}.am-facts{grid-template-columns:repeat(2,1fr)}.am-facts div:nth-child(3),.am-facts div:nth-child(4){border-top:1px solid rgba(235,193,104,.25);padding-top:12px;margin-top:12px}.am-facts div:nth-child(3){border-left:0;padding-left:0}.am-actions .am-btn{flex:1}.am-poster-card{width:92%;margin-left:auto}.am-collage{min-height:410px}.am-pic-a{width:76%;height:260px}.am-pic-b{width:50%;height:275px}.am-cards{grid-template-columns:1fr}.am-cards article{min-height:142px}.am-mini{grid-template-columns:1fr}.am-feature-photo img{min-height:430px}.am-book-poster{width:88%;margin-inline:auto}.am-final{min-height:410px}.am-final-copy{text-align:center}.am-credits{padding-bottom:92px}.am-mobile-cta{position:fixed;z-index:60;left:14px;right:14px;bottom:12px;min-height:52px;display:flex;align-items:center;justify-content:center;gap:.6rem;border:1px solid #d34d59;border-radius:999px;color:#fff7e7;background:linear-gradient(180deg,#a90f21,#75000f);box-shadow:0 14px 36px rgba(53,0,7,.34);font-weight:850;text-decoration:none}}
+  @media(prefers-reduced-motion:reduce){.am-btn{transition:none}.am-btn:hover{transform:none}}
+</style>
