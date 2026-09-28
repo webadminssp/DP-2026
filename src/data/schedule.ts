@@ -59,8 +59,7 @@ export const schedule: ScheduleDay[] = [
         title: "Anandamela",
         description: "A festival of food, cooked and shared by our residents.",
         icon: "anandamela",
-        href: "/images/anand-mela-2026.jpg",
-        newTab: true,
+        href: "/anandamela",
       },
       {
         title: "Dhunuchi Competition",
