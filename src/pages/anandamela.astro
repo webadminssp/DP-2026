@@ -2,15 +2,18 @@
 import Layout from "../layouts/Layout.astro";
 
 const whatsappUrl = "https://wa.me/918884666036?text=Hi%2C%20I%20would%20like%20to%20reserve%20a%20stall%20for%20Anandamela%202026.";
-const heroImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Thakur_Bhog_Platter.jpg/1920px-Thakur_Bhog_Platter.jpg";
-const pujoImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Durga_Puja_Bhog.jpg/1280px-Durga_Puja_Bhog.jpg";
-const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DURGA_PUJA_DISH.jpg/960px-DURGA_PUJA_DISH.jpg";
+const heroId = "1OQSbg9reMykbcC9Y_DcmxBv35nVDxxtF";
+const familyId = "1abBHvq-IzO2_-xAR5E5EUVMaz70hvgiW";
+const servingId = "1hfXZ3pl0--tOQUSr_2giBoA8fQX2UZmB";
+const courtyardId = "1uF_UWFNwyBr6lCwYwl-kz2IYKaj6GWdn";
+const driveImage = (id: string, width = 1600) => `https://drive.google.com/thumbnail?id=${id}&sz=w${width}`;
+const driveSrcSet = (id: string) => [480,800,1200,1600].map((w)=>`${driveImage(id,w)} ${w}w`).join(", ");
 ---
 
 <Layout title="Anandamela 2026 | Rajbarir Khana Khazana | Shriram Samruddhi Durga Pujo">
   <main class="am-page">
     <section class="am-hero">
-      <img class="am-hero-img" src="https://drive.google.com/thumbnail?id=1OQSbg9reMykbcC9Y_DcmxBv35nVDxxtF&sz=w1600" alt="Anandamela celebration in a Bengali Rajbari courtyard during Durga Pujo" fetchpriority="high" />
+      <img class="am-hero-img" src={driveImage(heroId)} srcset={driveSrcSet(heroId)} sizes="100vw" width="1672" height="941" alt="Anandamela celebration in a Bengali Rajbari courtyard during Durga Pujo" fetchpriority="high" decoding="async" />
       <div class="am-hero-shade"></div>
       <div class="am-shell am-hero-grid">
         <div class="am-hero-copy">
@@ -53,10 +56,10 @@ const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DUR
 
         <div class="am-collage" aria-label="Bengali Pujo food photographs">
           <figure class="am-pic am-pic-a">
-            <img src={pujoImage} alt="Durga Puja bhog tradition" loading="lazy" />
+            <img src={driveImage(servingId,1200)} srcset={driveSrcSet(servingId)} sizes="(max-width:640px) 92vw, (max-width:1080px) 58vw, 34vw" width="1122" height="1402" alt="Residents serving Bengali festive food at Anandamela" loading="lazy" decoding="async" />
           </figure>
           <figure class="am-pic am-pic-b">
-            <img src={foodImage} alt="Traditional Bengali Durga Puja meal" loading="lazy" />
+            <img src={driveImage(familyId,1200)} srcset={driveSrcSet(familyId)} sizes="(max-width:640px) 92vw, (max-width:1080px) 48vw, 27vw" width="1122" height="1402" alt="Family enjoying food and adda at Anandamela" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
@@ -111,7 +114,7 @@ const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DUR
     <section class="am-rajbari am-section">
       <div class="am-shell am-rajbari-grid">
         <div class="am-feature-photo">
-          <img src={heroImage} alt="Bengali festive food arranged for a Pujo feast" loading="lazy" />
+          <img src={driveImage(courtyardId)} srcset={driveSrcSet(courtyardId)} sizes="(max-width:1080px) 92vw, 42vw" width="1448" height="1086" alt="Grand Rajbari courtyard filled with Anandamela food stalls" loading="lazy" decoding="async" />
           <div class="am-photo-caption">A table full of flavour.<br /><b>A courtyard full of community.</b></div>
         </div>
 
@@ -133,7 +136,7 @@ const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DUR
     </section>
 
     <section class="am-feast">
-      <img src={pujoImage} alt="" loading="lazy" />
+      <img src={driveImage(courtyardId)} srcset={driveSrcSet(courtyardId)} sizes="100vw" width="1448" height="1086" alt="Rajbari-style Anandamela celebration with food stalls" loading="lazy" decoding="async" />
       <div class="am-feast-shade"></div>
       <div class="am-shell am-feast-copy">
         <p>Food. Adda. Pujo.</p>
@@ -162,22 +165,12 @@ const foodImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/DUR
     </section>
 
     <section class="am-final">
-      <img src={heroImage} alt="Bengali festive food" loading="lazy" />
+      <img src={driveImage(familyId)} srcset={driveSrcSet(familyId)} sizes="100vw" width="1122" height="1402" alt="Family sharing food together at Anandamela" loading="lazy" decoding="async" />
       <div class="am-final-shade"></div>
       <div class="am-shell am-final-copy">
         <p>Panchami evening</p>
         <h2>Come hungry.<br />Leave with memories.</h2>
         <a class="am-btn am-btn-gold" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Reserve a Stall <span>→</span></a>
-      </div>
-    </section>
-
-    <section class="am-credits">
-      <div class="am-shell">
-        <p>Photography used on this page is from Wikimedia Commons under CC BY-SA 4.0:
-          <a href="https://commons.wikimedia.org/wiki/File:Thakur_Bhog_Platter.jpg" target="_blank" rel="noopener noreferrer">Manali Saha</a>,
-          <a href="https://commons.wikimedia.org/wiki/File:Durga_Puja_Bhog.jpg" target="_blank" rel="noopener noreferrer">Shivangshi Mitra</a>,
-          and <a href="https://commons.wikimedia.org/wiki/File:DURGA_PUJA_DISH.jpg" target="_blank" rel="noopener noreferrer">19Baban92</a>.
-        </p>
       </div>
     </section>
 
