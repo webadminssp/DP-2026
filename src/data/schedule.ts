@@ -81,6 +81,8 @@ export const schedule: ScheduleDay[] = [
         title: "Bodhon",
         description: "Invocation of Maa Durga.",
         icon: "bodhon",
+        href: "/images/maha-shashti-bodhan-cultural-celebration.png",
+        newTab: true,
       },
       {
         title: "Aaroti at the Clubhouse",
