@@ -128,6 +128,8 @@ export const schedule: ScheduleDay[] = [
         title: "Dandiya Night",
         description: "Spin to the beats and celebrate together, under the stars.",
         icon: "dandiya",
+        href: "https://raw.githubusercontent.com/webadminssp/DP-2026/main/Dandiya%20Night%20Rajbari.png",
+        newTab: true,
       },
     ],
   },
