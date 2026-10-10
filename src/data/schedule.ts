@@ -113,7 +113,7 @@ export const schedule: ScheduleDay[] = [
         title: "Evening of Melodies",
         description: "A soulful evening of music.",
         icon: "music",
-        href: "https://github.com/webadminssp/DP-2026/blob/main/argos.jpeg",
+        href: "/evening-of-melodies",
         newTab: true,
       },
     ],
