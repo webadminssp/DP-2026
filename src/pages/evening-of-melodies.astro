@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Evening of Melodies — Shriram Samruddhi Pujo 2026">
+    <main class="poster-page">
+        <div class="poster-wrap">
+            <img
+                src="https://raw.githubusercontent.com/webadminssp/DP-2026/main/argos.jpeg"
+                alt="Evening of Melodies — 17 October 2026"
+                class="poster-image"
+            />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .poster-page {
+        min-height: 100vh;
+        padding: 2rem 1rem 3rem;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .poster-wrap {
+        width: min(100%, 1100px);
+        display: flex;
+        justify-content: center;
+    }
+
+    .poster-image {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(100vh - 5rem);
+        object-fit: contain;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (max-width: 640px) {
+        .poster-page {
+            padding: 1rem 0.5rem 2rem;
+        }
+
+        .poster-image {
+            max-height: none;
+            width: 100%;
+        }
+    }
+</style>
