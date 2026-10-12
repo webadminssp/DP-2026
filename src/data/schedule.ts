@@ -90,6 +90,13 @@ export const schedule: ScheduleDay[] = [
         icon: "aaroti",
       },
       {
+        title: "Home Cooks, Our Culinary Stars",
+        description: "Free stalls for home cooks — nominate your cook and celebrate their culinary talent.",
+        icon: "anandamela",
+        href: "https://raw.githubusercontent.com/webadminssp/DP-2026/main/Home%20Cooks_%20Our%20Culinary%20Stars.png",
+        newTab: true,
+      },
+      {
         title: "Cultural Function",
         description: "An evening of performances by our community artists.",
         icon: "cultural",
