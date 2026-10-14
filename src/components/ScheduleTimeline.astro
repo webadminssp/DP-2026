@@ -61,6 +61,16 @@ const dayIcons: Record<number, string> = {
         </div>
     </header>
 
+    <a class="schedule-poster" href="/schedule-poster" aria-label="View the full Durga Puja 2026 schedule poster">
+        <img
+            src="https://raw.githubusercontent.com/webadminssp/DP-2026/main/Durga%20Puja%202026%20Schedule%20Poster.png"
+            alt="Durga Puja 2026 Schedule Poster — Shriram Samruddhi"
+            width="1055" height="1491"
+            fetchpriority="high"
+        />
+        <span>View full schedule poster <span aria-hidden="true">↗</span></span>
+    </a>
+
     <!-- Timeline -->
     <div class="schedule-days">
         {
@@ -132,6 +142,37 @@ const dayIcons: Record<number, string> = {
 </section>
 
 <style>
+    .schedule-poster {
+        display: block;
+        width: 100%;
+        margin: 2.5rem auto 0;
+        padding: 0.5rem;
+        border: 1px solid var(--palette-gold);
+        border-radius: 1rem;
+        overflow: hidden;
+        background: var(--background);
+        box-shadow: 0 12px 36px rgb(0 0 0 / 12%);
+        text-decoration: none;
+    }
+    .schedule-poster img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 0.6rem;
+    }
+    .schedule-poster > span {
+        display: block;
+        padding: 1rem 0.5rem;
+        text-align: center;
+        font-weight: 600;
+        color: var(--palette-crimson);
+    }
+    .schedule-poster:hover { box-shadow: 0 12px 36px rgb(0 0 0 / 20%); }
+    .schedule-poster:focus-visible {
+        outline: 3px solid var(--palette-crimson);
+        outline-offset: 5px;
+    }
+
     /* ── Header meta row ──────────────────────────────────────────────── */
 
     .schedule-meta {
