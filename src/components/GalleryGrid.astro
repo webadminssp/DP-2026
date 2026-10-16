@@ -19,7 +19,31 @@ import { galleryYears as years } from "../data/gallery";
     <div class="gallery-years">
         {
             years.map((year) => (
-                <section class="year-section" data-year-section={year}>
+                <>
+                {year === 2025 && (
+                    <div class="archive-divider" data-archive-divider role="separator" aria-label="Memories from 2025 and earlier">
+                        <span class="archive-divider-line" aria-hidden="true"></span>
+                        <div class="archive-divider-center">
+                            <svg class="archive-alpona" viewBox="0 0 200 112" fill="none" aria-hidden="true">
+                                <g stroke="currentColor" stroke-width="1.4">
+                                    <path d="M100 94C65 76 62 42 100 12C138 42 135 76 100 94Z" />
+                                    <path d="M100 94C61 98 29 69 35 33C77 34 99 59 100 94ZM100 94C139 98 171 69 165 33C123 34 101 59 100 94Z" />
+                                    <path d="M100 94C63 111 18 93 9 60C49 52 81 64 100 94ZM100 94C137 111 182 93 191 60C151 52 119 64 100 94Z" />
+                                    <path d="M100 87C82 68 83 46 100 29C117 46 118 68 100 87Z" />
+                                    <path d="M85 85C66 77 54 63 49 48M115 85C134 77 146 63 151 48M78 92C54 91 34 82 24 71M122 92C146 91 166 82 176 71" />
+                                    <circle cx="100" cy="56" r="4" fill="currentColor" />
+                                    <circle cx="20" cy="40" r="2" fill="currentColor" />
+                                    <circle cx="180" cy="40" r="2" fill="currentColor" />
+                                    <path d="M69 20L72 25L69 30L66 25ZM131 20L134 25L131 30L128 25Z" />
+                                </g>
+                            </svg>
+                            <span class="archive-divider-bangla" lang="bn">স্মৃতির আলপনা</span>
+                            <span class="archive-divider-label">Memories through the years</span>
+                        </div>
+                        <span class="archive-divider-line" aria-hidden="true"></span>
+                    </div>
+                )}
+                <section class:list={["year-section", { "year-section-current": year === 2026, "year-section-archive": year < 2026 }]} data-year-section={year}>
                     <div class="year-heading">
                         <h2>{year}</h2>
                         <span class="year-count" data-year-count={year}>Loading…</span>
@@ -30,7 +54,9 @@ import { galleryYears as years } from "../data/gallery";
                             Reading the archive…
                         </div>
                     </div>
+                    <a class="year-album-link" data-year-album={year} target="_blank" rel="noopener noreferrer" hidden>View full album <span aria-hidden="true">↗</span></a>
                 </section>
+                </>
             ))
         }
     </div>
@@ -408,6 +434,7 @@ import { galleryYears as years } from "../data/gallery";
     type GalleryResponse = {
         year: number;
         count: number;
+        sourceFolderId?: string;
         media: GalleryMedia[];
     };
 
@@ -435,20 +462,58 @@ import { galleryYears as years } from "../data/gallery";
         });
     }
 
-    function selectForYear(pool: GalleryMedia[]): GalleryMedia[] {
+    async function selectForYear(pool: GalleryMedia[], year: number): Promise<GalleryMedia[]> {
         const unique = uniqueById(pool);
         const images = shuffle(unique.filter((item) => item.type === "image"));
         const videos = shuffle(unique.filter((item) => item.type === "video"));
-        const requestedPhotos = 8 + Math.floor(Math.random() * 5);
-        const photoCount = Math.min(images.length, requestedPhotos);
-        const videoCount = videos.length === 0 ? 0 : Math.min(videos.length, 1 + Math.floor(Math.random() * 2));
-        return shuffle([...images.slice(0, photoCount), ...videos.slice(0, videoCount)]);
+        if (year !== 2026) {
+            // Six thumbnails total, retaining a video preview when available.
+            const videoCount = Math.min(videos.length, Math.max(1, 6 - images.length));
+            return shuffle([...images.slice(0, 6 - videoCount), ...videos.slice(0, videoCount)]);
+        }
+
+        // Prefer photographs over event posters and artwork in this year's album.
+        const isPhoto = (item: GalleryMedia) => /^(DSC|IMG|PXL|DSCF|DSCN|DSC_|WhatsApp Image)/i.test(item.name);
+        const candidates = [...images.filter(isPhoto), ...images.filter((item) => !isPhoto(item))];
+        const selected: GalleryMedia[] = [];
+        const fallback: GalleryMedia[] = [];
+        // Probe a bounded, random sample in small batches; loaded previews are
+        // reused from the browser cache when the chosen tiles are rendered.
+        for (let offset = 0; offset < Math.min(candidates.length, 48) && selected.length < 12; offset += 6) {
+            const batch = candidates.slice(offset, offset + 6);
+            const quality = await Promise.all(batch.map(checkImageQuality));
+            batch.forEach((item, index) => {
+                if (quality[index] === "sharp") selected.push(item);
+                else if (quality[index] === "small") fallback.push(item);
+            });
+        }
+        return [...selected, ...fallback].slice(0, 12);
     }
 
     const driveThumb = (id: string, width = 800) =>
         `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${width}`;
     const driveFullImage = (id: string) => driveThumb(id, 2400);
     const driveVideo = (id: string) => `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
+
+    function checkImageQuality(media: GalleryMedia): Promise<"sharp" | "small" | "unavailable"> {
+        return new Promise((resolve) => {
+            const image = new Image();
+            const finish = (quality: "sharp" | "small" | "unavailable") => {
+                clearTimeout(timeout);
+                image.onload = null;
+                image.onerror = null;
+                resolve(quality);
+            };
+            const timeout = window.setTimeout(() => finish("unavailable"), 5000);
+            image.onload = () => {
+                const longEdge = Math.max(image.naturalWidth, image.naturalHeight);
+                const shortEdge = Math.min(image.naturalWidth, image.naturalHeight);
+                finish(longEdge >= 800 && shortEdge >= 480 ? "sharp" : "small");
+            };
+            image.onerror = () => finish("unavailable");
+            image.src = driveThumb(media.id, 800);
+        });
+    }
 
     function setCount(year: number, text: string) {
         const counter = document.querySelector<HTMLElement>(`[data-year-count="${year}"]`);
@@ -496,11 +561,11 @@ import { galleryYears as years } from "../data/gallery";
         return button;
     }
 
-    function renderYear(year: number, pool: GalleryMedia[]) {
+    async function renderYear(year: number, pool: GalleryMedia[]) {
         const grid = document.querySelector<HTMLElement>(`[data-year-grid="${year}"]`);
         if (!grid) return;
 
-        const selected = selectForYear(pool);
+        const selected = await selectForYear(pool, year);
         grid.replaceChildren();
 
         if (!selected.length) {
@@ -513,13 +578,6 @@ import { galleryYears as years } from "../data/gallery";
         }
 
         selected.forEach((media, index) => grid.append(makeTile(media, year, year === years[0] && index < 6)));
-
-        for (let i = 0; i < 6; i += 1) {
-            const filler = document.createElement("i");
-            filler.className = "gallery-filler";
-            filler.setAttribute("aria-hidden", "true");
-            grid.append(filler);
-        }
 
         const photos = selected.filter((item) => item.type === "image").length;
         const videos = selected.filter((item) => item.type === "video").length;
@@ -536,7 +594,13 @@ import { galleryYears as years } from "../data/gallery";
                 const response = await fetch(`/api/gallery?year=${year}`, { headers: { accept: "application/json" } });
                 if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
                 const data = (await response.json()) as GalleryResponse;
-                renderYear(year, data.media ?? []);
+                const album = document.querySelector<HTMLAnchorElement>(`[data-year-album="${year}"]`);
+                if (album && data.sourceFolderId && /^[-\w]+$/.test(data.sourceFolderId)) {
+                    album.href = `https://drive.google.com/drive/folders/${data.sourceFolderId}`;
+                    album.hidden = false;
+                    album.setAttribute("aria-label", `View the full ${year} album in Google Drive (opens in a new tab)`);
+                }
+                await renderYear(year, data.media ?? []);
                 loadedYears.add(year);
             } catch (error) {
                 console.error(`Unable to load gallery ${year}`, error);
@@ -573,6 +637,8 @@ import { galleryYears as years } from "../data/gallery";
         for (const section of sections) {
             section.hidden = year !== "all" && section.dataset.yearSection !== year;
         }
+        const divider = document.querySelector<HTMLElement>("[data-archive-divider]");
+        if (divider) divider.hidden = year !== "all";
         if (year !== "all") void loadYear(Number(year));
     }
 
