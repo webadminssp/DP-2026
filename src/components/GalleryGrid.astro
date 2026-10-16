@@ -16,6 +16,11 @@ import { galleryYears as years } from "../data/gallery";
         </div>
     </div>
 
+    <p class="gallery-refresh-note">
+        <span aria-hidden="true">📸</span>
+        <span>Refresh the page for a fresh shuffle of Pujo memories — <strong>your photo could be next!</strong></span>
+    </p>
+
     <div class="gallery-years">
         {
             years.map((year) => (
@@ -54,7 +59,6 @@ import { galleryYears as years } from "../data/gallery";
                             Reading the archive…
                         </div>
                     </div>
-                    <a class="year-album-link" data-year-album={year} target="_blank" rel="noopener noreferrer" hidden>View full album <span aria-hidden="true">↗</span></a>
                 </section>
                 </>
             ))
@@ -434,7 +438,6 @@ import { galleryYears as years } from "../data/gallery";
     type GalleryResponse = {
         year: number;
         count: number;
-        sourceFolderId?: string;
         media: GalleryMedia[];
     };
 
@@ -594,12 +597,6 @@ import { galleryYears as years } from "../data/gallery";
                 const response = await fetch(`/api/gallery?year=${year}`, { headers: { accept: "application/json" } });
                 if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
                 const data = (await response.json()) as GalleryResponse;
-                const album = document.querySelector<HTMLAnchorElement>(`[data-year-album="${year}"]`);
-                if (album && data.sourceFolderId && /^[-\w]+$/.test(data.sourceFolderId)) {
-                    album.href = `https://drive.google.com/drive/folders/${data.sourceFolderId}`;
-                    album.hidden = false;
-                    album.setAttribute("aria-label", `View the full ${year} album in Google Drive (opens in a new tab)`);
-                }
                 await renderYear(year, data.media ?? []);
                 loadedYears.add(year);
             } catch (error) {

@@ -38,17 +38,23 @@ import GalleryGrid from "../components/GalleryGrid.astro";
     .gallery-empty,
     .gallery-error { grid-column: 1 / -1; }
 
-    .year-album-link {
-        display: table;
-        margin: 0.8rem auto 0;
+    .gallery-refresh-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        max-width: 48rem;
+        margin: 0 auto 1.75rem;
+        padding: 0.9rem 1.2rem;
+        border-block: 1px solid rgb(183 123 34 / 25%);
+        background: linear-gradient(90deg, transparent, rgb(222 173 70 / 10%), transparent);
         color: #855733;
-        font-size: 0.75rem;
-        text-underline-offset: 0.2em;
+        font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+        line-height: 1.6;
+        text-align: center;
     }
 
-    .year-album-link:hover { color: #8d0013; }
-    .year-album-link:focus-visible { outline: 2px solid #b77b22; outline-offset: 4px; }
-    .year-album-link[hidden],
+    .gallery-refresh-note strong { color: #8d0013; font-weight: 650; }
     .archive-divider[hidden] { display: none; }
 
     @media (min-width: 640px) {
