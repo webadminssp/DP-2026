@@ -9,25 +9,28 @@ import Footer from '../components/Footer.astro';
 interface Props {
 	title?: string;
 	chrome?: boolean;
+	galleryPage?: boolean;
 }
 
 const {
 	title = "Shriram Samruddhi Pujo 2026",
 	chrome = true,
+	galleryPage = false,
 } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content={galleryPage ? "width=device-width, initial-scale=1.0, viewport-fit=cover" : "width=device-width, initial-scale=1.0"} />
 		<meta name="theme-color" content="#8d0013" />
 		<link rel="icon" href="/favicon/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 		<link rel="manifest" href="/favicon/site.webmanifest" />
-		<link rel="stylesheet" href="/journey-gallery.css" />
+		{!galleryPage && <link rel="stylesheet" href="/journey-gallery.css" />}
+		{galleryPage && <link rel="preconnect" href="https://drive.google.com" />}
 		<link rel="stylesheet" href="/blood-donation-overrides.css" />
 		<link rel="stylesheet" href="/blood-donation-mobile.css" />
 		<link rel="stylesheet" href="/prime-sponsors.css" />
@@ -45,10 +48,10 @@ const {
 			})();
 		</script>
 	</head>
-	<body>
+	<body class:list={{ "gallery-page": galleryPage }}>
 		{chrome && <Header />}
 		<slot />
 		{chrome && <Footer />}
-		<script src="/journey-gallery.js" defer></script>
+		{!galleryPage && <script is:inline src="/journey-gallery.js" defer></script>}
 	</body>
 </html>

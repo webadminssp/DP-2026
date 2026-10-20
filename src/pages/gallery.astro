@@ -1,9 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import GalleryGrid from "../components/GalleryGrid.astro";
+export const prerender = true;
 ---
 
-<Layout title="Gallery — Shriram Samruddhi Pujo 2026">
+<Layout title="Gallery — Shriram Samruddhi Pujo 2026" galleryPage>
     <main>
         <GalleryGrid />
     </main>
@@ -293,4 +294,94 @@ import GalleryGrid from "../components/GalleryGrid.astro";
         background: rgb(141 0 19 / 92%) !important;
         transform: translate(-50%, 50%) scale(1.08);
     }
+
+    /* Matching placeholders reserve each row before any network response. */
+    .gallery-placeholder {
+        display: block;
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        border-radius: 0.3rem;
+        background: #eadfcd;
+    }
+    .gallery-grid .gallery-item, .gallery-placeholder { min-height: 44px; }
+    .gallery-unavailable { display: block; padding: 0.25rem; font-size: 0.65rem; color: #855733; }
+    .gallery-chip, .gallery-retry { min-height: 44px; touch-action: manipulation; }
+    .gallery-retry {
+        border: 1px solid #b77b22;
+        border-radius: 999px;
+        padding: 0.4rem 0.9rem;
+        background: var(--background);
+        color: #8d0013;
+        cursor: pointer;
+    }
+    .gallery-error { flex-wrap: wrap; text-align: center; }
+    .gallery-rail { overscroll-behavior-x: contain; }
+    .gallery-rail-wrap { top: 4.5rem; }
+
+    .gallery-page .lightbox {
+        box-sizing: border-box;
+        height: 100vh;
+        height: 100dvh;
+        padding: calc(3.25rem + env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) calc(3rem + env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+        overscroll-behavior: contain;
+    }
+    .gallery-page .lightbox-stage {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        max-height: none;
+    }
+    .gallery-page .lightbox-stage iframe { width: 100%; height: 100%; }
+    .gallery-page .lightbox-close, .gallery-page .lightbox-nav {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+        background: rgb(24 8 12 / 80%);
+    }
+    .gallery-page .lightbox-close { top: max(0.35rem, env(safe-area-inset-top)); right: max(0.5rem, env(safe-area-inset-right)); }
+    .gallery-page .lightbox-prev { left: max(0.25rem, env(safe-area-inset-left)); }
+    .gallery-page .lightbox-next { right: max(0.25rem, env(safe-area-inset-right)); }
+    .gallery-page .lightbox-caption {
+        bottom: max(0.5rem, env(safe-area-inset-bottom));
+        width: 85vw;
+        max-height: 2.5rem;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+        line-height: 1.25;
+        font-size: 0.75rem;
+    }
+
+    @media (max-width: 1023px), (pointer: coarse) {
+        /* Keep controls reachable below the header without stacking sticky bars. */
+        .gallery-rail-wrap { position: static; background: var(--background); backdrop-filter: none; }
+        .year-count { backdrop-filter: none; box-shadow: none; }
+        .gallery-item::after { animation: none; background: #eadfcd; }
+        .gallery-item img { transition: opacity 120ms ease; }
+        .gallery-item:hover img { transform: none; }
+        .gallery-grid .gallery-item { box-shadow: none; }
+        .gallery-refresh-note { margin-bottom: 1rem; padding-block: 0.65rem; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+        /* The shared header otherwise hides both navigation choices in this range. */
+        .gallery-page #menu-toggle { display: inline-flex; }
+        .gallery-page #mobile-menu:not([hidden]) { display: block; }
+    }
+    @media (orientation: landscape) and (min-width: 560px) {
+        .gallery-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+    @media (orientation: landscape) and (max-height: 540px) {
+        .gallery { padding-top: 0.5rem; }
+        .gallery-rail-wrap { padding-block: 0.25rem; margin-bottom: 0.5rem; }
+        .gallery-refresh-note { margin-bottom: 0.5rem; padding-block: 0.4rem; }
+        .gallery-years { gap: 1.5rem !important; }
+        .year-heading { min-height: 3rem !important; margin-bottom: 0.65rem !important; }
+        .archive-divider { min-height: 8rem; padding-block: 0.75rem; }
+        .archive-alpona { width: 5rem; }
+        .archive-divider-bangla { font-size: 1.4rem; }
+        .gallery-page .lightbox {
+            padding-top: calc(2.75rem + env(safe-area-inset-top));
+            padding-bottom: calc(2.25rem + env(safe-area-inset-bottom));
+        }
+    }
+
 </style>

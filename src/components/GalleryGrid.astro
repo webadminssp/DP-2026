@@ -5,10 +5,10 @@ import { galleryYears as years } from "../data/gallery";
 <section class="gallery">
     <div class="gallery-rail-wrap">
         <div class="gallery-rail" role="group" aria-label="Filter gallery by year">
-            <button type="button" class="gallery-chip is-active" data-year="all">All</button>
+            <button type="button" class="gallery-chip is-active" data-year="all" aria-pressed="true">All</button>
             {
                 years.map((year) => (
-                    <button type="button" class="gallery-chip" data-year={year}>
+                    <button type="button" class="gallery-chip" data-year={year} aria-pressed="false">
                         {year}
                     </button>
                 ))
@@ -53,11 +53,10 @@ import { galleryYears as years } from "../data/gallery";
                         <h2>{year}</h2>
                         <span class="year-count" data-year-count={year}>Loading…</span>
                     </div>
-                    <div class="gallery-grid" data-year-grid={year} aria-live="polite">
-                        <div class="gallery-loading">
-                            <span class="loading-dot" aria-hidden="true"></span>
-                            Reading the archive…
-                        </div>
+                    <div class="gallery-grid" data-year-grid={year} aria-label={`${year} gallery`} aria-busy="true">
+                        {Array.from({ length: year === 2026 ? 18 : 6 }, () => (
+                            <span class="gallery-placeholder" aria-hidden="true"></span>
+                        ))}
                     </div>
                 </section>
                 </>
@@ -429,6 +428,7 @@ import { galleryYears as years } from "../data/gallery";
 </style>
 
 <script>
+    import { selectGalleryPreview, thumbnailSizes, readGalleryCache, writeGalleryCache } from "../lib/gallery-preview.js";
     type GalleryMedia = {
         id: string;
         name: string;
@@ -447,110 +447,68 @@ import { galleryYears as years } from "../data/gallery";
     const loadedYears = new Set<number>();
     const loadingYears = new Map<number, Promise<void>>();
 
-    function shuffle(values: GalleryMedia[]): GalleryMedia[] {
-        const copy = [...values];
-        for (let i = copy.length - 1; i > 0; i -= 1) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
-        return copy;
-    }
-
-    function uniqueById(items: GalleryMedia[]): GalleryMedia[] {
-        const seen = new Set<string>();
-        return items.filter((item) => {
-            if (seen.has(item.id)) return false;
-            seen.add(item.id);
-            return true;
-        });
-    }
-
-    async function selectForYear(pool: GalleryMedia[], year: number): Promise<GalleryMedia[]> {
-        const unique = uniqueById(pool);
-        const images = shuffle(unique.filter((item) => item.type === "image"));
-        const videos = shuffle(unique.filter((item) => item.type === "video"));
-        if (year !== 2026) {
-            // Six thumbnails total, retaining a video preview when available.
-            const videoCount = Math.min(videos.length, Math.max(1, 6 - images.length));
-            return shuffle([...images.slice(0, 6 - videoCount), ...videos.slice(0, videoCount)]);
-        }
-
-        // Prefer photographs over event posters and artwork in this year's album.
-        const isPhoto = (item: GalleryMedia) => /^(DSC|IMG|PXL|DSCF|DSCN|DSC_|WhatsApp Image)/i.test(item.name);
-        const candidates = [...images.filter(isPhoto), ...images.filter((item) => !isPhoto(item))];
-        const selected: GalleryMedia[] = [];
-        const fallback: GalleryMedia[] = [];
-        // Probe a bounded, random sample in small batches; loaded previews are
-        // reused from the browser cache when the chosen tiles are rendered.
-        for (let offset = 0; offset < Math.min(candidates.length, 48) && selected.length < 18; offset += 6) {
-            const batch = candidates.slice(offset, offset + 6);
-            const quality = await Promise.all(batch.map(checkImageQuality));
-            batch.forEach((item, index) => {
-                if (quality[index] === "sharp") selected.push(item);
-                else if (quality[index] === "small") fallback.push(item);
-            });
-        }
-        return [...selected, ...fallback].slice(0, 18);
-    }
-
-    const driveThumb = (id: string, width = 800) =>
+    const driveThumb = (id: string, width = 360) =>
         `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${width}`;
-    const driveFullImage = (id: string) => driveThumb(id, 2400);
     const driveVideo = (id: string) => `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
-
-    function checkImageQuality(media: GalleryMedia): Promise<"sharp" | "small" | "unavailable"> {
-        return new Promise((resolve) => {
-            const image = new Image();
-            const finish = (quality: "sharp" | "small" | "unavailable") => {
-                clearTimeout(timeout);
-                image.onload = null;
-                image.onerror = null;
-                resolve(quality);
-            };
-            const timeout = window.setTimeout(() => finish("unavailable"), 5000);
-            image.onload = () => {
-                const longEdge = Math.max(image.naturalWidth, image.naturalHeight);
-                const shortEdge = Math.min(image.naturalWidth, image.naturalHeight);
-                finish(longEdge >= 800 && shortEdge >= 480 ? "sharp" : "small");
-            };
-            image.onerror = () => finish("unavailable");
-            image.src = driveThumb(media.id, 800);
-        });
-    }
+    let albumStorage: Storage | null = null;
+    try { albumStorage = window.sessionStorage; } catch { /* Optional browser cache. */ }
 
     function setCount(year: number, text: string) {
         const counter = document.querySelector<HTMLElement>(`[data-year-count="${year}"]`);
         if (counter) counter.textContent = text;
     }
 
-    function makeTile(media: GalleryMedia, year: number, eager: boolean): HTMLButtonElement {
+    function makeTile(media: GalleryMedia, year: number, eager: boolean, reserve: GalleryMedia[], attempt = 0): HTMLButtonElement {
         const button = document.createElement("button");
         button.type = "button";
         button.className = `gallery-item${media.type === "video" ? " is-video" : ""}`;
         button.dataset.year = String(year);
+        button.dataset.mediaId = media.id;
         button.dataset.mediaType = media.type;
-        button.dataset.full = media.type === "image" ? driveFullImage(media.id) : driveVideo(media.id);
-        button.dataset.caption = media.name;
-        button.setAttribute("aria-label", `${media.type === "video" ? "Play" : "Open"} ${media.name}`);
-        button.style.setProperty("--r", "1.45");
+        button.dataset.caption = media.name || "Pujo memory";
+        button.setAttribute("aria-label", `${media.type === "video" ? "Play" : "Open"} ${media.name || "Pujo memory"}`);
 
         const img = document.createElement("img");
-        img.src = driveThumb(media.id, 800);
-        img.alt = media.name;
+        img.alt = media.name || "Pujo memory";
         img.loading = eager ? "eager" : "lazy";
         img.decoding = "async";
+        img.width = 360;
+        img.height = 240;
         img.draggable = false;
+        img.sizes = thumbnailSizes(year);
+        img.srcset = [240, 360, 480, 640].map((width) => `${driveThumb(media.id, width)} ${width}w`).join(", ");
         if (eager) img.setAttribute("fetchpriority", "high");
 
+        const replaceWithReserve = () => {
+            // Only retry an image that is actually displayed; never probe the whole album.
+            if (attempt >= 2 || !reserve.length) return false;
+            const replacement = reserve.shift()!;
+            const hadFocus = document.activeElement === button;
+            const next = makeTile(replacement, year, eager, reserve, attempt + 1);
+            button.replaceWith(next);
+            if (hadFocus) next.focus();
+            return true;
+        };
+
         img.addEventListener("load", () => {
-            if (img.naturalWidth && img.naturalHeight) {
-                const ratio = Math.max(0.65, Math.min(2.1, img.naturalWidth / img.naturalHeight));
-                button.style.setProperty("--r", String(ratio));
-            }
+            // naturalWidth is density-corrected when srcset is used.
+            const requiredWidth = button.clientWidth * 0.9;
+            const requiredHeight = button.clientHeight * 0.9;
+            if (media.type === "image" && button.clientWidth > 0
+                && (img.naturalWidth < requiredWidth || img.naturalHeight < requiredHeight)
+                && replaceWithReserve()) return;
             button.classList.add("is-loaded");
         }, { once: true });
 
-        img.addEventListener("error", () => button.classList.add("is-broken"), { once: true });
+        img.addEventListener("error", () => {
+            if (replaceWithReserve()) return;
+            button.classList.add("is-broken");
+            const label = document.createElement("span");
+            label.className = "gallery-unavailable";
+            label.textContent = "Preview unavailable";
+            button.append(label);
+        }, { once: true });
+        img.src = driveThumb(media.id);
         button.append(img);
 
         if (media.type === "video") {
@@ -559,32 +517,28 @@ import { galleryYears as years } from "../data/gallery";
             badge.innerHTML = '<span class="video-play" aria-hidden="true"></span>Video';
             button.append(badge);
         }
-
         button.addEventListener("click", () => openLightbox(button));
         return button;
     }
 
-    async function renderYear(year: number, pool: GalleryMedia[]) {
+    function renderYear(year: number, pool: GalleryMedia[]) {
         const grid = document.querySelector<HTMLElement>(`[data-year-grid="${year}"]`);
         if (!grid) return;
-
-        const selected = await selectForYear(pool, year);
-        grid.replaceChildren();
-
+        const { selected, reserve } = selectGalleryPreview(pool, year);
+        const fragment = document.createDocumentFragment();
         if (!selected.length) {
             const empty = document.createElement("div");
             empty.className = "gallery-empty";
             empty.textContent = "No photographs or videos are available for this year yet.";
-            grid.append(empty);
+            fragment.append(empty);
             setCount(year, "No media yet");
-            return;
+        } else {
+            selected.forEach((media, index) => fragment.append(makeTile(media, year, year === 2026 && index < 3, reserve)));
+            setCount(year, `${selected.length} memories`);
         }
-
-        selected.forEach((media, index) => grid.append(makeTile(media, year, year === years[0] && index < 6)));
-
-        const photos = selected.filter((item) => item.type === "image").length;
-        const videos = selected.filter((item) => item.type === "video").length;
-        setCount(year, videos ? `${photos} photos · ${videos} video${videos === 1 ? "" : "s"}` : `${photos} photos`);
+        // Render immediately; each responsive thumbnail appears as soon as it loads.
+        grid.replaceChildren(fragment);
+        grid.setAttribute("aria-busy", "false");
     }
 
     function loadYear(year: number): Promise<void> {
@@ -592,12 +546,23 @@ import { galleryYears as years } from "../data/gallery";
         const existing = loadingYears.get(year);
         if (existing) return existing;
 
-        const task = (async () => {
+        const task = Promise.resolve().then(async () => {
             try {
-                const response = await fetch(`/api/gallery?year=${year}`, { headers: { accept: "application/json" } });
-                if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
-                const data = (await response.json()) as GalleryResponse;
-                await renderYear(year, data.media ?? []);
+                let data = readGalleryCache(albumStorage, year) as GalleryResponse | null;
+                if (!data) {
+                    const controller = new AbortController();
+                    const timeout = window.setTimeout(() => controller.abort(), 20000);
+                    try {
+                        const response = await fetch(`/api/gallery?year=${year}`, {
+                            headers: { accept: "application/json" }, signal: controller.signal,
+                        });
+                        if (!response.ok) throw new Error(`Gallery API returned ${response.status}`);
+                        data = (await response.json()) as GalleryResponse;
+                        if (data.year !== year || !Array.isArray(data.media)) throw new Error("Invalid gallery response");
+                        writeGalleryCache(albumStorage, year, data);
+                    } finally { clearTimeout(timeout); }
+                }
+                renderYear(year, data.media);
                 loadedYears.add(year);
             } catch (error) {
                 console.error(`Unable to load gallery ${year}`, error);
@@ -606,29 +571,63 @@ import { galleryYears as years } from "../data/gallery";
                     const message = document.createElement("div");
                     message.className = "gallery-error";
                     message.textContent = "This year's archive could not be loaded right now.";
+                    const retry = document.createElement("button");
+                    retry.type = "button";
+                    retry.className = "gallery-retry";
+                    retry.textContent = "Try again";
+                    retry.addEventListener("click", () => scheduleYear(year, true));
+                    message.append(retry);
                     grid.replaceChildren(message);
+                    grid.setAttribute("aria-busy", "false");
                 }
                 setCount(year, "Unavailable");
             } finally {
                 loadingYears.delete(year);
             }
-        })();
+        });
 
         loadingYears.set(year, task);
         return task;
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    const yearQueue: number[] = [];
+    let activeLoads = 0;
+    function scheduleYear(year: number, priority = false) {
+        if (loadedYears.has(year) || loadingYears.has(year)) return;
+        const existingIndex = yearQueue.indexOf(year);
+        if (existingIndex >= 0) yearQueue.splice(existingIndex, 1);
+        if (priority) yearQueue.unshift(year);
+        else yearQueue.push(year);
+        drainYearQueue();
+    }
+
+    function drainYearQueue() {
+        // Limit album requests so older years cannot saturate a mobile connection.
+        while (activeLoads < 2 && yearQueue.length) {
+            const year = yearQueue.shift()!;
+            const section = sections.find((item) => Number(item.dataset.yearSection) === year);
+            if (!section || section.hidden || loadedYears.has(year) || loadingYears.has(year)) continue;
+            activeLoads += 1;
+            void loadYear(year).finally(() => { activeLoads -= 1; drainYearQueue(); });
+        }
+    }
+
+    const observer = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
         for (const entry of entries) {
             if (!entry.isIntersecting) continue;
             const section = entry.target as HTMLElement;
-            void loadYear(Number(section.dataset.yearSection));
-            observer.unobserve(section);
+            if (section.hidden) continue;
+            scheduleYear(Number(section.dataset.yearSection));
+            observer?.unobserve(section);
         }
-    }, { rootMargin: "500px 0px" });
+    }, { rootMargin: "120px 0px" }) : null;
 
-    for (const section of sections) observer.observe(section);
-    if (years[0]) void loadYear(years[0]);
+    if (years[0]) scheduleYear(years[0], true);
+    if (observer) {
+        for (const section of sections) observer.observe(section);
+    } else {
+        for (const year of years.slice(1)) scheduleYear(year);
+    }
 
     function applyFilter(year: string) {
         for (const section of sections) {
@@ -636,12 +635,22 @@ import { galleryYears as years } from "../data/gallery";
         }
         const divider = document.querySelector<HTMLElement>("[data-archive-divider]");
         if (divider) divider.hidden = year !== "all";
-        if (year !== "all") void loadYear(Number(year));
+        if (year !== "all") scheduleYear(Number(year), true);
+        else {
+            for (const section of sections) {
+                if (loadedYears.has(Number(section.dataset.yearSection))) continue;
+                if (observer) observer.observe(section);
+                else scheduleYear(Number(section.dataset.yearSection));
+            }
+        }
     }
 
     for (const chip of chips) {
         chip.addEventListener("click", () => {
-            for (const other of chips) other.classList.toggle("is-active", other === chip);
+            for (const other of chips) {
+                other.classList.toggle("is-active", other === chip);
+                other.setAttribute("aria-pressed", String(other === chip));
+            }
             applyFilter(chip.dataset.year ?? "all");
         });
     }
@@ -655,6 +664,7 @@ import { galleryYears as years } from "../data/gallery";
     const btnPrev = document.getElementById("lightbox-prev")!;
     const btnNext = document.getElementById("lightbox-next")!;
     let position = 0;
+    let viewerRequest = 0;
     let lastFocused: HTMLElement | null = null;
 
     function visibleItems(): HTMLButtonElement[] {
@@ -668,7 +678,8 @@ import { galleryYears as years } from "../data/gallery";
         if (!visible.length) return;
         position = (index + visible.length) % visible.length;
         const item = visible[position];
-        const source = item.dataset.full ?? "";
+        const mediaId = item.dataset.mediaId ?? "";
+        const request = ++viewerRequest;
 
         spinner.hidden = false;
         lightboxImg.hidden = true;
@@ -680,11 +691,29 @@ import { galleryYears as years } from "../data/gallery";
 
         if (item.dataset.mediaType === "video") {
             lightboxVideo.hidden = false;
-            lightboxVideo.src = source;
+            lightboxVideo.src = driveVideo(mediaId);
         } else {
             lightboxImg.hidden = false;
-            lightboxImg.src = source;
+            // Reuse the already-loaded thumbnail while the full image arrives.
+            const preview = item.querySelector("img");
+            lightboxImg.src = preview?.currentSrc || driveThumb(mediaId);
             lightboxImg.alt = item.dataset.caption ?? "Pujo photograph";
+            const full = new Image();
+            full.decoding = "async";
+            const width = Math.min(1920, Math.max(960, Math.ceil(
+                Math.max(window.innerWidth, window.innerHeight) * Math.min(window.devicePixelRatio || 1, 2),
+            )));
+            full.onload = () => {
+                if (request !== viewerRequest || lightbox.hidden) return;
+                lightboxImg.src = full.src;
+                caption.textContent = item.dataset.caption ?? "Pujo photograph";
+                lightboxImg.classList.add("is-loaded");
+                spinner.hidden = true;
+            };
+            full.onerror = () => {
+                if (request === viewerRequest) spinner.hidden = true;
+            };
+            full.src = driveThumb(mediaId, width);
         }
     }
 
@@ -693,6 +722,10 @@ import { galleryYears as years } from "../data/gallery";
         lightboxImg.classList.add("is-loaded");
     });
     lightboxVideo.addEventListener("load", () => { spinner.hidden = true; });
+    lightboxImg.addEventListener("error", () => {
+        spinner.hidden = true;
+        caption.textContent = "This photo could not be loaded. Please try another memory.";
+    });
 
     function openLightbox(item: HTMLButtonElement) {
         const visible = visibleItems();
@@ -704,6 +737,7 @@ import { galleryYears as years } from "../data/gallery";
     }
 
     function closeLightbox() {
+        viewerRequest += 1;
         lightbox.hidden = true;
         document.body.style.overflow = "";
         lightboxImg.removeAttribute("src");
@@ -726,14 +760,32 @@ import { galleryYears as years } from "../data/gallery";
         if (event.key === "Escape") closeLightbox();
         else if (event.key === "ArrowLeft") showItem(position - 1);
         else if (event.key === "ArrowRight") showItem(position + 1);
+        else if (event.key === "Tab") {
+            const focusable = [btnClose, btnPrev, btnNext, ...(!lightboxVideo.hidden ? [lightboxVideo] : [])];
+            const first = focusable[0], last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault(); last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault(); first.focus();
+            }
+        }
     });
 
     let touchStartX = 0;
+    let touchStartY = 0;
+    let swipeAllowed = false;
     lightbox.addEventListener("touchstart", (event) => {
-        touchStartX = event.changedTouches[0].clientX;
+        swipeAllowed = event.touches.length === 1 && (window.visualViewport?.scale ?? 1) <= 1;
+        if (!swipeAllowed) return;
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
     }, { passive: true });
     lightbox.addEventListener("touchend", (event) => {
+        if (!swipeAllowed || event.touches.length || !event.changedTouches.length) return;
         const dx = event.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 50) showItem(position + (dx < 0 ? 1 : -1));
+        const dy = event.changedTouches[0].clientY - touchStartY;
+        swipeAllowed = false;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) showItem(position + (dx < 0 ? 1 : -1));
     }, { passive: true });
+    lightbox.addEventListener("touchcancel", () => { swipeAllowed = false; }, { passive: true });
 </script>
