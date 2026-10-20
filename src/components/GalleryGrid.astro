@@ -482,7 +482,7 @@ import { galleryYears as years } from "../data/gallery";
         const fallback: GalleryMedia[] = [];
         // Probe a bounded, random sample in small batches; loaded previews are
         // reused from the browser cache when the chosen tiles are rendered.
-        for (let offset = 0; offset < Math.min(candidates.length, 48) && selected.length < 12; offset += 6) {
+        for (let offset = 0; offset < Math.min(candidates.length, 48) && selected.length < 18; offset += 6) {
             const batch = candidates.slice(offset, offset + 6);
             const quality = await Promise.all(batch.map(checkImageQuality));
             batch.forEach((item, index) => {
@@ -490,7 +490,7 @@ import { galleryYears as years } from "../data/gallery";
                 else if (quality[index] === "small") fallback.push(item);
             });
         }
-        return [...selected, ...fallback].slice(0, 12);
+        return [...selected, ...fallback].slice(0, 18);
     }
 
     const driveThumb = (id: string, width = 800) =>
